@@ -1,18 +1,5 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%",
-  eval = FALSE
-)
-```
 
 # BIDSconvertR
 
@@ -20,40 +7,31 @@ knitr::opts_chunk$set(
 
 [![DOI](https://zenodo.org/badge/195199025.svg)](https://zenodo.org/badge/latestdoi/195199025)
 
-
 <!-- badges: end -->
 
-The goal of BIDSconvertR is to ...
+The goal of BIDSconvertR is to …
 
 ## Installation
 
-You can install the released version of BIDSconvertR from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of BIDSconvertR from
+[CRAN](https://CRAN.R-project.org) with:
 
-```{r}
+``` r
 install.packages("BIDSconvertR")
 ```
 
 Please install the following packages manually:
 
-```{r}
+``` r
 devtools::install_github("muschellij2/papayaWidget")
 ```
 
 Please install your needed version of dcm2nii using:
 
-```{r}
+``` r
 install_dcm2niix("v1.0.20211006")
 ```
 
-
 ## Usage
 
-
 ## Citation
-
-
-
-
-
-
-
