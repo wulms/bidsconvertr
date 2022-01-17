@@ -1,0 +1,42 @@
+Package: bidsconvertr
+Title: Converts DICOM data to NIfTI and finally to BIDS
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Niklas",
+           family = "Wulms",
+           role = c("aut", "cre"),
+           email = "wulms@uni-muenster.de",
+           comment = c(ORCID = "0000-0002-3418-9978"))
+Description: The 'BIDSconvertR' converts MRI data into the BIDS-specification. 
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Depends:
+    dplyr,
+    devtools,
+    magrittr,
+    purrr,
+    readr,
+    tidyr,
+    stringr,
+    stringi,
+    lubridate,
+    rjson,
+    flexdashboard,
+    knitr,
+    DT,
+    lattice,
+    plotly,
+    rmarkdown,
+    shiny, 
+    shinythemes,
+    rhandsontable,
+    kableExtra,
+    patchwork,
+    pacman,
+    papayaWidget
+VignetteBuilder: knitr
+Suggests: 
+    
