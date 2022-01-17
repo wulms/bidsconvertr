@@ -3,6 +3,8 @@
 
 # BIDSconvertR
 
+# icons <a href='https://pkg.mitchelloharawild.com/icon'><img src='inst/figure/BIDSconvertR.png' align="right" height="138" /></a>
+
 <!-- badges: start -->
 
 [![DOI](https://zenodo.org/badge/195199025.svg)](https://zenodo.org/badge/latestdoi/195199025)
