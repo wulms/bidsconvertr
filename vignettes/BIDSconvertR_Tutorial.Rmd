@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
@@ -23,6 +24,7 @@ library(BIDSconvertR)
 You need to install the library "papayaWidget" by John Mushelli (@muschellij2). This implements the NIfTI viewer to inspect the images visually.
 
 ```{r}
+install.packages("devtools")
 devtools::install_github("muschellij2/papayaWidget")
 ```
 
@@ -33,8 +35,8 @@ devtools::install_github("muschellij2/papayaWidget")
 Choose a folder, where you want to store your "user settings" file. The function `create_user_settings("path")` creates a template file at the desired folder.
 
 ```{r}
-create_user_settings("/media/niklas/BIDS_data/BIDSconvertR/output/")
-create_user_settings("C:/Science/bidirect_bids/")
+create_user_settings("/media/niklas/BIDS_data/BIDSconvertR/output/") # Linux
+create_user_settings("C:/Science/bidirect_bids/") # Windows
 
 ```
 
@@ -86,7 +88,7 @@ install_dcm2niix()
 install_dcm2niix("v1.0.20181125") # installs v1.0.20181125
 ```
 
-# How to run the main script
+### How to run the main script
 
 The convert_to_BIDS function takes two arguments: the user_settings_file and a switch to select, if you want to see the sequence_table everytime ("on") or only, if something is not plausible ("off").
 
@@ -97,5 +99,36 @@ The convert_to_BIDS function takes two arguments: the user_settings_file and a s
 convert_to_BIDS(user_settings_file = settings_file,
                 sequence_table = "off")
 ```
+
+### Alternatively to main script: You can also run each step manually
+
+```{r}
+user_settings_file = settings_file
+
+# dcm2niix - niftis
+dcm2nii_converter_anon()
+
+# dcm2niix - jsons
+dcm2nii_converter_json()
+
+# read all metadata from JSON files
+read_json_headers(json_path = path_output_converter_temp_json, suffix = "")
+
+read_json_headers(json_path = path_output_converter_temp_nii, suffix = "_anon")
+
+
+sequence_mapper(edit_table = sequence_table)
+
+check_sequence_map()
+
+copy2BIDS()
+
+create_dashboard_internal()
+
+
+```
+
+
+
 
 

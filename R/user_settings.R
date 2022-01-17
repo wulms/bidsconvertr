@@ -38,6 +38,9 @@ mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe
   if(!file.exists(path)){
     print(paste("The file was created in this folder:", folder))
     writeLines(settings_string, path)
+    print("The file will be opened in 5 seconds. Please edit the file to your needs.")
+    Sys.sleep(5)
+    file.edit(path)
   } else {
     print(paste("The file already exists:", path))
   }

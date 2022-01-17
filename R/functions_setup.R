@@ -86,4 +86,6 @@ convert_to_BIDS <- function(user_settings_file = "",
 
   create_dashboard_internal()
 
+  run_shiny_BIDS()
+
 }
