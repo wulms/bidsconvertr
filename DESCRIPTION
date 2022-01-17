@@ -39,4 +39,5 @@ Depends:
     papayaWidget
 VignetteBuilder: knitr
 Suggests: 
-    
+URL: https://github.com/wulms/bidsconvertr
+BugReports: https://github.com/wulms/bidsconvertr/issues
