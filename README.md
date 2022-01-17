@@ -62,7 +62,7 @@ Edit the file “user\_settings.R” to your needs.
 | sessions\_id\_new      | c(“0”, “2”, “4”, “6”)                                                                                                     | The folder (and session) names after conversion. These can be identical to “sessions\_id\_old”. But note, that in BIDS a number is the way to go. |
 | mri\_sequences         | “T1\|T2\|DTI\|fmr\|rest\|rs\|func\|FLAIR\|smartbrain\|survey\|smart\|ffe\|tse”                                            | These are regular expressions, which should be matched to your MRI sequence ID’s.                                                                 |
 
-Information in the user settings file
+Table 1: Information in the user settings file
 
 Now you have edited your “user\_settings.R” file.
 
@@ -104,6 +104,30 @@ convert_to_BIDS(user_settings_file = settings_file,
                 sequence_table = "off")
 ```
 
+Now the ‘sequence\_mapper’ should start showing the following interface:
+
+![Sequence Mapper](inst/figure/sequence_mapper.PNG)
+
+You have to edit each entry according to the BIDS specification. Some
+tips can be found on the left panel and hyperlinks to the BIDS
+specification. Then you click “save” and close the ‘sequence mapper’.
+
+Just run again ‘convert\_to\_BIDS’. If the script finds an error in the
+‘sequence mapper’ definitions it starts again.
+
+If everything is fine (1) the files are copied to BIDS, (2) a dashboard
+for overview is rendered and (3) a shiny viewer is started to inspect
+the images.
+
+You can use ‘convert\_to\_BIDS’ continously during data acquisition.
+
+Everytime new files or sequences are added, the ‘sequence mapper’ opens
+again until everything is declared. Already processed files are skipped.
+
+If all files are already processed the BIDS viewer starts.
+
+![BIDS viewer](inst/figure/bids_viewer.PNG)
+
 ### Alternatively to main script: You can also run each step manually
 
 ``` r
@@ -129,15 +153,19 @@ read_json_headers(json_path = path_output_converter_temp_json, suffix = "")
 
 read_json_headers(json_path = path_output_converter_temp_nii, suffix = "_anon")
 
-
+# starts the sequence mapper
 sequence_mapper(edit_table = sequence_table)
 
+# checks the sequence map
 check_sequence_map()
 
+# copies files to BIDS
 copy2BIDS()
 
+# creates BIDS dashboard
 create_dashboard_internal()
 
+# runs BIDS viewer
 run_shiny_BIDS()
 ```
 
