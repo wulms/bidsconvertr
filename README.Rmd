@@ -96,7 +96,7 @@ Edit the file "user_settings.R" to your needs.
 | mri_sequences        | "T1\|T2\|DTI\|fmr\|rest\|rs\|func\|FLAIR\|smartbrain\|survey\|smart\|ffe\|tse"                                         | These are regular expressions, which should be matched to your MRI sequence ID's.                                                               |
 +----------------------+------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
 
-: Information in the user settings file
+: Table 1: Information in the user settings file
 
 
 Now you have edited your "user_settings.R" file. 
