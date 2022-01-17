@@ -48,17 +48,8 @@ color:white!important;
 </style>  
 
 ```{r setup, include=FALSE}
-library(flexdashboard)
-library(rjson)
-library(DT)
-library(plotly)
-library(knitr)
-library(kableExtra)
-library(patchwork)
-library(stringr)
-library(BIDSconvertR)
-
-
+# library(patchwork)
+library(bidsconvertr)
 ```
 
 ```{r include=FALSE}
