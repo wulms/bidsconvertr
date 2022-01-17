@@ -9,10 +9,10 @@
 
 [![DOI](https://zenodo.org/badge/195199025.svg)](https://zenodo.org/badge/latestdoi/195199025)
 
-The hexagonal sticker is based on the MRI svg graphics provided by :
+The hexagonal sticker is based on the MRI svg graphics provided by
+Flaticon and was created by mavadee.
 
-[MRI icons on flaticon](%22https://www.flaticon.com/free-icons/mri%22)
-Mri icons created by mavadee - Flaticon</a>
+[MRI icons on flaticon](https://www.flaticon.com/free-icons/mri)
 
 <!-- badges: end -->
 
