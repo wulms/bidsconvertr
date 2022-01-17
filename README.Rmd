@@ -61,12 +61,6 @@ devtools::install_github("muschellij2/papayaWidget")
 ## Usage
 
 
-Please install your needed version of dcm2nii using:
-
-```{r}
-install_dcm2niix("v1.0.20211006")
-```
-
 
 ### First steps
 
@@ -124,7 +118,7 @@ Then you need to install dcm2niix. The function automatically uses the tested "v
 ```{r}
 install_dcm2niix()
 
-install_dcm2niix("v1.0.20181125") # if you want to install the specific verion v1.0.20181125
+install_dcm2niix("v1.0.20181125") # if you want to install the specific version v1.0.20181125
 ```
 
 

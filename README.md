@@ -37,12 +37,6 @@ devtools::install_github("muschellij2/papayaWidget")
 
 ## Usage
 
-Please install your needed version of dcm2nii using:
-
-``` r
-install_dcm2niix("v1.0.20211006")
-```
-
 ### First steps
 
 Choose a folder, where you want to store your “user settings” file. The
@@ -91,7 +85,7 @@ changing the version number.
 ``` r
 install_dcm2niix()
 
-install_dcm2niix("v1.0.20181125") # if you want to install the specific verion v1.0.20181125
+install_dcm2niix("v1.0.20181125") # if you want to install the specific version v1.0.20181125
 ```
 
 ### How to run the main script
@@ -111,6 +105,15 @@ convert_to_BIDS(user_settings_file = settings_file,
 ```
 
 ### Alternatively to main script: You can also run each step manually
+
+``` r
+# preparation
+create_user_settings("C:/Science/bidirect_bids/") # Windows
+
+settings_file <- "C:/Science/bidirect_bids/user_settings.R" # Windows path
+
+prepare_environment(settings_file)
+```
 
 ``` r
 user_settings_file = settings_file
@@ -134,6 +137,8 @@ check_sequence_map()
 copy2BIDS()
 
 create_dashboard_internal()
+
+run_shiny_BIDS()
 ```
 
 ## Citation
