@@ -1,5 +1,5 @@
 Package: bidsconvertr
-Title: Converts DICOM data to NIfTI and finally to BIDS
+Title: Converts DICOM data to NIfTI and structure the NIfTI data in BIDS specification
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Niklas",
@@ -14,30 +14,29 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Depends:
-    dplyr,
-    devtools,
-    magrittr,
-    purrr,
-    readr,
-    tidyr,
-    stringr,
-    stringi,
-    lubridate,
-    rjson,
-    flexdashboard,
-    knitr,
-    DT,
+    dplyr (>= 1.0.7),
+    devtools (>= 2.4.2),
+    magrittr (>= 2.0.1),
+    purrr (>= 0.3.4),
+    readr (>= 2.1.1),
+    tidyr (>= 1.1.3),
+    stringr (>= 1.4.0),
+    stringi (>= 1.6.2),
+    lubridate (>= 1.7.10),
+    rjson (>= 0.2.20),
+    flexdashboard (>= 0.5.2),
+    knitr (>= 1.33),
+    DT (>= 0.18),
     lattice,
-    plotly,
-    rmarkdown,
-    shiny, 
-    shinythemes,
-    rhandsontable,
-    kableExtra,
-    patchwork,
-    pacman,
-    papayaWidget
+    plotly (>= 4.9.4.1),
+    rmarkdown (>= 2.9),
+    shiny (>= 1.6.0),
+    shinythemes (>= 1.2.0),
+    rhandsontable (>= 0.3.8),
+    kableExtra (>= 1.3.4),
+    patchwork (>= 1.1.0.9000),
+    pacman (>= 0.5.1),
+    papayaWidget (>= 0.7.1)
 VignetteBuilder: knitr
-Suggests: 
 URL: https://github.com/wulms/bidsconvertr
 BugReports: https://github.com/wulms/bidsconvertr/issues

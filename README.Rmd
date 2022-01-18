@@ -93,6 +93,8 @@ create_user_settings("C:/Science/bidirect_bids/") # Windows
 
 Edit the file "user_settings.R" to your needs.
 
+For more information on regular expressions (regex) please see the [stringR cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) or[RegexOne](https://regexone.com/). Each regex set here should match to your data. If you encounter any problems just contact me via mail or via the issues in this repository.
+
 +----------------------+------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
 | Variable             | Example                                                                                                                | Description                                                                                                                                     |
 +======================+========================================================================================================================+=================================================================================================================================================+
