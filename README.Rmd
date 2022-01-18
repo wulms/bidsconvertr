@@ -44,6 +44,8 @@ The goal of BIDSconvertR is to provide a workflow, which is able to:
 
 ## Installation
 
+If you work on Windows just download [Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools40.html) and install it. It is required to build packages.
+
 You need the R package 'devtools' to install packages from Github
 
 ```{r}
@@ -83,7 +85,7 @@ library(bidsconvertr)
 ```
 
 
-Choose a folder, where you want to store your "user settings" file. The function `create_user_settings("path")` creates a template file at the desired folder.
+Choose a folder, where you want to store your "user settings" file. The function `create_user_settings("path")` creates a template file at the desired folder. Take car, that the link contains a "/" at the end.
 
 ```{r}
 create_user_settings("/media/niklas/BIDS_data/BIDSconvertR/output/") # Linux
