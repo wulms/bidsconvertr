@@ -54,7 +54,7 @@ run_shiny_BIDS <- function(shiny_app_path = system.file("rmd", "bids_viewer.Rmd"
     separate(short_string, into = c("subject", "session", "type", "sequence"), sep = "/") %>%
     mutate(sequence = str_remove_all(sequence, paste0(subject, "_")) %>%
              str_remove(paste0(session, "_")) %>%
-             str_remove("\\.nii")
+             str_remove("\\.nii\\.gz|\\.nii")
     )
 
   if(nrow(image_df) == 0){stop("Error: No .nii.gz or .nii files found.")}
