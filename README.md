@@ -13,7 +13,16 @@ Link](https://www.flaticon.com/free-icons/mri).
 
 <!-- badges: end -->
 
-The goal of BIDSconvertR is to …
+The goal of BIDSconvertR is to provide a workflow, which is able to:
+
+-   convert DICOM data to NIfTI data using
+    [dcm2niix](https://github.com/rordenlab/dcm2niix)
+-   structure this data according to the [BIDS
+    specification](https://bids-specification.readthedocs.io/en/stable/)
+-   provide a data overview in a shareable html dashboard
+-   provide the
+    [papayaWidget](https://github.com/muschellij2/papayaWidget) viewer
+    for inspecting the images
 
 ## Installation
 
@@ -23,7 +32,7 @@ You need the R package ‘devtools’ to install packages from Github
 install.packages("devtools")
 ```
 
-Now you are able to install the development version of BIDSconvertR.
+Now you are able to install the development version of ‘BIDSconvertR’.
 
 ``` r
 devtools::install_github(repo = "wulms/bidsconvertr")
@@ -37,7 +46,23 @@ devtools::install_github("muschellij2/papayaWidget")
 
 ## Usage
 
+### Input data
+
+The input data needs to be in the following structure:
+
+-   a folder named “dicom”
+-   which contains one folder per session, e.g. “session\_1”,
+    “session\_2”
+-   these folders containing the DICOM data in separate folders per
+    subject, e.g. “001”, “002”
+
 ### First steps
+
+Load the ‘BIDSconvertR’ package to the environment.
+
+``` r
+library(bidsconvertr)
+```
 
 Choose a folder, where you want to store your “user settings” file. The
 function `create_user_settings("path")` creates a template file at the
