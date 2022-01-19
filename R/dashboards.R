@@ -38,8 +38,9 @@ create_dashboard_internal <- function(rmd_file = system.file("rmd", "bids_dashbo
 #' @export
 #'
 #' @examples
-run_shiny_BIDS <- function(shiny_app_path = system.file("rmd", "bids_viewer.Rmd", package = "bidsconvertr"),
-                           bids_directory = path_output_bids){
+run_shiny_BIDS <- function(bids_directory = path_output_bids,
+                           shiny_app_path = system.file("rmd", "bids_viewer.Rmd", package = "bidsconvertr")
+                           ){
 
   print(paste("Shiny app path:", shiny_app_path))
 
