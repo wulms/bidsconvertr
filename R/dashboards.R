@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-create_dashboard_internal <- function(rmd_file = system.file("rmd", "bids_dashboard.Rmd", package = "bidsconvertr"),
+create_dashboard <- function(rmd_file = system.file("rmd", "bids_dashboard.Rmd", package = "bidsconvertr"),
                                       converter_path = path_output_converter){
 
   output_dir = paste0(converter_path, "/dashboard")

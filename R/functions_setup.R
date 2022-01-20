@@ -84,7 +84,7 @@ convert_to_BIDS <- function(user_settings_file = "",
 
   copy2BIDS()
 
-  create_dashboard_internal()
+  create_dashboard()
 
   run_shiny_BIDS()
 
