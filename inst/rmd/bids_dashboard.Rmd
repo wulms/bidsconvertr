@@ -180,7 +180,7 @@ Column {data-width=550}
 
 ```{r fig.width = 7, fig.height = 7}
 json_merged_df %>% 
-    df_select_n %>% 
+    df_select_n() %>% 
   plot_bar()
 
 
