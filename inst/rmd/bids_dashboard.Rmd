@@ -353,7 +353,7 @@ Column {data-width=500}
 json_merged_df %>%
   df_select_patient_info() %>%
   group_by(session, group) %>%
-  summarize(mean = mean(Age),
+  dplyr::summarize(mean = mean(Age),
             median = median(Age),
             sd = sd(Age),
             var = var(Age),
@@ -405,7 +405,7 @@ json_merged_df %>%
 json_merged_df %>%
   select(subject, PatientBirthDate) %>%
   unique() %>%
-  select(subject)
+  select(subject) %>%
   count() %>% 
   filter(freq > 1) %>%
   left_join(json_merged_df) %>%
