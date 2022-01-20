@@ -63,15 +63,15 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
 
   # TESTS
   print("The following strings are unmatched strings. These are automatically removed from the file")
-  print(df %>% count(rest_string, rest_string2))
+  print(df %>% select(rest_string, rest_string2) %>% count())
   cat("\n")
 
   print("This is the amount of data per session:")
-  print(df %>% count(your_session_id, new_session_id))
+  print(df %>% select(your_session_id, new_session_id) %>% count())
   cat("\n")
 
   print("This is the amount of data per session and group:")
-  print(df %>% count(your_group_id, your_session_id, new_session_id))
+  print(df %>% select(your_group_id, your_session_id, new_session_id) %>% count())
   cat("\n")
 
   df %>%
