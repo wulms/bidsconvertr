@@ -121,22 +121,22 @@ Raw infos {data-width=170}
 #### Subjects 
 `r  json_merged_df %>% select(subject) %>% unique() %>% count() %>% kable()`
 #### Sessions
-`r  json_merged_df %>% count(session)  %>% kable()` 
+`r  json_merged_df %>% select(session) %>% count()  %>% kable()` 
 #### Sequences
-`r  json_merged_df %>% count(relevant)  %>% kable()`
+`r  json_merged_df %>% select(relevant) %>% count()  %>% kable()`
 #### Relevant
-`r  json_merged_df %>% filter(relevant == 1) %>% count(sequence)  %>% kable()`  
+`r  json_merged_df %>% filter(relevant == 1) %>% select(sequence) %>% count()  %>% kable()`  
 #### Irrelevant
-`r  json_merged_df %>% filter(relevant == 0) %>% count(sequence)  %>% kable()`
+`r  json_merged_df %>% filter(relevant == 0) %>% select(sequence) %>% count()  %>% kable()`
 #### Scanner information
-`r  json_merged_df %>% count(ManufacturersModelName)  %>% kable()`  
-`r  json_merged_df %>% count(Modality)   %>% kable()`  
-`r  json_merged_df %>% count(MagneticFieldStrength)   %>% kable()` 
-`r  json_merged_df %>% count(DeviceSerialNumber)   %>% kable()`  
-`r  json_merged_df %>% count(SoftwareVersions)   %>% kable()`  
-`r  json_merged_df %>% count(StationName) %>% kable()` 
-`r  json_merged_df %>% count(InstitutionalDepartmentName)  %>% kable()`  
-`r  json_merged_df %>% count(InstitutionName)  %>% kable()`  
+`r  json_merged_df %>% select(ManufacturersModelName) %>% count()  %>% kable()`  
+`r  json_merged_df %>% select(Modality) %>%  count()   %>% kable()`  
+`r  json_merged_df %>% select(MagneticFieldStrength) %>%  count()   %>% kable()` 
+`r  json_merged_df %>% select(DeviceSerialNumber) %>%  count()   %>% kable()`  
+`r  json_merged_df %>% select(SoftwareVersions) %>%  count()   %>% kable()`  
+`r  json_merged_df %>% select(StationName) %>%  count() %>% kable()` 
+`r  json_merged_df %>% select(InstitutionalDepartmentName) %>%  count()  %>% kable()`  
+`r  json_merged_df %>% select(InstitutionName) %>%  count()  %>% kable()`  
  
 
 
@@ -393,7 +393,9 @@ json_merged_df %>%
 json_merged_df %>%
   select(subject, PatientBirthDate) %>%
   unique() %>%
-  count(subject) %>% filter(n > 1) %>%
+  select(subject)
+  count() %>% 
+  filter(freq > 1) %>%
   left_join(json_merged_df) %>%
   select(subject, session, AcquisitionDateTime, PatientBirthDate) %>%
   mutate(AcquisitionDateTime = as.Date(AcquisitionDateTime)) %>%
@@ -416,7 +418,9 @@ Column {data.width = 500}
 json_merged_df %>%
   select(subject, PatientSex) %>%
   unique() %>%
-  count(subject) %>% filter(n > 1) %>%
+  select(subject) %>%
+  count() %>% 
+  filter(freq > 1) %>%
   left_join(json_merged_df) %>%
   select(subject, session, PatientSex) %>% unique() %>%
   datatable_setting()
@@ -433,7 +437,9 @@ json_merged_df %>%
   mutate(AcquisitionDateTime = as.Date(AcquisitionDateTime)) %>%
   unique() %>%
   group_by(subject) %>%
-  count(session) %>% filter(n > 1) %>%
+  select(session) %>%
+  count() %>% 
+  filter(freq > 1) %>%
   datatable_setting()
 ```
 

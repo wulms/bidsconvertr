@@ -103,8 +103,8 @@ copy2BIDS <- function(sequence_map = "sequence_map",
 
   file_paths %>%
     filter(relevant == 1) %>%
-    select(sequence, relevant) %>%
-    count(sequence) %>%
+    select(sequence) %>%
+    count() %>%
     print.data.frame()
 
   cat("\n\n")
@@ -114,8 +114,8 @@ copy2BIDS <- function(sequence_map = "sequence_map",
 
   file_paths %>%
     filter(relevant == 0) %>%
-    select(sequence, relevant) %>%
-    count(sequence) %>%
+    select(sequence) %>%
+    count() %>%
     print.data.frame()
 
   cat("\n\n")
