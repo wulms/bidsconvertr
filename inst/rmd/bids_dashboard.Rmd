@@ -196,7 +196,7 @@ Column {data-width=350}
 json_merged_df %>% 
   df_select_n() %>%
   filter(relevant == 1) %>% select(-relevant) %>%
-  spread(. ,session, value = n) %>%
+  spread(. ,session, value = freq) %>%
   kableExtra::kable() %>%
   kableExtra::kable_styling("striped") %>% 
  scroll_box(height = "400px")
@@ -208,7 +208,7 @@ json_merged_df %>%
 json_merged_df %>% 
   df_select_n() %>%
   filter(relevant == 0) %>% select(-relevant) %>%
-  spread(. ,session, value = n)  %>%
+  spread(. ,session, value = freq)  %>%
   kableExtra::kable() %>%
   kableExtra::kable_styling("striped") %>% 
  scroll_box(height = "400px")
@@ -225,7 +225,7 @@ Column {data-width=700}
 ```{r fig.width = 10, fig.height = 8}
 p <-json_merged_df %>%
       df_select_n_group() %>% 
-      ggplot(aes(x = session, y = n, fill = PatientSex)) + 
+      ggplot(aes(x = session, y = freq, fill = PatientSex)) + 
       geom_bar(position="stack", stat = "identity") + 
       theme_minimal() +
       facet_wrap(BIDS_type ~ BIDS_sequence + group, nrow = 2, labeller = label_both) +
@@ -244,7 +244,7 @@ Column {data-widht=300}
 json_merged_df %>% 
     df_select_n_group() %>% 
   select(-relevant) %>%
-  spread(session, n)  %>%
+  spread(session, freq)  %>%
   kableExtra::kable() %>%
   kableExtra::kable_styling("striped") %>% 
  scroll_box(height = "800px")
@@ -452,7 +452,7 @@ json_merged_df %>%
   select(BIDS_type, relevant, sequence, SeriesDescription, ProtocolName) %>%
   group_by(across(everything())) %>% 
   count() %>%
-  select(BIDS_type, relevant, n, everything()) %>%
+  select(BIDS_type, relevant, freq, everything()) %>%
   datatable_setting()
 
 
@@ -466,7 +466,7 @@ json_merged_df %>%
   select(subject, session, sequence) %>% 
   group_by(across(everything())) %>% 
   count() %>% 
-  filter(n > 1) %>%
+  filter(freq > 1) %>%
   left_join(json_merged_df) %>% 
   select(subject, session, sequence, Path) %>% 
   unique() %>%
@@ -477,7 +477,7 @@ Parameters - anat {data-navmenu="QC"}
 ===================================================================================
 
 ```{r}
-df_out <-json_merged_df %>%
+df_out <- json_merged_df %>%
   filter(BIDS_type == "anat") %>%
   filter(relevant == "1")
 
