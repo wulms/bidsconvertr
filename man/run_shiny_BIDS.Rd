@@ -5,15 +5,14 @@
 \title{Starts the BiDirect BIDS viewer}
 \usage{
 run_shiny_BIDS(
-  shiny_app_path = system.file("rmd", "bidirect_bids_viewer_debug.Rmd", package =
-    "BIDSconvertR"),
-  bids_directory = path_output_bids
+  bids_directory = path_output_bids,
+  shiny_app_path = system.file("rmd", "bids_viewer.Rmd", package = "bidsconvertr")
 )
 }
 \arguments{
-\item{shiny_app_path}{Path to the viewer RMD file}
-
 \item{bids_directory}{Directory of the images}
+
+\item{shiny_app_path}{Path to the viewer RMD file}
 }
 \value{
 
