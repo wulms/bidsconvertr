@@ -3,6 +3,7 @@
 export("%>%")
 export(add_BIDS_metadata)
 export(add_participants_tsv)
+export(check_sequence_map)
 export(convert_to_BIDS)
 export(copy2BIDS)
 export(copy_files)

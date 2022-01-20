@@ -53,6 +53,14 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
 }
 
 
+#' Checks sequence map
+#'
+#' @param sequence_map_file
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_sequence_map <- function(sequence_map_file = "sequence_map"){
 
   df <- paste0(path_output_converter, "/", sequence_map_file, ".tsv")
