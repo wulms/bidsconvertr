@@ -53,15 +53,23 @@ library(bidsconvertr)
 ```
 
 ```{r include=FALSE}
+# debug
+# converter_path = "C:/Science/bidirect_bids_test/bids_bidirect_converter/"
+# bids_path <- paste0(converter_path, "/bids/sourcedata")
+# json_metadata <- paste0(converter_path, "/json_metadata.tsv")
+# sequence_map <- paste0(converter_path, "/sequence_map.tsv")
+
+# original
 bids_path <- paste0(params$converter_path, "/bids/sourcedata")
+json_metadata <- paste0(params$converter_path, "/json_metadata.tsv")
+sequence_map <- paste0(params$converter_path, "/sequence_map.tsv")
 
 # create paths
 dataset_description <- paste0(bids_path, "/dataset_description.json")
 dataset_readme <- paste0(bids_path, "/README")
 dataset_changes <- paste0(bids_path, "/CHANGES")
 
-json_metadata <- paste0(params$converter_path, "/json_metadata.tsv")
-sequence_map <- paste0(params$converter_path, "/sequence_map.tsv")
+
 
 # read files
 
@@ -270,6 +278,10 @@ json_merged_df  %>%
 
 
 ```
+
+```{r}
+```
+
 
 
 JSON Metadata

@@ -89,7 +89,7 @@ calculate_comp_subjects <- function(df, sessions) {
     group_by(across(everything())) %>%
     count() %>%
     ungroup %>%
-    spread(session, n) %>%
+    spread(session, freq) %>%
     mutate("RatioCompleteSurveys" = rowSums(select(., contains("ses-")), na.rm = TRUE)/sessions) %>%
     group_by(subject) %>%
     mutate("RatioCompleteSubjects" = mean(RatioCompleteSurveys)) %>%
