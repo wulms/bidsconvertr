@@ -26,6 +26,10 @@ The goal of BIDSconvertR is to provide a workflow, which is able to:
 
 ## Installation
 
+If you work on Windows just download
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools40.html)
+and install it. It is required to build packages.
+
 You need the R package ‘devtools’ to install packages from Github
 
 ``` r
@@ -66,7 +70,7 @@ library(bidsconvertr)
 
 Choose a folder, where you want to store your “user settings” file. The
 function `create_user_settings("path")` creates a template file at the
-desired folder.
+desired folder. Take car, that the link contains a “/” at the end.
 
 ``` r
 create_user_settings("/media/niklas/BIDS_data/BIDSconvertR/output/") # Linux
@@ -74,6 +78,13 @@ create_user_settings("C:/Science/bidirect_bids/") # Windows
 ```
 
 Edit the file “user\_settings.R” to your needs.
+
+For more information on regular expressions (regex) please see the
+[stringR cheat
+sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)
+or[RegexOne](https://regexone.com/). Each regex set here should match to
+your data. If you encounter any problems just contact me via mail or via
+the issues in this repository.
 
 | Variable               | Example                                                                                                                   | Description                                                                                                                                       |
 |------------------------|---------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -188,7 +199,7 @@ check_sequence_map()
 copy2BIDS()
 
 # creates BIDS dashboard
-create_dashboard_internal()
+create_dashboard()
 
 # runs BIDS viewer
 run_shiny_BIDS()
