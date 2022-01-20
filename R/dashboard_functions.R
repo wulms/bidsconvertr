@@ -10,29 +10,29 @@ datatable_setting <- function(df) {
       deferRender = TRUE,
       scrollY = 200,
       scroller = TRUE
-    ), 
+    ),
     filter = 'top'
   )
 }
 
 
 df_select_n <- function(df) {
-  df <- df %>% 
-    select(session, BIDS_type, BIDS_sequence, relevant) %>% 
-    group_by(across(everything())) %>% 
-    count() %>% 
-    ungroup()  
+  df <- df %>%
+    select(session, BIDS_type, BIDS_sequence, relevant) %>%
+    group_by(across(everything())) %>%
+    count() %>%
+    ungroup()
    # spread(. ,session, value = n)
   return(df)
 }
 
 df_select_n_group <- function(df) {
-  df <- df %>% 
+  df <- df %>%
     select(session, BIDS_type, BIDS_sequence, group, PatientSex, relevant) %>%
     filter(relevant == 1) %>%
-    group_by(across(everything())) %>% 
-    count() %>% 
-    ungroup() 
+    group_by(across(everything())) %>%
+    count() %>%
+    ungroup()
   return(df)
 }
 
@@ -42,36 +42,36 @@ df_select_patient_info <- function(df){
     rbind(df2) %>%
     select(subject, session, group, PatientSex, PatientWeight, PatientBirthDate, AcquisitionDateTime) %>%
     mutate(AcquisitionDateTime = as.Date(AcquisitionDateTime),
-           Age = time_length(difftime(AcquisitionDateTime, PatientBirthDate), "years") %>% round(digits = 2)) %>% 
+           Age = time_length(difftime(AcquisitionDateTime, PatientBirthDate), "years") %>% round(digits = 2)) %>%
     unique()
   return(df)
 }
 
 
 plot_bar <- function(df){
-  p_relevant <- df %>% 
-    filter(relevant == 1) %>% 
+  p_relevant <- df %>%
+    filter(relevant == 1) %>%
     filter(BIDS_type == "anat") %>%
-    ggplot(aes(x = BIDS_sequence, y = n, fill = session)) + 
-    geom_bar(position="dodge", stat = "identity") + 
+    ggplot(aes(x = BIDS_sequence, y = freq, fill = session)) +
+    geom_bar(position="dodge", stat = "identity") +
     facet_grid(. ~ BIDS_type, scales = "free_x", space = "free_x") +
     theme(legend.position="top",
           axis.text.x = element_text(angle = 45, hjust=1)) +
     xlab("")+
-    ggtitle("Relevant Sequences") + 
+    ggtitle("Relevant Sequences") +
     ylab("Number of scans")
-  
-  p_irrelevant <- df %>% 
-    filter(relevant == 0) %>% 
-    ggplot(aes(x = BIDS_sequence, y = n, fill = session)) + 
-    geom_bar(position="dodge", stat = "identity") + 
+
+  p_irrelevant <- df %>%
+    filter(relevant == 0) %>%
+    ggplot(aes(x = BIDS_sequence, y =freq, fill = session)) +
+    geom_bar(position="dodge", stat = "identity") +
     facet_grid(. ~ BIDS_type, scales = "free_x", space = "free_x") +
     theme(legend.position="none") +
     xlab("")+
     ylab("Number of scans") +
     ggtitle("Irrelevant Sequences")
-  
-  p_relevant / p_irrelevant +  
+
+  p_relevant / p_irrelevant +
     plot_annotation(
       title = 'Sequence overview'
     ) &
@@ -82,14 +82,14 @@ plot_bar <- function(df){
 }
 
 calculate_comp_subjects <- function(df, sessions) {
-  df <- df %>% 
-    select(subject, session, group, BIDS_sequence, relevant) %>% 
-    filter(relevant == 1) %>% 
-    select(-relevant) %>% 
-    group_by(across(everything())) %>% 
-    count() %>% 
-    ungroup %>% 
-    spread(session, n) %>% 
+  df <- df %>%
+    select(subject, session, group, BIDS_sequence, relevant) %>%
+    filter(relevant == 1) %>%
+    select(-relevant) %>%
+    group_by(across(everything())) %>%
+    count() %>%
+    ungroup %>%
+    spread(session, n) %>%
     mutate("RatioCompleteSurveys" = rowSums(select(., contains("ses-")), na.rm = TRUE)/sessions) %>%
     group_by(subject) %>%
     mutate("RatioCompleteSubjects" = mean(RatioCompleteSurveys)) %>%
@@ -100,11 +100,11 @@ calculate_comp_subjects <- function(df, sessions) {
 
 show_settings <- function(df) {
   df <- df %>%
-    select(-filename, 
-           -subject, 
-           -session, 
-           -level, 
-           -input_json, 
+    select(-filename,
+           -subject,
+           -session,
+           -level,
+           -input_json,
            -BIDS_json,
            -sequence,
            -BIDS_sequence_ID,
