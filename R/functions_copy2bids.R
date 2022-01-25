@@ -98,6 +98,17 @@ copy2BIDS <- function(sequence_map = "sequence_map",
              str_replace("nii$", "nii\\.gz")
     )
 
+  file_paths %>%
+    mutate(input_exists = file.exists(input_file_paths),
+             input_file_paths = ifelse(test = input_exists,
+                                     yes = input_file_paths,
+                                     no = str_remove(input_file_paths, "\\.gz")),
+           output_file_paths =  ifelse(test = input_exists,
+                                       yes = output_file_paths,
+                                       no = str_remove(output_file_paths, "\\.gz"))
+    ) %>%
+    select(-input_exists) -> file_paths
+
   cat("\n\n")
   print("Relevant sequences files (copied2BIDS)")
   cat("\n\n")
