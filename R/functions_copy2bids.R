@@ -97,7 +97,7 @@ copy2BIDS <- function(sequence_map = "sequence_map",
                                      file_types) %>%
              str_replace("nii$", "nii\\.gz")
     )
-
+  # checks if NII or NIIGZ files are present.
   file_paths %>%
     mutate(input_exists = file.exists(input_file_paths),
              input_file_paths = ifelse(test = input_exists,
