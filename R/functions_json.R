@@ -120,9 +120,8 @@ read_json_headers <- function(json_path, suffix = "") {
   empty_df <- get_json_headers(json)
 
   if (file.exists(json_metadata_output_tsv) == 1) {
-    length_output <- readr::read_tsv(json_metadata_output_tsv) %>% nrow()
+    length_output <- readr::read_tsv(json_metadata_output_tsv, show_col_types = FALSE) %>% nrow()
     length_input <- nrow(json_files)
-    Sys.sleep(5)
     print(paste("Output length", length_output))
     print(paste("Input length", length_input))
     Sys.sleep(5)

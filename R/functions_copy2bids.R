@@ -94,7 +94,8 @@ copy2BIDS <- function(sequence_map = "sequence_map",
                                      subject, "_",
                                      session, "_",
                                      BIDS_sequence, ".",
-                                     file_types)
+                                     file_types) %>%
+             str_replace("nii$", "nii\\.gz$")
     )
 
   cat("\n\n")
