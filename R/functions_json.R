@@ -159,15 +159,15 @@ read_json_headers <- function(json_path, suffix = "") {
           relocate(subject, group, session, sequence, Path)
 
         if (file.exists(json_metadata_output_tsv) == 1) {
-          write.table(results_table, json_metadata_output_tsv,
-                      append = TRUE,
-                      sep = "\t", dec = ".", qmethod = "double",
-                      row.names = FALSE, col.names = FALSE)
+          readr::write_tsv(results_table, json_metadata_output_tsv,
+                           append = TRUE,
+                           col_names = FALSE)
         }
         if (file.exists(json_metadata_output_tsv) == 0) {
-          write.table(results_table, json_metadata_output_tsv,
-                      sep = "\t", dec = ".",
-                      qmethod = "double", row.names = FALSE)}
+          readr::write_tsv(results_table, json_metadata_output_tsv,
+                           append = FALSE,
+                           col_names = FALSE)
+        }
       } else {
         print(paste("The file", json[i], "is empty. Please check manually."))
       }
