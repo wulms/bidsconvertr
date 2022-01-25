@@ -241,18 +241,18 @@ create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/
 
     if(nrow(task_df) > 0){
 
-    task_df2 <- task_df %>%
-      left_join(taskname_df) %>%
-      unique() %>%
-      mutate(string = paste0('{\n\t"TaskName": "',
-                             BIDS_sequence,
-                             '",\n\t"RepetitionTime": ',
-                             RepetitionTime, '\n}'),
-             filename = paste0(path_output_bids, "/", BIDS_sequence, ".json"))
+      task_df2 <- task_df %>%
+        left_join(taskname_df) %>%
+        unique() %>%
+        mutate(string = paste0('{\n\t"TaskName": "',
+                               BIDS_sequence,
+                               '",\n\t"RepetitionTime": ',
+                               RepetitionTime, '\n}'),
+               filename = paste0(path_output_bids, "/", BIDS_sequence, ".json"))
 
-    for (i in 1:nrow(task_df2))
-      write_metadata_bids(task_df$string[i],
-                          task_df$filename[i])
+      for (i in 1:nrow(task_df2))
+        write_metadata_bids(task_df$string[i],
+                            task_df$filename[i])
     } else {
       print("No functional sequences found. Skipping.")
     }
