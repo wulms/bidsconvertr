@@ -81,7 +81,8 @@ metadata_dataset <- fromJSON(file = dataset_description)
 
 sequence_map_df <- read_tsv(sequence_map, show_col_types = FALSE, lazy = FALSE)
   
-json_df <- read_tsv(json_metadata, show_col_types = FALSE, lazy = FALSE)
+json_df <- read_tsv(json_metadata, show_col_types = FALSE, lazy = FALSE) %>% 
+  mutate(PatientSex = as.character(PatientSex))
 
 json_merged_df <- json_df %>% 
   left_join(sequence_map_df) %>%
