@@ -237,7 +237,11 @@ create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/
     task_df <- tsv_map %>%
       readr::read_tsv(show_col_types = FALSE, lazy = FALSE) %>%
       select(-total, -possible_sequence, -relevant) %>%
-      filter(BIDS_type == "func") %>%
+      filter(BIDS_type == "func")
+
+    if(nrow(task_df) > 0){
+
+    task_df2 <- task_df %>%
       left_join(taskname_df) %>%
       unique() %>%
       mutate(string = paste0('{\n\t"TaskName": "',
@@ -246,9 +250,12 @@ create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/
                              RepetitionTime, '\n}'),
              filename = paste0(path_output_bids, "/", BIDS_sequence, ".json"))
 
-    for (i in 1:nrow(task_df))
+    for (i in 1:nrow(task_df2))
       write_metadata_bids(task_df$string[i],
                           task_df$filename[i])
+    } else {
+      print("No functional sequences found. Skipping.")
+    }
 
   } else {
     print(paste("Column 'RepetitionTime' could not be found in 'json_metadata.tsv'. Please rename the column with the TR manually to 'RepetitionTime' and start again."))
