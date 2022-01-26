@@ -20,8 +20,6 @@ list_json_files <- function(input_path,
     mutate(short_strings = str_extract(json_path,
                                        "(?<=temp/(nii|json_sensitive)/)sub-.*$")) %>%
     rowwise() %>%
-    mutate(possible_sequence = paste(possible_sequence, collapse=", ")) %>%
-    ungroup()  %>%
     separate(short_strings, c("subject", "session", "sequence"), "/") %>%
     mutate(sequence = str_remove(sequence, "\\.json"),
            possible_sequence = str_extract_all(sequence,
@@ -29,7 +27,9 @@ list_json_files <- function(input_path,
                                                simplify = FALSE) %>%
              str_replace(pattern = regex("(survey|smartbrain|smart)",
                                          ignore_case = TRUE),
-                                         replacement = "localizer"))
+                                         replacement = "localizer"),
+           possible_sequence = paste(possible_sequence, collapse=", ")) %>%
+    ungroup()
 
   cat("\n")
   print("Sequences by session")
