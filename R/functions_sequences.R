@@ -18,7 +18,8 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
   tsv_input <- readr::read_tsv(input_file, show_col_types = FALSE, lazy = FALSE)
 
   tsv_input_sequences <- tsv_input %>%
-    select(sequence)
+    select(sequence) %>%
+    unique()
 
   if(file.exists(mapper_file)){
     tsv_map <- readr::read_tsv(mapper_file, show_col_types = FALSE, lazy = FALSE)%>%
