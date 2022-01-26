@@ -42,9 +42,11 @@ list_json_files <- function(input_path,
     summarise(subject_session_merge = paste(subject_session, collapse = ", "))
 
   json_overview <- json_df %>%
+    select(-json_path, -subject) %>%
     group_by(session, sequence, possible_sequence) %>%
     count() %>%
     pivot_wider(names_from = session, values_from = freq) %>%
+    group_by(sequence, possible_sequence) %>%
     mutate(total = sum(c_across(contains("ses-")), na.rm = TRUE)) %>%
     arrange(desc(possible_sequence), desc(total)) %>%
     left_join(json_temp) %>%
