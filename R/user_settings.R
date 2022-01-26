@@ -7,6 +7,8 @@
 #'
 #' @examples
 create_user_settings <- function(folder = getwd()){
+
+  print("Creating the user settings file.")
   settings_string <-'# Path that contains one folder per session, containing all DICOMS in subject folders
 path_input_dicom <- "C:/Science/bidirect/dicom/"
 
@@ -57,6 +59,7 @@ mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe
 #'
 #' @examples
 create_environment_variables <- function(input_path = path_output){
+  print("Creating all environment variables")
 
   dcm2niix_path <<- paste0(path_output, "/dcm2niix")
   # dcm2niix_path <<- system.file("dcm2niix", package = "BIDSconvertR")
@@ -99,6 +102,8 @@ create_environment_variables <- function(input_path = path_output){
 #'
 #' @examples
 prepare_environment <- function(user_settings_file = settings_file){
+
+  print("Preparing the environment")
   # source("new_version/user_settings_home.R") # Home
   source(user_settings_file)
 

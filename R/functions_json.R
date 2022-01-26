@@ -9,6 +9,8 @@
 #' @examples
 list_json_files <- function(input_path,
                             output_suffix = ""){
+
+  print("Listing up the json sidecar files")
   json_files <- list.files(input_path, pattern = "json$",
                            recursive = TRUE, full.names = TRUE)
 
@@ -75,6 +77,7 @@ list_json_files <- function(input_path,
 #'
 #' @examples get_json_headers(list_of_jsons)
 get_json_headers <- function(json) {
+  print("Extracting the headers of the json sidecars.")
   start_timer <- Sys.time()
   mri_properties <- vector()
   # str(mri_properties)
@@ -121,6 +124,7 @@ read_json_headers <- function(json_path, suffix = "") {
   empty_df <- get_json_headers(json)
 
   if (file.exists(json_metadata_output_tsv) == 1) {
+    print("Comparing the json metadata tsvs")
     length_output <- readr::read_tsv(json_metadata_output_tsv, show_col_types = FALSE) %>% nrow()
     length_input <- nrow(json_files)
     print(paste("Output length", length_output))

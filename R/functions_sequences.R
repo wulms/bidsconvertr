@@ -11,6 +11,8 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
                             output_name = "sequence_map",
                             edit_table = "off"){
 
+  print("Prepare data and start sequence_mapper")
+
   input_file = paste0(path_output_converter, "/", sequence_overview_file, ".tsv")
 
   mapper_file = str_replace(input_file, sequence_overview_file, output_name)
@@ -18,7 +20,7 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
   tsv_input <- readr::read_tsv(input_file, show_col_types = FALSE, lazy = FALSE)
 
   tsv_input_sequences <- tsv_input %>%
-    select(sequence) %>%
+    select(sequence, possible_sequence, total) %>%
     unique()
 
   if(file.exists(mapper_file)){
@@ -33,7 +35,7 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
 
     final_df <- full_join(tsv_map, tsv_difference)
   } else {
-    sequence_mapper_df <- tsv_input %>%
+    sequence_mapper_df <- tsv_input_sequences %>%
       mutate(BIDS_sequence = "please edit (T1w/T2/etc)",
              BIDS_type = "please edit (anat/dwi/func/etc)",
              relevant = "please edit (0 = no, 1 = yes)") %>%
@@ -63,6 +65,8 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
 #'
 #' @examples
 check_sequence_map <- function(sequence_map_file = "sequence_map"){
+
+  print("Checking sequence_map.tsv")
 
   df <- paste0(path_output_converter, "/", sequence_map_file, ".tsv")
   print(df)
