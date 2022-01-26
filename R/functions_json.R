@@ -27,7 +27,7 @@ list_json_files <- function(input_path,
     rowwise() %>%
     mutate(possible_sequence = paste(possible_sequence, collapse=", ")) %>%
     ungroup() %>%
-    mutate(possible_sequence2 = str_replace(possible_sequence,
+    mutate(possible_sequence = str_replace(possible_sequence,
                                             pattern = regex("(survey|smartbrain|smart)",
                                                             ignore_case = TRUE),
                                             replacement = "localizer"))
