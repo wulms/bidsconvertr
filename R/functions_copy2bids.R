@@ -105,7 +105,7 @@ copy2BIDS <- function(sequence_map = "sequence_map",
                                      no = str_remove(input_file_paths, "\\.gz")),
            output_file_path =  ifelse(test = input_exists,
                                        yes = output_file_path,
-                                       no = str_remove(output_file_paths, "\\.gz"))
+                                       no = str_remove(output_file_path, "\\.gz"))
     ) %>%
     select(-input_exists) -> file_paths
 
