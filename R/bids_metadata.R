@@ -102,29 +102,33 @@ create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/
     task_df <- tsv_map %>%
       readr::read_tsv(show_col_types = FALSE, lazy = FALSE) %>%
       select(-total, -possible_sequence, -relevant) %>%
-      filter(BIDS_type == "func") %>%
-      left_join(taskname_df) %>%
-      unique() %>%
-      mutate(string = paste0('{\n\t"TaskName": "',
-                             BIDS_sequence,
-                             '",\n\t"RepetitionTime": ',
-                             RepetitionTime, '\n}'),
-             filename = paste0(path_output_bids, "/", BIDS_sequence, ".json"))
+      filter(BIDS_type == "func")
 
-    print(task_df)
-    print("Test")
+    if(nrow(task_df) > 0){
+      task_df2 <- task_df %>%
+        left_join(taskname_df) %>%
+        unique() %>%
+        mutate(string = paste0('{\n\t"TaskName": "',
+                               BIDS_sequence,
+                               '",\n\t"RepetitionTime": ',
+                               RepetitionTime, '\n}'),
+               filename = paste0(path_output_bids, "/", BIDS_sequence, ".json"))
 
-    for (i in 1:nrow(task_df)){
-      write_metadata_bids(task_df$string[i],
-                          task_df$filename[i])
+      print(task_df2)
+
+      for (i in 1:nrow(task_df2)){
+        write_metadata_bids(task_df2$string[i],
+                            task_df2$filename[i])
+      }
+    } else {
+      print("No functional sequences found. Skipping.")
+    }
+    } else {
+      print(paste("Column 'RepetitionTime' could not be found in 'json_metadata.tsv'. Please rename the column with the TR manually to 'RepetitionTime' and start again."))
     }
 
-  } else {
-    print(paste("Column 'RepetitionTime' could not be found in 'json_metadata.tsv'. Please rename the column with the TR manually to 'RepetitionTime' and start again."))
+
   }
-
-
-}
 
 #' This function adds all required BIDS metadata: 'CHANGES', 'README', 'dataset_description.json', 'participants.json', 'participants.tsv' and per functional sequence a file that contains the RepetitionTime.
 #'
@@ -134,6 +138,7 @@ create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/
 #' @examples
 add_BIDS_metadata <- function(){
 
+  create_metadata()
   add_participants_tsv()
   # add CHANGES, README, dataset_description
 
