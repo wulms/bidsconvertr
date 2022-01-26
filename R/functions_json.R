@@ -167,13 +167,11 @@ read_json_headers <- function(json_path, suffix = "") {
 
         if (file.exists(json_metadata_output_tsv) == 1) {
           readr::write_tsv(results_table, json_metadata_output_tsv,
-                           append = TRUE,
-                           col_names = FALSE)
+                           append = TRUE)
         }
         if (file.exists(json_metadata_output_tsv) == 0) {
           readr::write_tsv(results_table, json_metadata_output_tsv,
-                           append = FALSE,
-                           col_names = FALSE)
+                           append = FALSE)
         }
       } else {
         print(paste("The file", json[i], "is empty. Please check manually."))
