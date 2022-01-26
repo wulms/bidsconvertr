@@ -112,6 +112,7 @@ create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/
              filename = paste0(path_output_bids, "/", BIDS_sequence, ".json"))
 
     print(task_df)
+    print("Test")
 
     for (i in 1:nrow(task_df)){
       write_metadata_bids(task_df$string[i],
