@@ -87,12 +87,15 @@ write_metadata_bids <- function(txt_input, file_path){
 #' @examples
 create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/json_metadata.tsv"),
                                      tsv_map = paste0(path_output_converter, "/sequence_map.tsv")){
-  taskname_df <- tsv_path %>%
-    readr::read_tsv(show_col_types = FALSE, lazy = FALSE) %>%
-    select(sequence, RepetitionTime) %>% unique()
+  taskname <- tsv_path %>%
+    readr::read_tsv(show_col_types = FALSE, lazy = FALSE) %>% names()
 
-  if("RepetitionTime" %in% names(taskname_df)){
+  if("RepetitionTime" %in% taskname){
     print(paste("Column 'RepetitionTime found. Everything is fine."))
+
+    taskname_df <- tsv_path %>%
+      readr::read_tsv(show_col_types = FALSE, lazy = FALSE) %>%
+      select(sequence, RepetitionTime) %>% unique()
 
     task_df <- tsv_map %>%
       readr::read_tsv(show_col_types = FALSE, lazy = FALSE) %>%
@@ -106,9 +109,10 @@ create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/
                              RepetitionTime, '\n}'),
              filename = paste0(path_output_bids, "/", BIDS_sequence, ".json"))
 
-    for (i in 1:nrow(task_df))
+    for (i in 1:nrow(task_df)){
       write_metadata_bids(task_df$string[i],
                           task_df$filename[i])
+    }
 
   } else {
     print(paste("Column 'RepetitionTime' could not be found in 'json_metadata.tsv'. Please rename the column with the TR manually to 'RepetitionTime' and start again."))
