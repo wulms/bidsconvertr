@@ -18,19 +18,18 @@ list_json_files <- function(input_path,
 
   json_df <- tibble(json_path = json_files) %>%
     mutate(short_strings = str_extract(json_path,
-                                       "(?<=temp/(nii|json_sensitive)/)sub-.*$"),
-           possible_sequence = str_extract_all(json_path,
-                                               regex(mri_sequences, ignore_case = TRUE),
-                                               simplify = FALSE)) %>%
+                                       "(?<=temp/(nii|json_sensitive)/)sub-.*$")) %>%
     rowwise() %>%
     mutate(possible_sequence = paste(possible_sequence, collapse=", ")) %>%
     ungroup()  %>%
     separate(short_strings, c("subject", "session", "sequence"), "/") %>%
     mutate(sequence = str_remove(sequence, "\\.json"),
-           possible_sequence =  str_replace(string = possible_sequence,
-                                            pattern = regex("(survey|smartbrain|smart)",
-                                                            ignore_case = TRUE),
-                                            replacement = "localizer"))
+           possible_sequence = str_extract_all(sequence,
+                                               regex(mri_sequences, ignore_case = TRUE),
+                                               simplify = FALSE) %>%
+             str_replace(pattern = regex("(survey|smartbrain|smart)",
+                                         ignore_case = TRUE),
+                                         replacement = "localizer"))
 
   cat("\n")
   print("Sequences by session")
