@@ -71,6 +71,7 @@ list_json_files <- function(input_path,
 #' @param working_dir directory
 #'
 #' @return empty dataframe with each unique column found in one json file
+#' @export
 #'
 #' @examples get_json_headers(list_of_jsons)
 get_json_headers <- function(json) {
