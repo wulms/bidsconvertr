@@ -27,7 +27,7 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
     tsv_map <- readr::read_tsv(mapper_file, show_col_types = FALSE, lazy = FALSE)%>%
       mutate(relevant = as.character(relevant))
 
-    tsv_difference <- anti_join(tsv_map, tsv_input_sequences) %>%
+    tsv_difference <- anti_join(tsv_input_sequences, tsv_map, by = "sequence") %>%
       mutate(BIDS_sequence = "please edit (T1w/T2/etc)",
              BIDS_type = "please edit (anat/dwi/func/etc)",
              relevant = "please edit (0 = no, 1 = yes)") %>%
