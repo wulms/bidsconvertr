@@ -63,8 +63,12 @@ path_to_folder <- function(list_of_files) {
 #' @export
 #'
 #' @examples
-convert_to_BIDS <- function(user_settings_file = "",
+convert_to_BIDS <- function(user_settings_file = settings_file,
                             sequence_table = "off"){
+
+  prepare_environment(user_settings_file)
+
+  install_dcm2niix()
 
   # dcm2niix - niftis
   dcm2nii_converter_anon()

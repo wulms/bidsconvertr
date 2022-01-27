@@ -46,6 +46,7 @@ mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe
   } else {
     print(paste("The file already exists:", path))
   }
+  settings_file <<- path
   return(path)
 }
 
