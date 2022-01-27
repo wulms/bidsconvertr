@@ -51,7 +51,7 @@ df_select_patient_info <- function(df){
 plot_bar <- function(df){
   p_relevant <- df %>%
     filter(relevant == 1) %>%
-    filter(BIDS_type == "anat") %>%
+    # filter(BIDS_type == "anat") %>%
     ggplot(aes(x = BIDS_sequence, y = freq, fill = session)) +
     geom_bar(position="dodge", stat = "identity") +
     facet_grid(. ~ BIDS_type, scales = "free_x", space = "free_x") +
@@ -61,23 +61,36 @@ plot_bar <- function(df){
     ggtitle("Relevant Sequences") +
     ylab("Number of scans")
 
-  p_irrelevant <- df %>%
-    filter(relevant == 0) %>%
-    ggplot(aes(x = BIDS_sequence, y =freq, fill = session)) +
-    geom_bar(position="dodge", stat = "identity") +
-    facet_grid(. ~ BIDS_type, scales = "free_x", space = "free_x") +
-    theme(legend.position="none") +
-    xlab("")+
-    ylab("Number of scans") +
-    ggtitle("Irrelevant Sequences")
+  df_irrelevant <- df %>%
+    filter(relevant == 0)
 
-  p_relevant / p_irrelevant +
-    plot_annotation(
-      title = 'Sequence overview'
-    ) &
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 45, hjust=1),
-          legend.position="none")
+  if(nrow(df_irrelevant > 0)){
+    p_irrelevant <- df %>%
+      filter(relevant == 0) %>%
+      ggplot(aes(x = BIDS_sequence, y =freq, fill = session)) +
+      geom_bar(position="dodge", stat = "identity") +
+      facet_grid(. ~ BIDS_type, scales = "free_x", space = "free_x") +
+      theme(legend.position="none") +
+      xlab("")+
+      ylab("Number of scans") +
+      ggtitle("Irrelevant Sequences")
+
+    p_relevant / p_irrelevant +
+      plot_annotation(
+        title = 'Sequence overview'
+      ) &
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust=1),
+            legend.position="none")
+  } else {
+    p_relevant +
+      ggtitle("Sequence Overview") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust=1),
+            legend.position="none")
+  }
+
+
   #ggplotly(p) %>% layout(margin = list(l = 100, r = 20, b = 50, t = 100))
 }
 
