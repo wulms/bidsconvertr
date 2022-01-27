@@ -124,25 +124,7 @@ For more information on regular expressions (regex) please see the [stringR chea
 
 Now you have edited your "user_settings.R" file. 
 
-The next step is to prepare your environment with the function "prepare_environment('/path/to/user_settings.R')"
 
-
-```{r}
-settings_file <- "/media/niklas/BIDS_data/BIDSconvertR/output/user_settings.R" # Linux path
-settings_file <- "C:/Science/bidirect_bids/user_settings.R" # Windows path
-
-prepare_environment(settings_file)
-```
-
-Then you need to install dcm2niix. The function automatically uses the tested "v1.0.20211006" of dcm2niix, other versions can be installed by changing the version number.
-
-<https://github.com/rordenlab/dcm2niix/releases>
-
-```{r}
-install_dcm2niix()
-
-install_dcm2niix("v1.0.20181125") # if you want to install the specific version v1.0.20181125
-```
 
 
 ### How to run the main script
@@ -153,8 +135,7 @@ The convert_to_BIDS function takes two arguments: the user_settings_file and a s
 "Off" shows the sequence mapper only, if some unplausible data is identified, e.g. new sequences, which are not mapped.
 
 ```{r eval=FALSE}
-convert_to_BIDS(user_settings_file = settings_file,
-                sequence_table = "off")
+convert_to_BIDS()
 ```
 
 Now the 'sequence_mapper' should start showing the following interface:
@@ -179,15 +160,30 @@ If all files are already processed the BIDS viewer starts.
 
 ### Alternatively to main script: You can also run each step manually
 
+
+
+#### preparation of workflow
+
 ```{r}
 # preparation
 create_user_settings("C:/Science/bidirect_bids/") # Windows
 
-settings_file <- "C:/Science/bidirect_bids/user_settings.R" # Windows path
-
-prepare_environment(settings_file)
+prepare_environment()
 ```
 
+#### dcm2niix: installation of other versions
+
+The "convert_to_BIDS()" function automatically uses the tested "v1.0.20211006" of dcm2niix. Other versions can be installed by changing the version number and running the script before running "convert_to_BIDS()" the first time. 
+
+Otherwise go to your output folder, delete the dcm2niix files in it, and run the "install_dcm2niix()" version with your version number.
+
+<https://github.com/rordenlab/dcm2niix/releases>
+
+```{r}
+install_dcm2niix("v1.0.20181125") # if you want to install the specific version v1.0.20181125
+```
+
+#### workflow
 
 ```{r}
 
