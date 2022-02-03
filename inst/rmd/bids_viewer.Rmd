@@ -15,19 +15,6 @@ runtime: shiny
 ```
 
 
-# Data Overview
-
-
-## Test 2
-
-### Test 3
-
-
-```{r}
-image_df <- params$df
-
-image_df %>% datatable_setting()
-```
 
 
 
@@ -151,6 +138,32 @@ papayaOutput("papayaViewer",
 ```
 
 
+# Data Overview
+
+
+## Test 2
+
+### Overview
+
+
+```{r}
+image_df <- params$df
+
+DT::datatable(
+    image_df,
+    extensions = c('Scroller'),
+    options = list(
+      search = list(regex = TRUE),
+      searchHighlight = TRUE,
+      pageLength = 25,
+      dom = 'Bfrtip',
+      deferRender = TRUE,
+      scrollY = 800,
+      scroller = TRUE
+    ),
+    filter = 'top'
+  )
+```
 
 
 
