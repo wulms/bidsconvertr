@@ -11,7 +11,7 @@
 #' @return dataframe containing list, session and subject id
 #' @examples \dontrun{list_dicom_folders("dicom")}
 list_dicom_folders <- function(input_folder = path_input_dicom,
-                               input_order = input_order,
+                               input_order = folder_order,
                                output_folder = path_output,
                                sessions_old = sessions_id_old,
                                sessions_new = sessions_id_new,

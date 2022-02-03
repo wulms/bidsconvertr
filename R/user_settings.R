@@ -11,7 +11,7 @@ create_user_settings <- function(folder = getwd()){
   print("Creating the user settings file.")
   settings_string <-'# Path that contains one folder per session, containing all DICOMS in subject folders
 path_input_dicom <- "C:/Science/bidirect/dicom/"
-input_order <- "session_subject" # "subject_session" is also possible.
+folder_order <<- "session_subject" # "subject_session" is also possible.
 
 # output folder
 path_output <- "C:/Science/bidirect_bids/"
