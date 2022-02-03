@@ -37,7 +37,8 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
     # extract relevant information
     mutate(
       folder_short = str_remove(dicom_folder, input_folder) %>%
-        str_replace("////", "//"))
+        str_replace("////", "//") %>%
+        str_remove("^/"))
 
   cat("These are your input folders.
       'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
