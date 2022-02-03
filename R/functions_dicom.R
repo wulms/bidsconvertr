@@ -40,6 +40,10 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
         str_replace("////", "//") %>%
         str_remove("^/"))
 
+  if(nrow(df) == 0){
+    stop("No folders found")
+  }
+
   cat("These are your input folders.
       'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
   cat("\n")
@@ -73,7 +77,18 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   }
   Sys.sleep(5)
 
+
+  # check for NAs
+  df_na <- df %>%
+    filter(across(everything(),~ is.na(.)))
   # cat("\014")
+  if(nrow(df) == 0){
+    stop("No folders found")
+  } else if (df_na > 0){
+    print(df_na)
+    stop("NAs found. Please check your data or open an issue on the Github repo.")
+  }
+
 
   df <- df %>%
     # remove "ses- or sub-" from the input string

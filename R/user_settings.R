@@ -21,6 +21,9 @@ study_name <- "BiDirect Study"
 
 # regular expressions
 regex_subject_id <- "[:digit:]{5}"
+
+
+# optional settings
 regex_group_id <- "[:digit:]{1}(?=[:digit:]{4})"
 regex_remove_pattern <- "[:punct:]{1}|[:blank:]{1}|((b|d)i(d|b)i|bid|bd|bdi)(ect|rect)($|(rs|T2TSE|inclDIRSequenz|neu|abbruch))"
 
