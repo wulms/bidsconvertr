@@ -11,6 +11,7 @@
 #' @return dataframe containing list, session and subject id
 #' @examples \dontrun{list_dicom_folders("dicom")}
 list_dicom_folders <- function(input_folder = path_input_dicom,
+                               input_order = input_order,
                                output_folder = path_output,
                                sessions_old = sessions_id_old,
                                sessions_new = sessions_id_new,
@@ -32,20 +33,49 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
     data.frame(dicom_folder = ., stringsAsFactors = FALSE)  %>%
     # extract relevant information
     mutate(
-      folder_short = str_remove(dicom_folder, input_folder),
-      your_session_id = str_extract(dicom_folder,
-                                    string_sessions
-      ),
-      your_subject_id = str_extract(dicom_folder,
+      folder_short = str_remove(dicom_folder, input_folder) %>%
+        str_replace("////", "//"))
+
+  print("These are your input folders. 'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
+  print(paste("Your selected input folder hierarchy: ", input_order))
+  head(df)
+  Sys.sleep(5)
+  cat("\014")
+
+  if(input_order == "session_subject"){
+    df <- df %>%
+      separate(folder_short, into = c("session", "subject"), sep = "/")
+    print(head(df))
+    print("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
+        Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
+    Sys.sleep(5)
+  } else if (input_order == "subject_session") {
+    df <- df %>%
+      separate(folder_short, into = c("subject", "session"), sep = "/")
+    print(head(df))
+    print("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
+        Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
+    Sys.sleep(5)
+  } else {
+    stop("ERROR: Please choose your 'input_order'.
+         'dicom/sub-XXX/ses-XXX/' is 'subject_session'.
+         'dicom/ses-XXX/sub-XXX' is 'session_subject'.")
+  }
+  cat("\014")
+
+  df <- df %>%
+    mutate(your_session_id = str_extract(session,
+                                    string_sessions),
+      your_subject_id = str_extract(subject,
                                     regex_subject),
-      your_group_id = str_extract(dicom_folder,
+      your_group_id = str_extract(subject,
                                   regex_group)) %>%
     # create rest string
     mutate(
-      rest_string = str_remove(folder_short, your_session_id) %>%
-        str_remove(your_subject_id) %>%
+      rest_string = str_remove(subject, your_subject_id) %>%
         str_remove("//"),
-      rest_string2 = str_remove_all(rest_string, regex(regex_remove, ignore_case = TRUE))
+      rest_string2 = str_remove_all(rest_string,
+                                    regex(regex_remove, ignore_case = TRUE))
     ) %>%
     # output path
     mutate(
@@ -59,26 +89,31 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
                                "/ses-", new_session_id),
       output_path_json = str_replace(output_path_nii, "/nii/", "/json_sensitive/")
     ) %>%
-    relocate(dicom_folder, your_subject_id, your_group_id, your_session_id, new_session_id)
+    relocate(dicom_folder, your_subject_id, your_group_id,
+             your_session_id, new_session_id)
 
   # TESTS
   print("The following strings are unmatched strings. These are automatically removed from the file")
-  print(df %>% select(rest_string, rest_string2) %>% count())
+  print(df %>% select(rest_string, rest_string2) %>% dplyr::count())
   cat("\n")
+  Sys.sleep(2)
 
   print("This is the amount of data per session:")
-  print(df %>% select(your_session_id, new_session_id) %>% count())
+  print(df %>% select(your_session_id, new_session_id) %>% dplyr::count())
   cat("\n")
+  Sys.sleep(2)
 
   print("This is the amount of data per session and group:")
-  print(df %>% select(your_group_id, your_session_id, new_session_id) %>% count())
+  print(df %>% select(your_group_id, your_session_id, new_session_id) %>% dplyr::count())
   cat("\n")
+  Sys.sleep(2)
 
   df %>%
     filter(is.na(your_subject_id)) -> unmatched_subjects
   print(paste("Unmatched subject-IDs: ", nrow(unmatched_subjects)))
   print(unmatched_subjects)
   cat("\n")
+  Sys.sleep(2)
 
   df %>%
     filter(is.na(your_session_id)) -> unmatched_sessions
@@ -86,10 +121,13 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   print(unmatched_sessions)
   cat("\n")
   cat("\n")
+  Sys.sleep(2)
 
   # Preview
   print("Preview of extracted data: ")
   print(head(df))
+  Sys.sleep(5)
+  cat("\014")
 
   path_to_folder(paste0(path_output_converter, "/dicom_paths.tsv"))
   write_tsv(df, file = paste0(path_output_converter, "/dicom_paths.tsv"))
