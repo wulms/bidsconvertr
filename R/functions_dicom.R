@@ -26,6 +26,8 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
     regex(., ignore_case = TRUE)
 
 
+
+
   df <- dir(input_folder, full.names = TRUE) %>%
     lapply(FUN = dir,
            recursive = FALSE,

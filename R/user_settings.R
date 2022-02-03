@@ -74,6 +74,15 @@ create_environment_variables <- function(input_path = path_output){
   # }
 
   # output converter folder
+
+  if(str_detect(input_path, "/$") == 0){
+    input_path <- paste0(input_path, "/")
+  }
+
+  if(str_detect(path_input_dicom, "/$") == 0){
+    path_input_dicom <- paste0(path_input_dicom, "/")
+  }
+
   path_output_converter <<- paste0(input_path, "/bidsconvertr")
 
   # user files
