@@ -56,18 +56,15 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   if(input_order == "session_subject"){
     df <- df %>%
       separate(folder_short, into = c("session", "subject"), sep = "/")
-    print(head(df))
-    cat("\n")
     cat("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
         Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
     cat("\n")
   } else if (input_order == "subject_session") {
     df <- df %>%
       separate(folder_short, into = c("subject", "session"), sep = "/")
-    print(head(df))
-    cat("\n")
+
     cat("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
-        Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
+        Change it to 'session_subject' if 'subject' and 'session' are in the wrong order here.")
     cat("\n")
   } else {
     cat("\n")
@@ -75,6 +72,8 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
          'dicom/sub-XXX/ses-XXX/' is 'subject_session'.
          'dicom/ses-XXX/sub-XXX' is 'session_subject'.")
   }
+  print(head(df))
+  cat("\n")
   Sys.sleep(5)
 
 
@@ -84,7 +83,7 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   # cat("\014")
   if(nrow(df) == 0){
     stop("No folders found")
-  } else if (df_na > 0){
+  } else if (nrow(df_na) > 0){
     print(df_na)
     stop("NAs found. Please check your data or open an issue on the Github repo.")
   }
