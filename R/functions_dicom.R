@@ -42,9 +42,9 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   cat("These are your input folders.
       'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
   cat("\n")
-  print(paste("Your selected input folder hierarchy: ", input_order))
+  print(paste("You selected the input folder hierarchy: ", input_order))
   cat("\n")
-  head(df)
+  print(head(df))
   Sys.sleep(5)
   # cat("\014")
 
@@ -53,7 +53,7 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
       separate(folder_short, into = c("session", "subject"), sep = "/")
     print(head(df))
     cat("\n")
-    print("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
+    cat("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
         Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
     cat("\n")
   } else if (input_order == "subject_session") {
@@ -61,7 +61,7 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
       separate(folder_short, into = c("subject", "session"), sep = "/")
     print(head(df))
     cat("\n")
-    print("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
+    cat("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
         Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
     cat("\n")
   } else {
