@@ -56,7 +56,6 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
     print("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
         Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
     cat("\n")
-    Sys.sleep(5)
   } else if (input_order == "subject_session") {
     df <- df %>%
       separate(folder_short, into = c("subject", "session"), sep = "/")
@@ -64,7 +63,6 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
     cat("\n")
     print("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
         Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
-    Sys.sleep(5)
     cat("\n")
   } else {
     cat("\n")
@@ -72,7 +70,9 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
          'dicom/sub-XXX/ses-XXX/' is 'subject_session'.
          'dicom/ses-XXX/sub-XXX' is 'session_subject'.")
   }
-  cat("\014")
+  Sys.sleep(5)
+
+  # cat("\014")
 
   df <- df %>%
     # remove "ses- or sub-" from the input string
@@ -152,7 +152,7 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   print("Preview of extracted data: ")
   print(head(df))
   Sys.sleep(5)
-  cat("\014")
+  # cat("\014")
 
   path_to_folder(paste0(path_output_converter, "/dicom_paths.tsv"))
   write_tsv(df, file = paste0(path_output_converter, "/dicom_paths.tsv"))
