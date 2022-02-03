@@ -41,26 +41,33 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
 
   cat("These are your input folders.
       'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
+  cat("\n")
   print(paste("Your selected input folder hierarchy: ", input_order))
+  cat("\n")
   head(df)
   Sys.sleep(5)
-  cat("\014")
+  # cat("\014")
 
   if(input_order == "session_subject"){
     df <- df %>%
       separate(folder_short, into = c("session", "subject"), sep = "/")
     print(head(df))
+    cat("\n")
     print("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
         Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
+    cat("\n")
     Sys.sleep(5)
   } else if (input_order == "subject_session") {
     df <- df %>%
       separate(folder_short, into = c("subject", "session"), sep = "/")
     print(head(df))
+    cat("\n")
     print("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
         Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
     Sys.sleep(5)
+    cat("\n")
   } else {
+    cat("\n")
     stop("ERROR: Please choose your 'input_order'.
          'dicom/sub-XXX/ses-XXX/' is 'subject_session'.
          'dicom/ses-XXX/sub-XXX' is 'session_subject'.")
@@ -112,17 +119,17 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
 
   # TESTS
   print("The following strings are unmatched strings. These are automatically removed from the file")
-  print(df %>% select(rest_string, rest_string2) %>% dplyr::count())
+  print(df %>% select(rest_string, rest_string2) %>% count())
   cat("\n")
   Sys.sleep(2)
 
   print("This is the amount of data per session:")
-  print(df %>% select(your_session_id, new_session_id) %>% dplyr::count())
+  print(df %>% select(your_session_id, new_session_id) %>% count())
   cat("\n")
   Sys.sleep(2)
 
   print("This is the amount of data per session and group:")
-  print(df %>% select(your_group_id, your_session_id, new_session_id) %>% dplyr::count())
+  print(df %>% select(your_group_id, your_session_id, new_session_id) %>% count())
   cat("\n")
   Sys.sleep(2)
 
