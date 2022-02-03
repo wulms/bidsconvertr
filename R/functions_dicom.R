@@ -22,7 +22,8 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   string_sessions <- sessions_old %>%
     paste0(collapse = "|")
 
-  string_sessions <- paste0("(", string_sessions, ")(?=/)") %>% regex()
+  string_sessions <- paste0("(", string_sessions, ")") %>%
+    regex(., ignore_case = TRUE)
 
 
   df <- dir(input_folder, full.names = TRUE) %>%
@@ -36,7 +37,8 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
       folder_short = str_remove(dicom_folder, input_folder) %>%
         str_replace("////", "//"))
 
-  print("These are your input folders. 'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
+  cat("These are your input folders.
+      'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
   print(paste("Your selected input folder hierarchy: ", input_order))
   head(df)
   Sys.sleep(5)
@@ -64,12 +66,26 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   cat("\014")
 
   df <- df %>%
+    # remove "ses- or sub-" from the input string
+    mutate(session = str_remove(session, "^ses-"),
+           subject = str_remove(subject, "^sub-")) %>%
+    # apply regular expressions
     mutate(your_session_id = str_extract(session,
                                     string_sessions),
       your_subject_id = str_extract(subject,
                                     regex_subject),
       your_group_id = str_extract(subject,
                                   regex_group)) %>%
+    # if one is NA, switch with extracted info before regex
+    mutate(your_session_id = ifelse(is.na(your_session_id),
+                                    yes = session,
+                                    no = your_session_id),
+           your_subject_id = ifelse(is.na(your_subject_id),
+                                    yes = subject,
+                                    no = your_subject_id),
+           your_group_id = ifelse(is.na(your_group_id),
+                                  yes = "1",
+                                  no = your_group_id)) %>%
     # create rest string
     mutate(
       rest_string = str_remove(subject, your_subject_id) %>%
