@@ -74,7 +74,7 @@ create_environment_variables <- function(input_path = path_output){
   # }
 
   # output converter folder
-  path_output_converter <<- paste0(input_path, "/bids_bidirect_converter")
+  path_output_converter <<- paste0(input_path, "/bidsconvertr")
 
   # user files
   path_output_user <<- paste0(path_output_converter, "/user")
