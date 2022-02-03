@@ -150,6 +150,7 @@ read_json_headers <- function(json_path, suffix = "") {
       if(file.info(json[i])$size > 0) {
         result_new <- rjson::fromJSON(file = json[i], simplify = TRUE) %>%
           lapply(paste, collapse = ", ") %>%
+          lapply(str_replace_all, pattern = "\\n|\\r", replacement = " ") %>%
           bind_rows() %>%
           mutate(Path = json[i])
         result_new <- merge(empty_df, result_new, all = TRUE, sort = F)
