@@ -136,12 +136,23 @@ copy2BIDS <- function(sequence_map = "sequence_map",
   file_paths <- file_paths %>%
     filter(relevant == 1)
 
+  # duplicate paths
+  duplicate_output_paths <- file_paths %>%
+    dplyr::count(output_file_path) %>%
+    filter(n > 1)
+
+  if(nrow(duplicate_output_paths) > 1){
+    print("WARNING - Duplicates identified")
+    cat("\n\n")
+    print(duplicate_output_paths)
+    Sys.sleep(10)
+  }
+
   file_paths %>%
     readr::write_csv(., output_file)
 
   path_to_folder(file_paths$output_file_path)
 
-  # non dwi
   copy_files(from = file_paths$input_file_paths,
              to = file_paths$output_file_path,
              "Copy2BIDS: all relevant files")

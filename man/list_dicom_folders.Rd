@@ -6,6 +6,7 @@
 \usage{
 list_dicom_folders(
   input_folder = path_input_dicom,
+  input_order = folder_order,
   output_folder = path_output,
   sessions_old = sessions_id_old,
   sessions_new = sessions_id_new,

@@ -9,6 +9,8 @@
 #' @param regex_remove a regular expression (or multiple, concatenated with the "|" symbol), which are removed from the filename.
 #'
 #' @return dataframe containing list, session and subject id
+#' @export
+#'
 #' @examples \dontrun{list_dicom_folders("dicom")}
 list_dicom_folders <- function(input_folder = path_input_dicom,
                                input_order = folder_order,
@@ -27,6 +29,16 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
 
 
 
+  if(!dir.exists(input_folder)){
+    stop("ERROR: The 'path_input_dicom' does not exist. Please set up a valid existing folder.")
+  }
+
+  if(str_detect(input_oder,
+                "^(session_subject|subject_session)$",
+                negate = TRUE)){
+    stop("ERROR: The 'folder_order' needs to be specified as 'session_subject' or 'subject_session'")
+  }
+
 
   df <- dir(input_folder, full.names = TRUE) %>%
     lapply(FUN = dir,
@@ -41,7 +53,7 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
         str_remove("^/"))
 
   if(nrow(df) == 0){
-    stop("No folders found")
+    stop("ERROR: No folders found in your specified 'path_input_dicom'")
   }
 
   cat("These are your input folders.
@@ -183,6 +195,7 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
 #' @param scanner_type MRI scanner vendor type
 #' @param dcm2niix_path Path to dcm2niix tool on your system
 #'
+#' @export
 #' @return List of dcm2niix system commands
 #'
 #' @examples
