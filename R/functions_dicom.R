@@ -33,7 +33,7 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
     stop("ERROR: The 'path_input_dicom' does not exist. Please set up a valid existing folder.")
   }
 
-  if(str_detect(input_oder,
+  if(str_detect(input_order,
                 "^(session_subject|subject_session)$",
                 negate = TRUE)){
     stop("ERROR: The 'folder_order' needs to be specified as 'session_subject' or 'subject_session'")
