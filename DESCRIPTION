@@ -37,7 +37,7 @@ Depends:
     patchwork (>= 1.1.0.9000),
     pacman (>= 0.5.1),
     devtools (>= 2.4.3),
-    neurobase (>= 1.32.1),
+    neurobase (>= 1.32.0),
     papayaWidget (>= 0.7.1),
     shinyDirectoryInput (>= 0.2.0)
 VignetteBuilder: knitr
