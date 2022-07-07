@@ -40,109 +40,10 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
   }
 
 
-  df <- dir(input_folder, full.names = TRUE) %>%
-    lapply(FUN = dir,
-           recursive = FALSE,
-           full.names = TRUE) %>%
-    unlist() %>%
-    data.frame(dicom_folder = ., stringsAsFactors = FALSE)  %>%
-    # extract relevant information
-    mutate(
-      folder_short = str_remove(dicom_folder, input_folder) %>%
-        str_replace("////", "//") %>%
-        str_remove("^/"))
 
-  if(nrow(df) == 0){
-    stop("ERROR: No folders found in your specified 'path_input_dicom'")
-  }
+  df <- check_folder_order(input_folder, input_order)
 
-  cat("These are your input folders.
-      'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
-  cat("\n")
-  print(paste("You selected the input folder hierarchy: ", input_order))
-  cat("\n")
-  print(head(df))
-  Sys.sleep(5)
-  # cat("\014")
-
-  if(input_order == "session_subject"){
-    df <- df %>%
-      separate(folder_short, into = c("session", "subject"), sep = "/")
-    cat("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
-        Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
-    cat("\n")
-  } else if (input_order == "subject_session") {
-    df <- df %>%
-      separate(folder_short, into = c("subject", "session"), sep = "/")
-
-    cat("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
-        Change it to 'session_subject' if 'subject' and 'session' are in the wrong order here.")
-    cat("\n")
-  } else {
-    cat("\n")
-    stop("ERROR: Please choose your 'input_order'.
-         'dicom/sub-XXX/ses-XXX/' is 'subject_session'.
-         'dicom/ses-XXX/sub-XXX' is 'session_subject'.")
-  }
-  print(head(df))
-  cat("\n")
-  Sys.sleep(5)
-
-
-  # check for NAs
-  df_na <- df %>%
-    filter(across(everything(),~ is.na(.)))
-  # cat("\014")
-  if(nrow(df) == 0){
-    stop("No folders found")
-  } else if (nrow(df_na) > 0){
-    print(df_na)
-    stop("NAs found. Please check your data or open an issue on the Github repo.")
-  }
-
-
-  df <- df %>%
-    # remove "ses- or sub-" from the input string
-    mutate(session = str_remove(session, "^ses-"),
-           subject = str_remove(subject, "^sub-")) %>%
-    # apply regular expressions
-    mutate(your_session_id = str_extract(session,
-                                    string_sessions),
-      your_subject_id = str_extract(subject,
-                                    regex_subject),
-      your_group_id = str_extract(subject,
-                                  regex_group)) %>%
-    # if one is NA, switch with extracted info before regex
-    mutate(your_session_id = ifelse(is.na(your_session_id),
-                                    yes = session,
-                                    no = your_session_id),
-           your_subject_id = ifelse(is.na(your_subject_id),
-                                    yes = subject,
-                                    no = your_subject_id),
-           your_group_id = ifelse(is.na(your_group_id),
-                                  yes = "1",
-                                  no = your_group_id)) %>%
-    # create rest string
-    mutate(
-      rest_string = str_remove(subject, your_subject_id) %>%
-        str_remove("//"),
-      rest_string2 = str_remove_all(rest_string,
-                                    regex(regex_remove, ignore_case = TRUE))
-    ) %>%
-    # output path
-    mutate(
-      # switch session-IDS
-      new_session_id = reduce2(paste0(sessions_old, "$"),
-                               sessions_new,
-                               .init = your_session_id,
-                               str_replace),
-      output_path_nii = paste0(path_output_converter_temp_nii,
-                               "/sub-", your_subject_id,
-                               "/ses-", new_session_id),
-      output_path_json = str_replace(output_path_nii, "/nii/", "/json_sensitive/")
-    ) %>%
-    relocate(dicom_folder, your_subject_id, your_group_id,
-             your_session_id, new_session_id)
+  df <- check_filenames(df)
 
   # TESTS
   print("The following strings are unmatched strings. These are automatically removed from the file")
@@ -188,99 +89,119 @@ list_dicom_folders <- function(input_folder = path_input_dicom,
 }
 
 
-#' Creates the dcm2niix system commands for the conversion
-#'
-#' @param input Folder path(s) containing dicoms
-#' @param output Folder path(s) where the nii images should be exported to
-#' @param scanner_type MRI scanner vendor type
-#' @param dcm2niix_path Path to dcm2niix tool on your system
-#'
-#' @export
-#' @return List of dcm2niix system commands
-#'
-#' @examples
-#' \dontrun{dcm2nii_wrapper("root_folder/session_id/participant_id/", "nii/session-id/participant-id/")}
-dcm2nii_wrapper <-   function(input_folder,
-                              output_folder,
-                              scanner_type,
-                              dcm2niix_local_path = normalizePath(dcm2niix_path, mustWork = F),
-                              dcm2niix_string) {
-  commands <- paste(dcm2niix_local_path,
-                    "-o", output_folder,
-                    dcm2niix_string,
-                    input_folder)
 
-  print("Example commands:")
-  cat("\n")
-  print(head(commands, 3))
-  cat("\n\n")
-  return(commands)
-}
+check_folder_order <- function(input_folder = input_folder,
+                               input_order = input_order) {
+  df <- dir(input_folder, full.names = TRUE) %>%
+    lapply(FUN = dir,
+           recursive = FALSE,
+           full.names = TRUE) %>%
+    unlist() %>%
+    data.frame(dicom_folder = ., stringsAsFactors = FALSE)  %>%
+    # extract relevant information
+    mutate(
+      folder_short = str_remove(dicom_folder, input_folder) %>%
+        str_replace("////", "//") %>%
+        str_remove("^/"))
 
-
-## dicom converter
-
-#' dcm2niix system calls using a list from dcm2nii_wrapper
-#'
-#' @param list from dcm2nii_wrapper
-#' @param output_folder list of output folders (one for each subject and session)
-#'
-#' @examples
-#' \dontrun{dcm2nii_converter("dcm2niix -o nii/session-id/participant-id/ -ba y -f %d -z y root_folder/session_id/participant_id/")}
-dcm2nii_converter <- function(dcm2niix_string,
-                              input_folder,
-                              output_folder){
-
-  list <- dcm2nii_wrapper(
-    output_folder = output_folder,
-    input_folder = input_folder,
-    dcm2niix_string = dcm2niix_string
-  )
-
-
-
-
-  start_timer <- Sys.time()
-  for (i in seq_along(list)) {
-    done_file <- paste0(output_folder[i], "/done.txt")
-    if (file.exists(done_file) == 0) {
-      cat("\n")
-      dir.create(output_folder[i], recursive = TRUE, showWarnings = FALSE)
-      print_passed_time(i, list, start_timer, "dcm2niix (by Chris Rorden) conversion: ")
-      system(list[i])
-      write_file("done", done_file)
-    } else if (file.exists(done_file) == 1) {
-      print("Skipped: Subject already processed - folder contains done.txt")
-    }
+  if(nrow(df) == 0){
+    stop("ERROR: No folders found in your specified 'path_input_dicom'")
   }
+
+  cat("These are your input folders.
+      'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
   cat("\n\n")
-  print_passed_time(i, list, start_timer, "Total:  ")
-  print("===================================")
-  print("Congratulation - the conversion was successful.")
+  print(paste("You selected the input folder hierarchy: ", input_order))
+  cat("\n\n")
+  print(head(df))
+  Sys.sleep(5)
+  # cat("\014")
+  cat("\n\n")
+
+  if(input_order == "session_subject"){
+    df <- df %>%
+      separate(folder_short, into = c("session", "subject"), sep = "/")
+    cat("You selected 'session_subject' as the hierarchical order of folders in the DICOM input.
+        Change it to 'subject_session' if 'subject' and 'session' are in the wrong order here.")
+    cat("\n\n")
+  } else if (input_order == "subject_session") {
+    df <- df %>%
+      separate(folder_short, into = c("subject", "session"), sep = "/")
+
+    cat("You selected 'subject_session' as the hierarchical order of folders in the DICOM input.
+        Change it to 'session_subject' if 'subject' and 'session' are in the wrong order here.")
+    cat("\n\n")
+  } else {
+    cat("\n\n")
+    stop("ERROR: Please choose your 'input_order'.
+         'dicom/sub-XXX/ses-XXX/' is 'subject_session'.
+         'dicom/ses-XXX/sub-XXX' is 'session_subject'.")
+  }
+  print(head(df))
+  cat("\n\n")
+  Sys.sleep(5)
+
+
+  # check for NAs
+  df_na <- df %>%
+    filter(if_all(everything(),~ is.na(.)))
+  # cat("\014")
+  if(nrow(df) == 0){
+    stop("No folders found")
+  } else if (nrow(df_na) > 0){
+    print(df_na)
+    stop("NAs found. Please check your data or open an issue on the Github repo.")
+  }
+
+  return(df)
+
+
 }
 
 
-#' Converts the DICOM to anonymized NII and JSON files.
-#' @return
-#' @export
-#'
-#' @examples
-dcm2nii_converter_anon <- function(){
-  dcm2nii_converter(dcm2niix_string = "-ba y -f %d -z y -w 0 -i y",
-                    input_folder = input_dicom_folders$dicom_folder %>% normalizePath(mustWork = F),
-                    output_folder = input_dicom_folders$output_path_nii %>% normalizePath(mustWork = F)
-                    )
-}
+check_filenames <- function(df = df){
+  df <- df %>%
+    # remove "ses- or sub-" from the input string
+    mutate(session = str_remove(session, "^ses-"),
+           subject = str_remove(subject, "^sub-")) %>%
+    # apply regular expressions
+    mutate(your_session_id = str_extract(session,
+                                         string_sessions),
+           your_subject_id = str_extract(subject,
+                                         regex_subject),
+           your_group_id = str_extract(subject,
+                                       regex_group)) %>%
+    # if one is NA, switch with extracted info before regex
+    mutate(your_session_id = ifelse(is.na(your_session_id),
+                                    yes = session,
+                                    no = your_session_id),
+           your_subject_id = ifelse(is.na(your_subject_id),
+                                    yes = subject,
+                                    no = your_subject_id),
+           your_group_id = ifelse(is.na(your_group_id),
+                                  yes = "1",
+                                  no = your_group_id)) %>%
+    # create rest string
+    mutate(
+      rest_string = str_remove(subject, your_subject_id) %>%
+        str_remove("//"),
+      rest_string2 = str_remove_all(rest_string,
+                                    regex(regex_remove, ignore_case = TRUE))
+    ) %>%
+    # output path
+    mutate(
+      # switch session-IDS
+      new_session_id = reduce2(paste0(sessions_old, "$"),
+                               sessions_new,
+                               .init = your_session_id,
+                               str_replace),
+      output_path_nii = paste0(path_output_converter_temp_nii,
+                               "/sub-", your_subject_id,
+                               "/ses-", new_session_id),
+      output_path_json = str_replace(output_path_nii, "/nii/", "/json_sensitive/")
+    ) %>%
+    relocate(dicom_folder, your_subject_id, your_group_id,
+             your_session_id, new_session_id)
 
-#' Converts the DICOM to only JSON files, that contain all sensitive information stored in the DICOM headers.
-#'
-#' @return
-#' @export
-#'
-#' @examples
-dcm2nii_converter_json <- function(){
-  dcm2nii_converter(dcm2niix_string = "-b o -ba n -f %d",
-                    input_folder = input_dicom_folders$dicom_folder %>% normalizePath(mustWork = F),
-                    output_folder = input_dicom_folders$output_path_json %>% normalizePath(mustWork = F)
-                    )
+  return(df)
 }

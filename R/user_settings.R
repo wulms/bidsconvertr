@@ -55,6 +55,9 @@ mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe
 }
 
 
+
+
+
 #' Sets up the environment, creates needed variables variables
 #'
 #' @param input_path The path for the BIDSconvertR output
@@ -95,12 +98,12 @@ create_environment_variables <- function(input_path = path_output){
   path_output_user_settings <<- paste0(path_output_user, "/settings")
 
   # converter outputs
-  path_output_converter_temp <<- paste0(path_output_converter, "/temp")
-  path_output_converter_temp_nii <<- paste0(path_output_converter_temp, "/nii")
-  path_output_converter_temp_json <<- paste0(path_output_converter_temp, "/json_sensitive")
+  path_output_converter_temp <<- paste0(path_output_converter, "/dcm2niix_converted")
+  path_output_converter_temp_nii <<- path_output_converter_temp
+  path_output_converter_temp_json <<- paste0(path_output_converter, "/identifying_information/json_sensitive")
 
   # BIDS output
-  path_output_bids <<- paste0(path_output_converter, "/bids/sourcedata")
+  path_output_bids <<- paste0(path_output_converter, "/bids")
 
   # Dashboards
   path_output_user <<- paste0(path_output_converter, "/dashboard")

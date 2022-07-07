@@ -36,7 +36,15 @@ Depends:
     kableExtra (>= 1.3.4),
     patchwork (>= 1.1.0.9000),
     pacman (>= 0.5.1),
-    papayaWidget (>= 0.7.1)
+    devtools (>= 2.4.3),
+    neurobase (>= 1.32.1),
+    papayaWidget (>= 0.7.1),
+    shinyDirectoryInput (>= 0.2.0)
 VignetteBuilder: knitr
 URL: https://github.com/wulms/bidsconvertr
 BugReports: https://github.com/wulms/bidsconvertr/issues
+Imports: 
+Remotes:  
+    muschellij2/papayaWidget,
+    muschellij2/neurobase,
+    wleepang/shiny-directory-input
