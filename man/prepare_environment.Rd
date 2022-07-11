@@ -2,7 +2,7 @@
 % Please edit documentation in R/user_settings.R
 \name{prepare_environment}
 \alias{prepare_environment}
-\title{Prepares th environment with custom variables based on the user settings file.}
+\title{Prepares the environment with custom variables based on the user settings file.}
 \usage{
 prepare_environment(user_settings_file = settings_file)
 }
@@ -13,5 +13,5 @@ prepare_environment(user_settings_file = settings_file)
 A mapping of the DICOM to NII mapping
 }
 \description{
-Prepares th environment with custom variables based on the user settings file.
+Prepares the environment with custom variables based on the user settings file.
 }

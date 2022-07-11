@@ -1,0 +1,17 @@
+sequence	total	possible_sequence	BIDS_sequence	BIDS_type	relevant
+t1_mprage_sag_ipat2_1p0iso	2	t1, t2	T1w	anat	1
+AAHead_Scout_32ch-head	2	NA	moehrensuppe	anat	1
+cmrr_2p4iso_mb8_TR0700	2	NA	task-reward_acq-mp8_echo-1_bold	func	1
+cmrr_2p4iso_mb8_TR0700_SBRef	2	NA	task-reward_acq-mp8_echo-1_sbref	func	1
+cmrr_2p5iso_mb3me3_TR1500_e1	2	NA	123	func	1
+cmrr_2p5iso_mb3me3_TR1500_e2	2	NA	task-stop_acq-mb3m3_run-2_bold	func	1
+cmrr_2p5iso_mb3me3_TR1500_e3	2	NA	task-stop_acq-mb3m3_run-3_bold	func	1
+cmrr_2p5iso_mb3me3_TR1500_SBRef_e1	2	NA	task-stop_acq-mb3m3_run-1_sbref	func	1
+cmrr_2p5iso_mb3me3_TR1500_SBRef_e2	2	NA	task-stop_acq-mb3m3_run-2_bold	func	1
+cmrr_2p5iso_mb3me3_TR1500_SBRef_e3	2	NA	task-stop_acq-mb3m3_run-3_bold	func	1
+field_map_2p4iso_e1	2	NA	acq-2p4_magnitude1	fmap	1
+field_map_2p4iso_e2	2	NA	acq-2p4_magnitude2	fmap	1
+field_map_2p4iso_e2_ph	2	NA	acq-2p4_phasediff	fmap	1
+field_map_2p5iso_e1	2	NA	acq-2p5_magnitude1	fmap	1
+field_map_2p5iso_e2	2	NA	acq-2p5_magnitude2	fmap	1
+field_map_2p5iso_e2_ph	2	NA	acq-2p5_phasediff	fmap	1

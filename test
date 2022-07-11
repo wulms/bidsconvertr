@@ -1,0 +1,24 @@
+# Input path: that contains multiple folders per "session/subject" or "subject/session", containing all DICOMS in subject folders
+path_input_dicom <- "G:/Science/bidirect/dicom"
+folder_order <<- "session_subject"
+
+# output folder
+path_output <- "G:/Science/bidsconvertr_july2022"
+
+
+study_name <- "BiDirect Study"
+
+# regular expressions
+regex_subject_id <- "[:digit:]{5}"
+
+
+# optional settings
+# regex_group_id <- "[:digit:]{1}(?=[:digit:]{4})"
+regex_remove_pattern <- "nothing_configured"
+
+# session ids
+sessions_id_old <- c("Baseline", "FollowUp")
+sessions_id_new <- c("1", "2")
+
+# mri sequence ids
+mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe|tse")

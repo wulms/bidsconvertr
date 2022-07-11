@@ -49,11 +49,6 @@ mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe
     "Description": "Session of study",
     "Units": "Session Name, Ordinal"
   },
-    "group_id": {
-    "LongName": "group_id",
-    "Description": "group/cohort of the participant - regex of BIDS-Direct-ConverteR",
-    "Units": "years"
-  },
   "birthdate": {
     "LongName": "birthdate",
     "Description": "birthdate of the participant - extracted from dicom header",
@@ -83,6 +78,14 @@ mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe
     "LongName": "age",
     "Description": "age of the participant - time difference between birthdate and acquisitiondate",
     "Units": "years"
+  }
+}'
+
+  participants_anon <<- '{
+  "session": {
+    "LongName": "session",
+    "Description": "Session of study",
+    "Units": "Session Name, Ordinal"
   }
 }'
 

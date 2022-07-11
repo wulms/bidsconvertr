@@ -1,63 +1,3 @@
-#' Creates a user setting template file at working directory or custom folder. This file is required for all processing.
-#'
-#' @param folder Set the folder to save your file.
-#'
-#' @return The path to the folder
-#' @export
-#'
-#' @examples
-create_user_settings <- function(folder = getwd()){
-
-  print("Creating the user settings file.")
-  settings_string <-'# Path that contains one folder per session, containing all DICOMS in subject folders
-path_input_dicom <- "C:/Science/bidirect/dicom/"
-folder_order <<- "session_subject" # "subject_session" is also possible.
-
-# output folder
-path_output <- "C:/Science/bidirect_bids/"
-
-
-study_name <- "BiDirect Study"
-
-# regular expressions
-regex_subject_id <- "[:digit:]{5}"
-
-
-# optional settings
-regex_group_id <- "[:digit:]{1}(?=[:digit:]{4})"
-regex_remove_pattern <- "[:punct:]{1}|[:blank:]{1}|((b|d)i(d|b)i|bid|bd|bdi)(ect|rect)($|(rs|T2TSE|inclDIRSequenz|neu|abbruch))"
-
-# session ids
-sessions_id_old <- c("Baseline", "FollowUp", "FollowUp2", "FollowUp3")
-sessions_id_new <- c("0", "2", "4", "6")
-
-# mri sequence ids
-mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe|tse")'
-
-  if(!dir.exists(folder)){
-    path_to_folder(folder)
-  }
-
-  path <- paste0(folder, "/user_settings.R")
-
-
-  if(!file.exists(path)){
-    print(paste("The file was created in this folder:", folder))
-    writeLines(settings_string, path)
-    print("The file will be opened in 5 seconds. Please edit the file to your needs.")
-    Sys.sleep(5)
-    file.edit(path)
-  } else {
-    print(paste("The file already exists:", path))
-  }
-  settings_file <<- path
-  return(path)
-}
-
-
-
-
-
 #' Sets up the environment, creates needed variables variables
 #'
 #' @param input_path The path for the BIDSconvertR output
@@ -110,7 +50,7 @@ create_environment_variables <- function(input_path = path_output){
 
 }
 
-#' Prepares th environment with custom variables based on the user settings file.
+#' Prepares the environment with custom variables based on the user settings file.
 #'
 #' @param user_settings_file The path to the user settings file, created by "create_user_setting()".
 #'
@@ -126,9 +66,64 @@ prepare_environment <- function(user_settings_file = settings_file){
 
   create_environment_variables()
 
-  # source("new_version/environment.R")
-
   # indexing all folders
-  input_dicom_folders <<- list_dicom_folders(path_input_dicom)
+  input_dicom_folders <<- list_dicom_folders()
   return(input_dicom_folders)
 }
+
+
+#' #' Creates a user setting template file at working directory or custom folder. This file is required for all processing.
+#' #'
+#' #' @param folder Set the folder to save your file.
+#' #'
+#' #' @return The path to the folder
+#' #' @export
+#' #'
+#' #' @examples
+#' create_user_settings <- function(folder = getwd()){
+#'
+#'   print("Creating the user settings file.")
+#'   settings_string <-'# Input path: that contains multiple folders per "session/subject" or "subject/session", containing all DICOMS in subject folders
+#' path_input_dicom <- "C:/Science/bidirect/dicom/"
+#' folder_order <<- "session_subject" # "subject_session" is also possible.
+#'
+#' # output folder
+#' path_output <- "C:/Science/bidirect_bids/"
+#'
+#'
+#' study_name <- "BiDirect Study"
+#'
+#' # regular expressions
+#' regex_subject_id <- "[:digit:]{5}"
+#'
+#'
+#' # optional settings
+#' regex_group_id <- "[:digit:]{1}(?=[:digit:]{4})"
+#' regex_remove_pattern <- "[:punct:]{1}|[:blank:]{1}|((b|d)i(d|b)i|bid|bd|bdi)(ect|rect)($|(rs|T2TSE|inclDIRSequenz|neu|abbruch))"
+#'
+#' # session ids
+#' sessions_id_old <- c("Baseline", "FollowUp", "FollowUp2", "FollowUp3")
+#' sessions_id_new <- c("0", "2", "4", "6")
+#'
+#' # mri sequence ids
+#' mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe|tse")'
+#'
+#'   if(!dir.exists(folder)){
+#'     path_to_folder(folder)
+#'   }
+#'
+#'   path <- paste0(folder, "/user_settings.R")
+#'
+#'
+#'   if(!file.exists(path)){
+#'     print(paste("The file was created in this folder:", folder))
+#'     writeLines(settings_string, path)
+#'     print("The file will be opened in 5 seconds. Please edit the file to your needs.")
+#'     Sys.sleep(5)
+#'     file.edit(path)
+#'   } else {
+#'     print(paste("The file already exists:", path))
+#'   }
+#'   settings_file <<- path
+#'   return(path)
+#' }

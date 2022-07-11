@@ -4,12 +4,12 @@
 \alias{convert_to_BIDS}
 \title{The core function, which converts the DICOM to NII, extracts the JSON information, opens the sequence mapper and converts the data to BIDS.}
 \usage{
-convert_to_BIDS(user_settings_file = settings_file, sequence_table = "off")
+convert_to_BIDS(sequence_table = "off")
 }
 \arguments{
-\item{user_settings_file}{The path to the user settings file from the "create_user_settungs()" function.}
-
 \item{sequence_table}{"on" or "off" - turns the sequence mapper shiny app on or off.}
+
+\item{user_settings_file}{The path to the user settings file from the "create_user_settungs()" function.}
 }
 \value{
 

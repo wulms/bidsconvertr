@@ -39,12 +39,13 @@ Depends:
     devtools (>= 2.4.3),
     neurobase (>= 1.32.0),
     papayaWidget (>= 0.7.1),
-    shinyDirectoryInput (>= 0.2.0)
+    shinyDirectoryInput (>= 0.2.0),
+    svDialogs (>= 1.1.0)
 VignetteBuilder: knitr
 URL: https://github.com/wulms/bidsconvertr
 BugReports: https://github.com/wulms/bidsconvertr/issues
 Imports: 
-Remotes:  
+Remotes: 
     muschellij2/papayaWidget,
     muschellij2/neurobase,
     wleepang/shiny-directory-input

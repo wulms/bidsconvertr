@@ -36,6 +36,8 @@ print_passed_time <- function(item, list_of_files, start, string) {
 #' @param list_of_files filename, list of filenames containing path
 #'
 #' @return Nothing - creates folders for these files on the system
+#' @export
+#'
 #' @examples
 #' path_to_folder("folder/subfolder/file.txt")
 path_to_folder <- function(list_of_files) {
@@ -63,12 +65,15 @@ path_to_folder <- function(list_of_files) {
 #' @export
 #'
 #' @examples
-convert_to_BIDS <- function(user_settings_file = settings_file,
-                            sequence_table = "off"){
+convert_to_BIDS <- function(sequence_table = "off"){
 
-  prepare_environment(user_settings_file)
+  select_user_settings_file()
+  cat("\n\n\n============ Preparing environment ===============\n\n\n")
+  prepare_environment(settings_file)
+  cat("\n\n\n============ Install dcm2niix ===============\n\n\n")
 
   install_dcm2niix()
+  cat("\n\n\n============ dcm2niix conversion ===============\n\n\n")
 
   # dcm2niix - niftis
   dcm2nii_converter_anon()
@@ -76,20 +81,24 @@ convert_to_BIDS <- function(user_settings_file = settings_file,
   # dcm2niix - jsons
   dcm2nii_converter_json()
 
+  cat("\n\n\n============ Extracting metadata information ===============\n\n\n")
   # read all metadata from JSON files
   read_json_headers(json_path = path_output_converter_temp_json, suffix = "")
 
   read_json_headers(json_path = path_output_converter_temp_nii, suffix = "_anon")
 
-
+  cat("\n\n\n============ Sequence Mapper ===============\n\n\n")
   sequence_mapper(edit_table = sequence_table)
 
   check_sequence_map()
 
+  cat("\n\n\n============ Copy files to BIDS ===============\n\n\n")
   copy2BIDS()
 
+  cat("\n\n\n============ Create Dashboard ===============\n\n\n")
   create_dashboard()
 
+  cat("\n\n\n============ Starting Shiny BIDS ===============\n\n\n")
   run_shiny_BIDS()
 
 }

@@ -18,7 +18,7 @@ copy_files <- function(from, to, string){
   if(nrow(df) > 0) {
     start_timer <- Sys.time()
     for (i in seq(df$from)) {
-      cat("\014")
+      #cat("\014")
       # print(paste("Copied file ", i, " of ", length(from),  " to: ", to[i]))
       # if(file.exists(to[i]) == 0) {
       print_passed_time(i, df$to, start_timer, "Copying2BIDS: ")
@@ -156,6 +156,9 @@ copy2BIDS <- function(sequence_map = "sequence_map",
   copy_files(from = file_paths$input_file_paths,
              to = file_paths$output_file_path,
              "Copy2BIDS: all relevant files")
+
+  cat("\n\nCopied the relevant files to BIDS.\n\n")
+  cat("Adding BIDS metadata\n\n")
 
   add_BIDS_metadata()
 }

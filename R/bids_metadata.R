@@ -23,7 +23,7 @@ add_participants_tsv <- function(tsv_path = paste0(path_output_converter, "/json
 
   needed_columns <- c("subject",
                       "session",
-                      "group",
+                      #"group",
                       "PatientBirthDate",
                       "AcquisitionDateTime",
                       "PatientSex",
@@ -33,10 +33,10 @@ add_participants_tsv <- function(tsv_path = paste0(path_output_converter, "/json
     cat("\n")
 
     patient_tsv <- df %>%
-      select(subject, session, group,
+      select(subject, session, #group,
              PatientBirthDate, AcquisitionDateTime, PatientSex, PatientWeight) %>%
       rename(participant_id = subject,
-             group_id = group,
+             #group_id = group,
              birthdate = PatientBirthDate,
              acquisitiondate = AcquisitionDateTime,
              sex = PatientSex,
@@ -45,11 +45,27 @@ add_participants_tsv <- function(tsv_path = paste0(path_output_converter, "/json
              age = time_length(difftime(acquisitiondate, birthdate), "years") %>%
                round(digits = 2)) %>%
       unique()
-    # Write participants.tvs file
-    write_tsv(patient_tsv,
+
+    patient_tsv_anon <- patient_tsv %>%
+      select(birthdate, acquisitiondate, sex, weight, age)
+
+    # Write participants_anon file
+    write_tsv(patient_tsv_anon,
               paste0(path_output_bids, "/participants.tsv"))
-    writeLines(participants,
+    writeLines(participants_anon,
                paste0(path_output_bids, "/participants.json"))
+
+    # write the anonymized ones to
+    write_tsv(patient_tsv,
+              paste0(path_output_converter_temp_json, "/participants.tsv"))
+    writeLines(participants,
+               paste0(path_output_converter_temp_json, "/participants.json"))
+
+
+
+
+
+
     print("Created 'participants.tsv' and 'participants.json' in the BIDS folder.")
   } else {
     print("Some columns are missing. This could result from different scanner or json header names.")

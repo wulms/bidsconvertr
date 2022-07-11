@@ -18,7 +18,7 @@ list_json_files <- function(input_path,
 
   json_df <- tibble(json_path = json_files) %>%
     mutate(short_strings = str_extract(json_path,
-                                       "(?<=temp/(nii|json_sensitive)/)sub-.*$")) %>%
+                                       "(?<=(dcm2niix_converted|json_sensitive)/)sub-.*$")) %>%
     separate(short_strings, c("subject", "session", "sequence"), "/") %>%
     mutate(sequence = str_remove(sequence, "\\.json"),
            possible_sequence = str_extract_all(sequence,
@@ -158,13 +158,13 @@ read_json_headers <- function(json_path, suffix = "") {
 
         results_table <- result_new %>%
           mutate(subject = str_extract(Path, paste0("sub-", regex_subject_id)),
-                 group = str_extract(subject, regex_group_id),
+                 #group = str_extract(subject, regex_group_id),
                  session = str_extract(Path, "ses-.*(?=/)"),
                  sequence = str_extract(Path, "ses-.*$") %>%
                    str_remove("ses-.*/") %>%
                    str_remove("\\.json")
           ) %>%
-          relocate(subject, group, session, sequence, Path)
+          relocate(subject, session, sequence, Path)
 
         if (file.exists(json_metadata_output_tsv) == 1) {
           readr::write_tsv(results_table, json_metadata_output_tsv,

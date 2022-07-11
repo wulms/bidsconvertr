@@ -4,31 +4,7 @@
 \alias{list_dicom_folders}
 \title{Finds dicom folders in dicom/session/subject folder structure}
 \usage{
-list_dicom_folders(
-  input_folder = path_input_dicom,
-  input_order = folder_order,
-  output_folder = path_output,
-  sessions_old = sessions_id_old,
-  sessions_new = sessions_id_new,
-  regex_subject = regex_subject_id,
-  regex_group = regex_group_id,
-  regex_remove = regex_remove_pattern
-)
-}
-\arguments{
-\item{input_folder}{a folder, containing /session/subject/dicomdata structure}
-
-\item{output_folder}{the output folder, where the data will be stored in future}
-
-\item{sessions_old}{a list, containing the old sessions (e.g. c("baseline", "follow-up 1"))}
-
-\item{sessions_new}{a list, containing the BIDS session IDs in the order of the old sessions (e.g. c("0", "1"))}
-
-\item{regex_subject}{a regular expression of the subject-ID - see stringr cheat sheet with regular expressions (e.g. "[:digit:]{5}" to indicate, that 5 digits are the subject ID)}
-
-\item{regex_group}{a regular expression of the group-ID - see stringr cheat sheet with regular expressions (e.g. "[:digit:]{1}(?=[:digit:]{4})" to indicate, that the first number in a five number text indicates the session id.)}
-
-\item{regex_remove}{a regular expression (or multiple, concatenated with the "|" symbol), which are removed from the filename.}
+list_dicom_folders()
 }
 \value{
 dataframe containing list, session and subject id
