@@ -11,7 +11,7 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
                             output_name = "sequence_map",
                             edit_table = "off"){
 
-  print("Prepare data and start sequence_mapper")
+  cat("\n\nPrepare data and start sequence_mapper\n\n")
 
   input_file = paste0(path_output_converter, "/", sequence_overview_file, ".tsv")
 
@@ -28,7 +28,7 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
       mutate(relevant = as.character(relevant))
 
     tsv_difference <- anti_join(tsv_input_sequences, tsv_map, by = "sequence") %>%
-      mutate(BIDS_sequence = "please edit (T1w/T2/etc)",
+      mutate(BIDS_sequence = "please edit (T1w/T2w/etc)",
              BIDS_type = "please edit (anat/dwi/func/etc)",
              relevant = "please edit (0 = no, 1 = yes)") %>%
       select(sequence, total, possible_sequence, BIDS_sequence, BIDS_type, relevant)
@@ -36,14 +36,16 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
     final_df <- full_join(tsv_map, tsv_difference)
   } else {
     sequence_mapper_df <- tsv_input_sequences %>%
-      mutate(BIDS_sequence = "please edit (T1w/T2/etc)",
+      mutate(BIDS_sequence = "please edit (T1w/T2w/etc)",
              BIDS_type = "please edit (anat/dwi/func/etc)",
              relevant = "please edit (0 = no, 1 = yes)") %>%
       select(sequence, total, possible_sequence, BIDS_sequence, BIDS_type, relevant)
 
     final_df <- sequence_mapper_df
   }
-
+  cat("Writing the dataframe.\n\n")
+  print(final_df)
+  cat("\n\n")
   readr::write_tsv(final_df, file = mapper_file)
 
   if(edit_table == "on"){
@@ -77,24 +79,39 @@ check_sequence_map <- function(sequence_map_file = "sequence_map"){
   df_to_edit <- df_import %>%
     filter_all(any_vars(str_detect(., "please edit")))
 
-  if(nrow(df_to_edit) > 0){
+  while(nrow(df_to_edit) > 0){
+
     cat("\n\n\n")
-    print("ERROR: Sequence map still contains columns that are not edited.")
-    print("Please take care, that every column (that contains 'please edit') is edited manually.")
-    print("The following columns need to be edited again. Start the sequence mapper again.")
+    cat("ERROR: Sequence map still contains columns that are not edited.\n")
+    cat("Please take care, that every column (that contains 'please edit') is edited manually.\n")
+    cat("The following columns need to be edited again. Start the sequence mapper again.\n\n")
     print(df_to_edit, n = Inf)
 
-    print("The sequence mapper is started in 10 seconds. Please wait")
-    Sys.sleep(10)
+    cat("\n\n The sequence mapper is started. Please wait...\n\n")
 
-    try(editTable(DF = df_import,
-                  outdir = paste0(path_output_converter),
-                  outfilename = sequence_map_file))
+    sequence_mapper(edit_table = "on")
+    cat("2\n")
 
-    check_sequence_map()
 
-  } else {
-    print("Your sequences look fine.")
+    cat("\n\n")
+
+    cat("\n\nChecking again if there are unedited cells.\n\n")
+
+    df_import <- readr::read_tsv(df, show_col_types = FALSE, lazy = FALSE)
+    print(df_import, n = Inf)
+
+    df_to_edit <- df_import %>%
+      filter_all(any_vars(str_detect(., "please edit")))
+
+    if(nrow(df_to_edit) > 0){
+      cat("\n\nError: you still have unchanged cells (containing 'please edit')")
+      print(df_to_edit)
+      stop("\n\nCode stopped. You still have unedited cells. Restart the 'convert_to_BIDS()' function AND edit the sequences.")
+    }
+
+
+
   }
+    print("Your sequences look fine.\n\n")
 
 }

@@ -34,41 +34,63 @@ list_dicom_folders <- function() {
 
   df <- check_filenames(df)
 
-  # TESTS
-  print("The following strings are unmatched strings. These are automatically removed from the file")
-  print(df %>% select(rest_string, rest_string2) %>% count())
-  cat("\n\n")
-  Sys.sleep(2)
 
-  print("This is the amount of data per session:")
-  print(df %>% select(your_session_id, new_session_id) %>% count())
+
+  # ============================= TESTS ==============================================
+  cat("\n\n Running diagnostics on the data. \n\n")
+
+  print(head(df))
+
   cat("\n\n")
-  Sys.sleep(2)
+
+  if(df %>% dplyr::count(rest_string, rest_string2) %>% nrow() > 0){
+    print("The following strings are unmatched strings. These are automatically removed from the file")
+    print(df %>% dplyr::count(rest_string, rest_string2))
+    cat("\n\n")
+    Sys.sleep(2)
+  }
+
+  if(df %>% dplyr::count(your_session_id, new_session_id) %>% nrow() > 0){
+    print("This is the amount of data per session:")
+    print(df %>% dplyr::count(your_session_id, new_session_id))
+    cat("\n\n")
+    Sys.sleep(2)
+  }
 
   # print("This is the amount of data per session and group:")
   # print(df %>% select(your_group_id, your_session_id, new_session_id) %>% count())
   # cat("\n\n")
   # Sys.sleep(2)
 
-  df %>%
-    filter(is.na(your_subject_id)) -> unmatched_subjects
-  print(paste("Unmatched subject-IDs: ", nrow(unmatched_subjects)))
-  print(unmatched_subjects)
-  cat("\n\n")
-  Sys.sleep(2)
+  unmatched_subjects <- df %>%
+    filter(is.na(your_subject_id))
 
-  df %>%
-    filter(is.na(your_session_id)) -> unmatched_sessions
-  print(paste("Unmatched session-IDs: ", nrow(unmatched_sessions)))
-  print(unmatched_sessions)
-  cat("\n")
-  cat("\n")
-  Sys.sleep(2)
+  if(unmatched_subjects %>% nrow() > 0){
+    print(paste("Unmatched subject-IDs identified: ", nrow(unmatched_subjects)))
+    print(unmatched_subjects)
+    cat("\n\n")
+    Sys.sleep(2)
+    stop("Please start a new user file or edit the old one manually, until all subject-IDs are matched!")
+  }
+
+
+   unmatched_sessions <- df %>%
+    filter(is.na(your_session_id))
+
+  if(unmatched_sessions %>% nrow() > 0){
+    print(paste("Unmatched session-IDs identified: ", nrow(unmatched_sessions)))
+    print(unmatched_sessions)
+    cat("\n\n")
+    Sys.sleep(2)
+    stop("Please start a new user file or edit the old one manually, until all session-IDs are matched!")
+
+  }
+
 
   # Preview
   print("Preview of extracted data: ")
   print(head(df))
-  Sys.sleep(5)
+  Sys.sleep(2)
   # cat("\014")
 
   path_to_folder(paste0(path_output_converter, "/dicom_paths.tsv"))
@@ -102,7 +124,7 @@ check_folder_order <- function() {
   print(paste("You selected the input folder hierarchy: ", folder_order))
   cat("\n\n")
   print(head(df))
-  Sys.sleep(5)
+  Sys.sleep(2)
   # cat("\014")
   cat("\n\n")
 
@@ -127,7 +149,7 @@ check_folder_order <- function() {
   }
   print(head(df))
   cat("\n\n")
-  Sys.sleep(5)
+  Sys.sleep(2)
 
 
   # check for NAs
@@ -148,7 +170,8 @@ check_folder_order <- function() {
 
 
 check_filenames <- function(df = df){
-  df <- df %>%
+  cat("\n\n Preparing filenames \n\n")
+  df_out <- df %>%
     # remove "ses- or sub-" from the input string
     mutate(session = str_remove(session, "^ses-"),
            subject = str_remove(subject, "^sub-")) %>%
@@ -188,5 +211,9 @@ check_filenames <- function(df = df){
     relocate(dicom_folder, your_subject_id,
              your_session_id, new_session_id)
 
-  return(df)
+  cat("\n\n")
+  print(df_out)
+  cat("\n\n")
+
+  return(df_out)
 }

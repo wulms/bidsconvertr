@@ -65,8 +65,8 @@ dcm2nii_converter <- function(dcm2niix_string,
   }
   cat("\n\n")
   print_passed_time(i, list, start_timer, "Total:  ")
-  print("===================================")
-  print("Congratulation - the conversion was successful.")
+  cat("\n\n =================================== \n\n")
+  print("Congratulation - the conversion was successful. \n\n")
 }
 
 

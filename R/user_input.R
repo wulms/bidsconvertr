@@ -305,10 +305,10 @@ edit_session_df <- function(){
                                                default = df$session_BIDS[i])$res}
 
   df_out <- subject_session_df_BIDS %>%
-    select(-session_BIDS) %>%
     left_join(df, by = "session")
 
-  # print(df_out)
+  cat("Sessions are edited:")
+  print(df_out)
   return(df_out)
 }
 

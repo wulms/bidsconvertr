@@ -47,7 +47,7 @@ add_participants_tsv <- function(tsv_path = paste0(path_output_converter, "/json
       unique()
 
     patient_tsv_anon <- patient_tsv %>%
-      select(birthdate, acquisitiondate, sex, weight, age)
+      select(-birthdate, -acquisitiondate, -sex, -weight, -age)
 
     # Write participants_anon file
     write_tsv(patient_tsv_anon,

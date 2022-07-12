@@ -10,7 +10,7 @@
 list_json_files <- function(input_path,
                             output_suffix = ""){
 
-  print("Listing up the json sidecar files")
+  cat("Listing up the json sidecar files\n\n")
   json_files <- list.files(input_path, pattern = "json$",
                            recursive = TRUE, full.names = TRUE)
 
@@ -58,6 +58,8 @@ list_json_files <- function(input_path,
   json_overview %>%
     print(n = Inf)
 
+  cat("\n\n Sequence overview saved to file:\n\n")
+  print(paste0(path_output_converter, "/sequence_overview", output_suffix, ".tsv"))
   readr::write_tsv(json_overview,
                    file = paste0(path_output_converter, "/sequence_overview", output_suffix, ".tsv"),
                    append = FALSE)
@@ -79,7 +81,7 @@ list_json_files <- function(input_path,
 #'
 #' @examples get_json_headers(list_of_jsons)
 get_json_headers <- function(json) {
-  print("Extracting the headers of the json sidecars.")
+  cat("\n\n Extracting the headers of the json sidecars.\n\n")
   start_timer <- Sys.time()
   mri_properties <- vector()
   # str(mri_properties)
@@ -100,7 +102,7 @@ get_json_headers <- function(json) {
   empty_df <- data.frame()
   for (k in names)
     empty_df[[k]] <- as.character()
-  print("Extracted all json headers - Success!")
+  cat("Extracted all json headers - Success!\n\n")
   empty_df <- empty_df %>% mutate(Path = NULL)
   return(empty_df)
 }
@@ -126,7 +128,7 @@ read_json_headers <- function(json_path, suffix = "") {
   empty_df <- get_json_headers(json)
 
   if (file.exists(json_metadata_output_tsv) == 1) {
-    print("Comparing the json metadata tsvs")
+    cat("Comparing the json metadata tsvs")
     length_output <- readr::read_tsv(json_metadata_output_tsv, show_col_types = FALSE) %>% nrow()
     length_input <- nrow(json_files)
     print(paste("Output length", length_output))
@@ -140,7 +142,7 @@ read_json_headers <- function(json_path, suffix = "") {
     }}
 
   if(file.exists(json_metadata_output_tsv) == 0){
-
+    cat("\n\n Merged json file does not exists. Will be extracted. \n\n")
     start_timer <- Sys.time()
 
     for (i in 1:length(json)) {

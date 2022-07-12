@@ -5,7 +5,9 @@
 #' @param list_of_files list, where the item comes from
 #' @param start Sys.time() of start, used to calculate the time difference
 #' @param string String, to describe the function of the loop
-
+#' @export
+#'
+#' @examples
 print_passed_time <- function(item, list_of_files, start, string) {
   end <- Sys.time()
   time_difference <- difftime(end, start, unit = "mins") %>% round(2)
@@ -88,15 +90,17 @@ convert_to_BIDS <- function(sequence_table = "off"){
   read_json_headers(json_path = path_output_converter_temp_nii, suffix = "_anon")
 
   cat("\n\n\n============ Sequence Mapper ===============\n\n\n")
-  sequence_mapper(edit_table = sequence_table)
+  # sequence_mapper(edit_table = sequence_table)
 
   check_sequence_map()
-
   cat("\n\n\n============ Copy files to BIDS ===============\n\n\n")
   copy2BIDS()
 
+  cat("\n\n\n============ start BIDS validator ===============\n\n\n")
+  start_bids_validator_docker()
+  Sys.sleep(10)
   cat("\n\n\n============ Create Dashboard ===============\n\n\n")
-  create_dashboard()
+  # create_dashboard()
 
   cat("\n\n\n============ Starting Shiny BIDS ===============\n\n\n")
   run_shiny_BIDS()

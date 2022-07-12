@@ -44,11 +44,11 @@ Debug: Cannot open the connection - This means, that a file is missing! Check in
 
 #### Big thanks on the contributors of the following packages:  
 
-The viewer is the papaya viewer: [Link](https://rii-mango.github.io/Papaya/)  
+The viewer is the [papaya viewer](https://rii-mango.github.io/Papaya/)  
 
-Brought to R by John Muschelli: [Link](https://cran.r-project.org/web/packages/papayar/index.html)  
+Brought to [R by John Muschelli](https://cran.r-project.org/web/packages/papayar/index.html)  
 
-Brought to Shiny by John Muschelli: [Link](https://johnmuschelli.com/papayaWidget/index.html)  
+Brought to [Shiny by John Muschelli](https://johnmuschelli.com/papayaWidget/index.html)  
 
 
 

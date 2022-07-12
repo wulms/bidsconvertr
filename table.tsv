@@ -1,17 +1,21 @@
 sequence	total	possible_sequence	BIDS_sequence	BIDS_type	relevant
-t1_mprage_sag_ipat2_1p0iso	2	t1, t2	T1w	anat	1
-AAHead_Scout_32ch-head	2	NA	moehrensuppe	anat	1
-cmrr_2p4iso_mb8_TR0700	2	NA	task-reward_acq-mp8_echo-1_bold	func	1
-cmrr_2p4iso_mb8_TR0700_SBRef	2	NA	task-reward_acq-mp8_echo-1_sbref	func	1
-cmrr_2p5iso_mb3me3_TR1500_e1	2	NA	123	func	1
-cmrr_2p5iso_mb3me3_TR1500_e2	2	NA	task-stop_acq-mb3m3_run-2_bold	func	1
-cmrr_2p5iso_mb3me3_TR1500_e3	2	NA	task-stop_acq-mb3m3_run-3_bold	func	1
-cmrr_2p5iso_mb3me3_TR1500_SBRef_e1	2	NA	task-stop_acq-mb3m3_run-1_sbref	func	1
-cmrr_2p5iso_mb3me3_TR1500_SBRef_e2	2	NA	task-stop_acq-mb3m3_run-2_bold	func	1
-cmrr_2p5iso_mb3me3_TR1500_SBRef_e3	2	NA	task-stop_acq-mb3m3_run-3_bold	func	1
-field_map_2p4iso_e1	2	NA	acq-2p4_magnitude1	fmap	1
-field_map_2p4iso_e2	2	NA	acq-2p4_magnitude2	fmap	1
-field_map_2p4iso_e2_ph	2	NA	acq-2p4_phasediff	fmap	1
-field_map_2p5iso_e1	2	NA	acq-2p5_magnitude1	fmap	1
-field_map_2p5iso_e2	2	NA	acq-2p5_magnitude2	fmap	1
-field_map_2p5iso_e2_ph	2	NA	acq-2p5_phasediff	fmap	1
+T2W_TSE	3	T2, TSE	T2w	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+T2_FFE_Blut	7	T2, FFE	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+3DT1TFElrsQFOV	4	T1, rs	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+3DT1TFElrs	3	T1, rs	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+SmartBrain	4	localizer	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+SURVEY_MST_i00001	3	localizer	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+SURVEY_MST_i00004	3	localizer	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+SURVEY_MST_i00007	3	localizer	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+fMRsshpRS72	7	fMR, RS	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+fMRssh2s35_82	4	fMR	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+FLAIR_TE120	7	FLAIR	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+DTI36Jones20n	7	DTI	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+isoReg_-_WIP_DTI36Jones20n	3	DTI	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+isoWIP_DTI36Jones20n_Maske0	3	DTI	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+Reg_-_WIP_DTI36Jones20n	3	DTI	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+isoReg_-_DTI36Jones20n	1	DTI	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+Reg_-_DTI36Jones20n	1	DTI	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+Patient_Aligned_MPR_i00001	4	NA	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+Patient_Aligned_MPR_i00023	4	NA	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)
+Patient_Aligned_MPR_i00039	4	NA	please edit (T1w/T2/etc)	please edit (anat/dwi/func/etc)	please edit (0 = no, 1 = yes)

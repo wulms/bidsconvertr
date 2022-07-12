@@ -17,14 +17,16 @@ start_bids_validator_online <- function(){
 #' @export
 #'
 #' @examples
-start_bids_validator_docker <- function(bids_path = user_output_dir){
+start_bids_validator_docker <- function(bids_path = path_output_bids){
 
   if (system("docker", show.output.on.console = FALSE) == 127) {
     #  | system2("docker") == 127
     browseURL("https://docs.docker.com/desktop/windows/install/")
-    stop("Please install DOCKER")
+    cat("Starting the online version of the BIDS-Validator. \n\n")
+    start_bids_validator_online()
+    stop("Please install DOCKER\n\n")
   }
-  cat("\014")
+  # cat("\014")
 
   command <- paste0("docker run --rm -v ", bids_path, ":/data:ro bids/validator /data")
 

@@ -94,6 +94,14 @@ create_BIDS_regex <- function(){
   return(valid_BIDS_regex)
 }
 
+#' Checks the plausibility of entered BIDS sequences based on regular expressions.
+#'
+#' @param df
+#'
+#' @return
+#' @export
+#'
+#' @examples
 check_BIDS_plausibility <- function(df){
 
   valid_BIDS_regex <- create_BIDS_regex()
@@ -101,19 +109,36 @@ check_BIDS_plausibility <- function(df){
   df <- df %>%
     mutate(valid = str_detect(BIDS_sequence, valid_BIDS_regex) %>%
              as.numeric(),
+           valid = ifelse(str_detect(BIDS_type, "^(anat|dwi|func|fmap|perf)$",
+                                     negate = TRUE), yes = 0, no = valid),
+           valid = ifelse(str_detect(relevant, "^(0|1)$",
+                                     negate = TRUE), yes = 0, no = valid),
            matched = str_extract(BIDS_sequence, valid_BIDS_regex),
            unmatched = str_remove_all(BIDS_sequence, valid_BIDS_regex))
   return(df)
 }
 
 
+#' Sequence mapper shiny app.
+#'
+#' @param DF
+#' @param outdir
+#' @param outfilename
+#'
+#' @return
+#' @export
+#'
+#' @examples
 editTable <- function(DF, outdir=getwd(), outfilename="table"){
 
 # based on these: https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data
 
-
+  cat("\n\n\nSequence mapper started:...\n\n\n")
 
   DF <- check_BIDS_plausibility(DF)
+
+  # print(DF)
+
 
   dt_output = function(title, id) {
     fluidRow(column(
@@ -165,7 +190,7 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
 
                               # rHandsontableOutput("hot"),
                               br(),
-                              dt_output('Please edit the white columns and click "save". Red columns indicate non-valid BIDS strings. Green volumns indicate a match with the BIDS regular expression', 'x1'),
+                              dt_output('Please edit the red & bold columns (double-click) and "save". Red indicates non-valid BIDS strings. Green indicates a valid "BIDS_sequence", "BIDS_type" and "relevant" column.', 'x1'),
                               width = 10
 
 
@@ -179,6 +204,7 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
     values <- reactiveValues()
 
     data_reactive <- reactiveVal(DF)
+
 
 
     # DF formatting
@@ -205,17 +231,17 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
       formatStyle('valid',
                   target = "row",
                   color = 'black',
-                  backgroundColor = styleEqual(c(0,1), c('tomato', 'lightgreen')),
-                  fontWeight = 'bold')  %>%
+                  backgroundColor = styleEqual(c(0,1), c('tomato', 'lightgreen')))  %>%
+        # formatStyle(c("BIDS_sequence", "BIDS_type"),
+        #             backgroundColor = 'white') %>%
+        formatStyle(c("BIDS_type", "BIDS_sequence", "relevant"),
+                    # target = "row",
+                    backgroundColor = JS("(/please edit/).test(value) ? 'red' : (/^(anat|dwi|func|fmap|perf)$/).test(value) ? 'lightgreen' : ''"),
+                    fontWeight = "bold") %>%
         formatStyle('relevant',
-                    #target = "row",
-                    #color = 'black',
-                    backgroundColor = styleEqual(c(0,1), c('white', 'lightgreen')),
-                    fontWeight = 'bold')  %>%
-        formatStyle(
-                    c("BIDS_sequence", "BIDS_type"),
-                    backgroundColor = 'white'
-                  )%>%
+                     #target = "row",
+                     backgroundColor = styleEqual(c(0, 1), c('grey', 'lightgreen')),
+                    fontWeight =  styleEqual(c(0, 1), c('italics', 'bold')))  %>%
       formatStyle(columns = c(1:9), fontSize = '75%')
       },
       server = TRUE)
@@ -252,11 +278,11 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
 
     })
 
-      })
 
     onStop(function() {
-      stopApp()
-      cat("Session stopped. Validate 'sequence_map.tsv' for BIDS plausibility. Only sequences marked as 'relevant' are checked. \n\n ")
+     stopApp("Sequence mapper stopped.")
+
+            cat("Sequence mapper stopped. \n\nValidate 'sequence_map.tsv' for BIDS plausibility. Only sequences marked as 'relevant' are checked. \n\n ")
 
       bids_unmatched <- file.path(outdir, sprintf("%s.tsv", outfilename)) %>%
         readr::read_tsv(file = ., show_col_types = FALSE) %>%
@@ -269,18 +295,15 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
       } else {
         cat("Your BIDS-sequences are valid.\n\n")
 
-        check_sequence_map()
-
-        copy2BIDS()
-
-        create_dashboard()
-
-        run_shiny_BIDS()
       }
 
-
+     # Sys.sleep(5)
 
     })
+
+  })
+
+
 
 
 
