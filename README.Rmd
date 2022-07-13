@@ -51,10 +51,40 @@ Renaming of unclean subject-ID's or session-ID's.
 Everytime new files or sequences are added, the 'sequence mapper' opens again until everything is declared according to BIDS.
 Already processed files are skipped.
 
-## Installation
+## Installation of R
+
+##### Windows
+
+download a recent [R version](https://cran.r-project.org/bin/windows/base/)
 
 If you work on Windows just download [Rtools](https://cran.r-project.org/bin/windows/Rtools/) according to your R-version and install it.
 It is required to install the packages.
+
+Install [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
+
+##### Linux
+
+```{bash}
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/r-project.gpg
+
+
+echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | sudo tee -a /etc/apt/sources.list.d/r-project.list
+
+sudo apt update
+
+sudo apt install --no-install-recommends r-base
+
+sudo apt install r-base-dev
+
+sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev
+```
+
+Install [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
+
+"Right-Click -> Open With ->Software Install" should help in installing it.
+
+
+#### Inside R
 
 You need to install the R package 'devtools' once, which is required to install packages from Github.
 
@@ -156,13 +186,12 @@ The terminal shows a table with a "subject" and a "session" column.
 You are able to select any folder on your disk.
 So you are able to store raw data at another location than converted data.
 
-### User dialog - part II (subject- and session-ID's): Cleaning or extraction of subject-ID's and renaming of sessions (optional)
+### User dialog - part II (subject- and session-ID's, optional): 
 
-As mentioned above.
-You are able to convert also data without "sub-" or "ses-" foldernames with the BIDSconvertR.
+This part is about cleaning or extraction of subject-ID's and renaming of sessions.
 
 You are asked, if your subject- and session-ID's are fine, or if you want to edit them.
-If your data was alread acquired with clear subject- and session-ID's you can skip this procedure by selecting:
+If your data was already acquired with clear subject- and session-ID's you can skip this procedure by selecting:
 
 +-------------------------------+-------------------------------------------------------------------------------------------------------------+
 | Option to select              | What happens?                                                                                               |
