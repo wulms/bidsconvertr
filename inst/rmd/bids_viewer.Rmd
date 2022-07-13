@@ -165,5 +165,7 @@ DT::datatable(
   )
 ```
 
-
+```{r, echo = FALSE}
+session$onSessionEnded(stopApp)
+```
 
