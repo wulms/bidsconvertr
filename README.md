@@ -178,13 +178,13 @@ The terminal shows a table with a “subject” and a “session” column.
 You are able to select any folder on your disk. So you are able to store
 raw data at another location than converted data.
 
-### User dialog - part II (subject- and session-ID’s): Cleaning or extraction of subject-ID’s and renaming of sessions (optional)
+### User dialog - part II (subject- and session-ID’s, optional):
 
-As mentioned above. You are able to convert also data without “sub-” or
-“ses-” foldernames with the BIDSconvertR.
+This part is about cleaning or extraction of subject-ID’s and renaming
+of sessions.
 
 You are asked, if your subject- and session-ID’s are fine, or if you
-want to edit them. If your data was alread acquired with clear subject-
+want to edit them. If your data was already acquired with clear subject-
 and session-ID’s you can skip this procedure by selecting:
 
 <table>
@@ -414,17 +414,17 @@ each letter of the filename.
 
 If everything is fine:
 
-1 - The files are copied to BIDS.
+1.  The files are copied to BIDS.
 
-2 - The BIDS validation is started. Via Docker, if it is installed on
-your local machine, otherwise the online-version is launched and you
-have to select your folder manually.
+2.  The BIDS validation is started. Via Docker, if it is installed on
+    your local machine, otherwise the online-version is launched and you
+    have to select your folder manually.
 
-2 - You are asked, if you want to delete temporary images from your hard
-drive. Don’t do this manually! Do this only, when you have validated
-your data, and you already acquired all your data.
+3.  You are asked, if you want to delete temporary images from your hard
+    drive. Don’t do this manually! Do this only, when you have validated
+    your data, and you already acquired all your data.
 
-3 - A Shiny viewer is started to visually inspect the images.
+4.  A Shiny viewer is started to visually inspect the images.
 
 <figure>
 <img src="inst/figure/bids_viewer.PNG" alt="BIDS viewer" />
@@ -437,17 +437,18 @@ your data, and you already acquired all your data.
 
 You can also edit the file “user_settings.R” manually to your needs.
 
-| Variable             | Example                                                                                                                   | Description                                                                                                                                     |
-|----------------------|---------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| path_input_dicom     | “/media/niklas/BIDS_data/dicom/”                                                                                          | Input path, where your DICOM folders are inside of session folders                                                                              |
-| path_output          | “/media/niklas/BIDS_data/BIDSconvertR”                                                                                    | A path, where all the output of the converter should be written to.                                                                             |
-| study_name           | “BiDirect Study”                                                                                                          | Your study name, only needed for the dashboard rendering.                                                                                       |
-| regex_subject_id     | “\[:digit:\]{5}”                                                                                                          | Regex defining your unique subject ID’s.                                                                                                        |
-| regex_group_id       | “\[:digit:\]{1}(?=\[:digit:\]{4})”                                                                                        | Regex defining the group ID (if present).                                                                                                       |
-| regex_remove_pattern | “\[:punct:\]{1}\|\[:blank:\]{1}\|((b\|d)i(d\|b)i\|bid\|bd\|bdi)(ect\|rect)($\|(rs\|T2TSE\|inclDIRSequenz\|neu\|abbruch))” | These regex will be removed from the file names.                                                                                                |
-| sessions_id_old      | c(“Baseline”, “FollowUp”, “FollowUp2”, “FollowUp3”)                                                                       | The folder (and session) names before conversion                                                                                                |
-| sessions_id_new      | c(“0”, “2”, “4”, “6”)                                                                                                     | The folder (and session) names after conversion. These can be identical to “sessions_id_old”. But note, that in BIDS a number is the way to go. |
-| mri_sequences        | “T1\|T2\|DTI\|fmr\|rest\|rs\|func\|FLAIR\|smartbrain\|survey\|smart\|ffe\|tse”                                            | These are regular expressions, which should be matched to your MRI sequence ID’s.                                                               |
+| Variable                 | Example                                                                                                                   | Description                                                                                                                                     |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| path_input_dicom         | “/media/niklas/BIDS_data/dicom/”                                                                                          | Input path, where your DICOM folders are inside of session folders                                                                              |
+| path_output              | “/media/niklas/BIDS_data/BIDSconvertR”                                                                                    | A path, where all the output of the converter should be written to.                                                                             |
+| study_name               | “BiDirect Study”                                                                                                          | Your study name, only needed for the dashboard rendering.                                                                                       |
+| regex_subject_id         | “\[:digit:\]{5}”                                                                                                          | Regex defining your unique subject ID’s.                                                                                                        |
+| regex_group_id           | “\[:digit:\]{1}(?=\[:digit:\]{4})”                                                                                        | Regex defining the group ID (if present).                                                                                                       |
+| regex_remove_pattern     | “\[:punct:\]{1}\|\[:blank:\]{1}\|((b\|d)i(d\|b)i\|bid\|bd\|bdi)(ect\|rect)($\|(rs\|T2TSE\|inclDIRSequenz\|neu\|abbruch))” | These regex will be removed from the file names.                                                                                                |
+| sessions_id_old          | c(“Baseline”, “FollowUp”, “FollowUp2”, “FollowUp3”)                                                                       | The folder (and session) names before conversion                                                                                                |
+| sessions_id_new          | c(“0”, “2”, “4”, “6”)                                                                                                     | The folder (and session) names after conversion. These can be identical to “sessions_id_old”. But note, that in BIDS a number is the way to go. |
+| mri_sequences            | “T1\|T2\|DTI\|fmr\|rest\|rs\|func\|FLAIR\|smartbrain\|survey\|smart\|ffe\|tse”                                            | These are regular expressions, which should be matched to your MRI sequence ID’s.                                                               |
+| dcm2niix_argument_string | “-ba y -f %d -z y -w 0 -i y”                                                                                              | string of the arguments, which are used for dcm2niix, can be changed.                                                                           |
 
 Table 1: Information in the user settings file
 
@@ -466,6 +467,30 @@ run the “install_dcm2niix()” version with your version number.
 ``` r
 install_dcm2niix("v1.0.20181125") # if you want to install the specific version v1.0.20181125
 ```
+
+### dcm2niix: other conversion string
+
+You can edit the dcm2niix_argument_string in the “user_settings.R” file.
+
+Just read
+[here](https://www.nitrc.org/plugins/mwiki/index.php/dcm2nii:MainPage)
+or inspect the possible arguments from this image:
+
+![](inst/figure/dcm2niix_arguments.JPG)
+
+dcm2niix_argument_string \<- “-ba y -f %d -z y -w 0 -i y”
+
+| Argument | Setting | Behaviour                                        |
+|----------|---------|--------------------------------------------------|
+| -ba      | y (yes) | bids anonymisation of JSON sidecar               |
+| -f       | %d      | string for the filename (do not change this one) |
+| -z       | y (yes) | compress the output (nii.gz instead of nii)      |
+| -w       | 0       | in case of duplicate filename -\> skip           |
+| -i       | y (yes) | ignore derived, localizer and 2d images          |
+
+Used arguments for conversion
+
+Please edit these, if the conversion went wrong.
 
 ## Citation
 
