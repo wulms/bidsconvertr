@@ -116,23 +116,25 @@ get_user_input <- function(){
 #' @export
 #'
 #' @examples
-cleaning_subject_ids <- function(){
+cleaning_subject_ids <- function() {
   ######################### regex cleaning subject ID ############################
-  data_cleaning_needed = menu(graphics = TRUE,
-                              choices = c("Yes, I need to remove some prefixes, suffices or else.",
-                                          "No, my subject-ID's are fine."),
-                              title="Do your subject-ID's need some file cleaning using regular expressions?")
+  data_cleaning_needed = menu(
+    graphics = TRUE,
+    choices = c(
+      "Yes, I need to remove some prefixes, suffices or else.",
+      "No, my subject-ID's are fine."
+    ),
+    title = "Do your subject-ID's need some file cleaning using regular expressions?"
+  )
 
-  if(data_cleaning_needed == 1){
-
+  if (data_cleaning_needed == 1) {
     print("--- Configuring data cleaning of subject names. --- \n\n")
 
     switch_subject_regex = 2
     while (switch_subject_regex == 2) {
+      regex_subject_id <<- svDialogs::dlg_input("Please set your subject-ID regular expression: e.g. [:digit:]{3} for a three digit ID. \n \n Press cancel, if you don't know what to do, or want to keep the subject folder name.")$res
 
-      regex_subject_id <- svDialogs::dlg_input("Please set your subject-ID regular expression: e.g. [:digit:]{3} for a three digit ID. \n \n Press cancel, if you don't know what to do, or want to keep the subject folder name.")$res
-
-      if (!length(regex_subject_id) | isTRUE(str_detect(regex_subject_id, "nothing_configured"))) {
+      if (!length(regex_subject_id) | isTRUE(str_detect(regex_subject_id, "nothing_configured")) | exists("regex_subject_id") == 0) {
         # The user clicked the 'cancel' button. Using the subject-ID from the folder
         cat("Ok, I am using the subject folder name as the subject-ID. \n\n")
         regex_subject_id <<- "nothing_configured"
@@ -142,44 +144,52 @@ cleaning_subject_ids <- function(){
 
       } else {
 
-        # applying the regex to the subject ID
-        print(paste("You selected: \n\n", regex_subject_id, "\n\n"))
-        regex_subject_id <<- stringr::regex(regex_subject_id)
-        subject_session_df_BIDS <<- subject_session_df %>%
-          mutate(rest = stringr::str_remove_all(subject, regex_subject_id),
-                 subject_BIDS = stringr::str_extract(subject, regex_subject_id) %>%
-                   paste0("sub-", .) %>%
-                   str_replace("sub-sub-", "sub-"))
-      }
 
-      print("Do the subject columns look valid?\n\n")
-      subject_session_df_BIDS %>%
-        select(-dicom_folder, -session) %>% unique() %>% print()
-
-      switch_subject_regex <- menu(graphics = TRUE,
-                                   choices = c("Yes, they are valid.",
-                                               "No, please let me change the subject regular expression."),
-                                   title="Are the subject-ID's correct?")
-
+      # applying the regex to the subject ID
+      print(paste("You selected: \n\n", regex_subject_id, "\n\n"))
+      regex_subject_id <<- stringr::regex(regex_subject_id)
+      subject_session_df_BIDS <<- subject_session_df %>%
+        mutate(
+          rest = stringr::str_remove_all(subject, regex_subject_id),
+          subject_BIDS = stringr::str_extract(subject, regex_subject_id) %>%
+            paste0("sub-", .) %>%
+            str_replace("sub-sub-", "sub-")
+        )
     }
 
+    print("Do the subject columns look valid?\n\n")
+    subject_session_df_BIDS %>%
+      select(-dicom_folder, -session) %>% unique() %>% print()
+
+    switch_subject_regex <- menu(
+      graphics = TRUE,
+      choices = c(
+        "Yes, they are valid.",
+        "No, please let me change the subject regular expression."
+      ),
+      title = "Are the subject-ID's correct?"
+    )
+
+  }
 
 
+
+
+
+    cat("\n\n Your 'regex_subject_id' is:\n\n")
+    print(regex_subject_id)
 
     ############################# regex pattern to remove ####################################
     print("--- Configuring data cleaning of patterns, that needs to be removed from the subject-ID's --- \n\n")
 
     switch_pattern_regex = 2
     while (switch_pattern_regex == 2) {
-      regex_remove_pattern <- svDialogs::dlg_input("Please set your regular expressions, you want to remove from the data. \n The string 'my_study' would remove this string from each of the ID's. \n If you want to use multiple patterns just connect them with the '|' operator: 'study_a|study_b'\n\n Press cancel, if you don't know what to do, nothing will be removed from the string.")$res
+      regex_remove_pattern <<- svDialogs::dlg_input("Please set your regular expressions, you want to remove from the data. \n The string 'my_study' would remove this string from each of the ID's. \n If you want to use multiple patterns just connect them with the '|' operator: 'study_a|study_b'\n\n Press cancel, if you don't know what to do, nothing will be removed from the string.")$res
 
       if (!length(regex_remove_pattern) | isTRUE(str_detect(regex_remove_pattern, "nothing_configured"))) {
         # The user clicked the 'cancel' button. Using the sequence-ID from the folder
         cat("OK, I am using the session folder name as session-ID.")
         regex_remove_pattern <<- "nothing_configured"
-        #subject_session_df_BIDS <<- subject_session_df_BIDS %>%
-        #  mutate(subject_BIDS = paste0("sub-", subject_BIDS) %>%
-        #           str_replace("sub-sub-", "sub-"))
 
       } else {
 
@@ -204,6 +214,9 @@ cleaning_subject_ids <- function(){
 
     }
   } else {
+    regex_subject_id <<- "nothing_configured"
+    regex_remove_pattern <<- "nothing_configured"
+
     subject_session_df_BIDS <<- subject_session_df %>%
       mutate(subject_BIDS = paste0("sub-", subject) %>%
                str_replace("sub-sub-", "sub-"))
@@ -263,6 +276,7 @@ cleaning_session_ids <- function(){
 
   cat("Your sessions are numbered automatically. You can change this in the next step: \n\n")
 
+  cat("These are your unique session-ID's:\n\n")
   subject_session_df_BIDS$session %>% unique() %>% print()
 
   session_cleaning_needed = menu(graphics = TRUE,
@@ -271,12 +285,18 @@ cleaning_session_ids <- function(){
                               title="Do your session-ID's need some renaming?")
 
   if(session_cleaning_needed == 1){
-    subject_session_df_BIDS <<- edit_session_df()
+    subject_session_df_BIDS <<- edit_session_df() %>%
+      mutate(session_BIDS = paste0("ses-", session_BIDS) %>%
+               str_remove("^ses-(?=ses-)"))
+  } else {
+    subject_session_df_BIDS <<- subject_session_df_BIDS %>%
+      mutate(session_BIDS = paste0("ses-", session) %>%
+               str_remove("^ses-(?=ses-)"))
   }
 
   cat("Your new sessions are named like this:\n\n")
   subject_session_df_BIDS %>%
-    select(session, session_BIDS) %>% unique()
+    select(session, session_BIDS) %>% unique() %>% print()
 }
 
 
@@ -308,7 +328,7 @@ edit_session_df <- function(){
     left_join(df, by = "session")
 
   cat("Sessions are edited:")
-  print(df_out)
+  # print(df_out)
   return(df_out)
 }
 
@@ -385,8 +405,8 @@ regex_subject_id <- "', regex_subject_id,'"
 regex_remove_pattern <- "', regex_remove_pattern,'"
 
 # session ids
-sessions_id_old <- c("', subject_session_df_BIDS$session %>% paste0(., collapse = '", "'), '")
-sessions_id_new <- c("', subject_session_df_BIDS$session_BIDS %>% paste0(., collapse = '", "'), '")
+sessions_id_old <- c("', subject_session_df_BIDS$session %>% unique() %>% paste0(., collapse = '", "'), '")
+sessions_id_new <- c("', subject_session_df_BIDS$session_BIDS %>% unique() %>% paste0(., collapse = '", "'), '")
 
 # mri sequence ids
 mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe|tse")')

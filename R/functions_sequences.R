@@ -8,8 +8,7 @@
 #'
 #' @examples
 sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
-                            output_name = "sequence_map",
-                            edit_table = "off"){
+                            output_name = "sequence_map"){
 
   cat("\n\nPrepare data and start sequence_mapper\n\n")
 
@@ -48,11 +47,11 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
   cat("\n\n")
   readr::write_tsv(final_df, file = mapper_file)
 
-  if(edit_table == "on"){
-    editTable(DF = final_df,
-              outdir = paste0(path_output_converter),
-              outfilename = output_name)
-  }
+  # if(edit_table == "on"){
+  #   editTable(DF = final_df,
+  #             outdir = paste0(path_output_converter),
+  #             outfilename = output_name)
+  # }
   return(final_df)
 
 }
@@ -89,8 +88,9 @@ check_sequence_map <- function(sequence_map_file = "sequence_map"){
 
     cat("\n\n The sequence mapper is started. Please wait...\n\n")
 
-    sequence_mapper(edit_table = "on")
-    cat("2\n")
+    editTable(DF = df_import,
+              outdir = paste0(path_output_converter),
+              outfilename = "sequence_map")
 
 
     cat("\n\n")

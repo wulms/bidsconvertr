@@ -144,6 +144,8 @@ copy2BIDS <- function(sequence_map = "sequence_map",
   if(nrow(duplicate_output_paths) > 1){
     print("WARNING - Duplicates identified")
     cat("\n\n")
+    readr::write_tsv(duplicate_output_paths, file = paste0(path_output, "duplicate_paths.tsv"))
+    cat("Writing 'duplicate_paths.tsv' to your output folder.")
     print(duplicate_output_paths)
     Sys.sleep(10)
   }

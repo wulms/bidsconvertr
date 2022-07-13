@@ -121,7 +121,9 @@ read_json_headers <- function(json_path, suffix = "") {
 
   json_metadata_output_tsv <- paste0(path_output_converter, "/json_metadata", suffix, ".tsv")
 
-  json_files <- list_json_files(json_path, output_suffix = suffix)
+  json_files <- list_json_files(json_path, output_suffix = suffix) %>%
+    filter(str_detect(json_path, "participants\\.json", negate = TRUE))
+
   json = json_files$json_path
 
 
@@ -159,7 +161,7 @@ read_json_headers <- function(json_path, suffix = "") {
         result_new <- result_new[sort(names(result_new))]
 
         results_table <- result_new %>%
-          mutate(subject = str_extract(Path, paste0("sub-", regex_subject_id)),
+          mutate(subject = str_extract(Path, "sub-.*(?=/ses-)"),
                  #group = str_extract(subject, regex_group_id),
                  session = str_extract(Path, "ses-.*(?=/)"),
                  sequence = str_extract(Path, "ses-.*$") %>%
