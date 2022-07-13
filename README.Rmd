@@ -330,16 +330,16 @@ If your sequence is in the 'unmatched' column investigate each letter of the fil
 
 If everything is fine:
 
-1 - The files are copied to BIDS.
+1. The files are copied to BIDS.
 
-2 - The BIDS validation is started.
+2. The BIDS validation is started.
 Via Docker, if it is installed on your local machine, otherwise the online-version is launched and you have to select your folder manually.
 
-2 - You are asked, if you want to delete temporary images from your hard drive.
+3. You are asked, if you want to delete temporary images from your hard drive.
 Don't do this manually!
 Do this only, when you have validated your data, and you already acquired all your data.
 
-3 - A Shiny viewer is started to visually inspect the images.
+4. A Shiny viewer is started to visually inspect the images.
 
 ![BIDS viewer](inst/figure/bids_viewer.PNG){alt="BIDS viewer"}
 
