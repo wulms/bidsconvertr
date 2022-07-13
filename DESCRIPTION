@@ -46,6 +46,6 @@ URL: https://github.com/wulms/bidsconvertr
 BugReports: https://github.com/wulms/bidsconvertr/issues
 Imports: 
 Remotes: 
-    muschellij2/papayaWidget,
     muschellij2/neurobase,
+    muschellij2/papayaWidget,
     wleepang/shiny-directory-input
