@@ -76,7 +76,7 @@ dcm2nii_converter <- function(dcm2niix_string,
 #'
 #' @examples
 dcm2nii_converter_anon <- function(){
-  dcm2nii_converter(dcm2niix_string = "-ba y -f %d -z y -w 0 -i y",
+  dcm2nii_converter(dcm2niix_string = dcm2niix_argument_string,
                     input_folder = input_dicom_folders$dicom_folder %>% normalizePath(mustWork = F),
                     output_folder = input_dicom_folders$output_path_nii %>% normalizePath(mustWork = F)
   )

@@ -408,6 +408,14 @@ regex_remove_pattern <- "', regex_remove_pattern,'"
 sessions_id_old <- c("', subject_session_df_BIDS$session %>% unique() %>% paste0(., collapse = '", "'), '")
 sessions_id_new <- c("', subject_session_df_BIDS$session_BIDS %>% unique() %>% paste0(., collapse = '", "'), '")
 
+# edit this string only, if you know, what you are doing
+dcm2niix_argument_string <- "-ba y -f %d -z y -w 0 -i y"
+# -ba y = BIDS anonymisation (yes - anonymise JSON sidecar files)
+# -f %d = filename string (please do not change this one)
+# -z y = zip these files (yes - gunzip, nii.gz output)
+# -w 0 = name conflicts (0 = skip)
+# -i y = ignore derived, localicer and 2d images (yes)
+
 # mri sequence ids
 mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe|tse")')
 
