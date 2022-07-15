@@ -13,6 +13,18 @@ Link](https://www.flaticon.com/free-icons/mri).
 
 <!-- badges: end -->
 
+# Table of contents
+
+1.  [Aim](#aim)
+2.  [Installation of R](#installation_of_r)
+3.  [Installation of BIDSconvertR](#installation_of_bidsconvertr)
+4.  [Usage notes](#usage_notes)
+5.  [Workflow](#workflow)
+6.  [Additional information](#additional)
+7.  [Citation](#citation)
+
+## Aim <a name = "aim"></a>
+
 The goal of BIDSconvertR is to provide a workflow, which is able to:
 
 -   convert DICOM data to NIfTI data using
@@ -37,7 +49,7 @@ Everytime new files or sequences are added, the ‘sequence mapper’ opens
 again until everything is declared according to BIDS. Already processed
 files are skipped.
 
-## Installation of R
+## Installation of R <a name = "installation"></a>
 
 ##### Windows
 
@@ -74,7 +86,7 @@ Install
 “Right-Click -\> Open With -\>Software Install” should help in
 installing it.
 
-#### Inside R
+#### Inside R <a name = "installation_of_bidsconvertr"></a>
 
 You need to install the R package ‘devtools’ once, which is required to
 install packages from Github.
@@ -90,7 +102,7 @@ Now you are able to install the most recent development version of
 devtools::install_github(repo = "wulms/bidsconvertr")
 ```
 
-## Usage
+## Usage notes <a name = "usage_notes"></a>
 
 ### Input data
 
@@ -362,7 +374,7 @@ You select a folder, where the file is stored. This can be anywhere on
 your filesystem. This is the file, that you can edit to start the
 workflow again without setting up all the information.
 
-# Start of the workflow
+# Start of the workflow <a name = "workflow"></a>
 
 Based on the inputs your data is converted via dcm2niix into NifTI
 format.
@@ -431,7 +443,7 @@ If everything is fine:
 <figcaption>BIDS viewer</figcaption>
 </figure>
 
-# More information
+# More information <a name = "additional"></a>
 
 #### What is in my ‘user_settings.R’ file?
 
@@ -492,7 +504,7 @@ Used arguments for conversion
 
 Please edit these, if the conversion went wrong.
 
-## Citation
+## Citation <a name = "citation"></a>
 
 (Wulms 2022)
 

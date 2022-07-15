@@ -43,7 +43,7 @@ convert_to_BIDS <- function(sequence_table = "off"){
   copy2BIDS()
 
   cat("\n\n\n============ start BIDS validator ===============\n\n\n")
-  start_bids_validator_docker()
+  start_bids_validator()
   Sys.sleep(10)
   cat("\n\n\n============ Create Dashboard ===============\n\n\n")
   # create_dashboard()

@@ -17,7 +17,7 @@ start_bids_validator_online <- function(){
 #' @export
 #'
 #' @examples
-start_bids_validator_docker <- function(bids_path = path_output_bids){
+start_bids_validator <- function(bids_path = path_output_bids){
 
   #if system("docker", show.output.on.console = FALSE) == 127) {
   if (suppressWarnings({system2("docker") == 127})){
