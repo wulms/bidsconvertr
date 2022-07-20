@@ -1,6 +1,6 @@
 # Tutorial
 
-This procedure should demonstratehow tu use the BIDSconvertR. 
+This procedure should demonstrate how to use the BIDSconvertR. 
 We appreciate the [BIDScoin](https://github.com/Donders-Institute/bidscoin) team's permission to use their sample data.
 
 ## The installation procedure
