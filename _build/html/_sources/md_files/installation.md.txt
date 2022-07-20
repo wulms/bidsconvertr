@@ -1,0 +1,37 @@
+# Install R, dependencies and RStudio
+
+## Windows
+
+Download and install a recent [R
+version](https://cran.r-project.org/bin/windows/base/).
+
+If you work on Windows just download
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) according to
+your R-version and install it. It is required to install the packages.
+
+Download & install
+[RStudio](https://www.rstudio.com/products/rstudio/download/#download).
+
+## Linux
+
+``` bash
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/r-project.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | sudo tee -a /etc/apt/sources.list.d/r-project.list
+
+sudo apt update
+
+sudo apt install --no-install-recommends r-base
+
+sudo apt install r-base-dev
+
+sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev
+```
+
+Install
+[RStudio](https://www.rstudio.com/products/rstudio/download/#download).
+
+Then “Right-Click -\> Open With -\>Software Install” should help in
+installing it.
+
+

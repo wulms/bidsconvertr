@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced features &mdash; bidsconvertr 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Start of the workflow" href="workflow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> bidsconvertr
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bidsconvertr.html">BIDSconvertR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Install R, dependencies and RStudio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation_bidsconvertr.html">Install the BIDSconvertR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Workflow:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage_notes.html">Usage notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_notes_user_settings.html">Creation of ‘user settings’ file.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Start of the workflow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#resources-for-regular-expressions">Resources for regular expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#useful-regular-expressions">Useful regular expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#regular-expression-subject-id">Regular expression: subject-ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regular-expression-pattern-to-remove">Regular expression: pattern to remove</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#do-you-want-to-edit-your-session-ids">Do you want to edit your session-ID’s?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional information:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_settings_file.html">What is in my ‘user_settings.R’ file?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dcm2niix.html">dcm2niix customisation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">bidsconvertr</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Advanced features</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_files/usage_notes_advanced.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-features">
+<h1>Advanced features<a class="headerlink" href="#advanced-features" title="Permalink to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This part is optional.
+It is relevant for you, if you have untidy subject-ID’s (e.g. with some redundant prefix, suffix or string) or you want to rename your session-ID’s.</p>
+</div>
+<p>This part is about the optional cleaning or extraction of subject-ID’s and renaming
+of sessions.</p>
+<p>You are asked during the setup procedure, if your subject- and session-ID’s are fine, or if you
+want to edit them. If your data was already acquired with clear subject-
+and session-ID’s you can skip this procedure by selecting:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Option to select</strong></p></th>
+<th class="head"><p><strong>What happens?</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>No, my subject-ID’s are fine.</p></td>
+<td><p>The paths are created, subject- and session-ID’s get a “sub-” and “ses-” prefix, if it isn’t already there.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Yes</p></td>
+<td><p>Set a subject-ID regular expression or set a string, prefix, suffix or regular expression, which is then removed from each subject-ID.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="resources-for-regular-expressions">
+<h2>Resources for regular expressions<a class="headerlink" href="#resources-for-regular-expressions" title="Permalink to this heading"></a></h2>
+<p>For more information on regular expressions (regex) please see the
+<a class="reference external" href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">stringR cheat
+sheet</a>
+or <a class="reference external" href="https://regexone.com/">RegexOne</a>.</p>
+<embed src="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf" type="application/pdf" width="100%" height="400">
+<p>Each regex set here should match to
+your data. If you encounter any problems just contact me via mail or via
+the issues in this repository.</p>
+<p>These both functions should give you enough flexibility to clean up your
+filenames and modify your regular expression step by step.</p>
+</section>
+<section id="useful-regular-expressions">
+<h2>Useful regular expressions<a class="headerlink" href="#useful-regular-expressions" title="Permalink to this heading"></a></h2>
+<p>The subject-ID is from the folder name. If no regular expression is used, the subject-ID remains unchanged.</p>
+<section id="regular-expression-subject-id">
+<h3>Regular expression: subject-ID<a class="headerlink" href="#regular-expression-subject-id" title="Permalink to this heading"></a></h3>
+<p>These regular expression extracts the subject-ID from the input string. This can be used, if you had a clear defined naming convention for all your files.</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>subject-ID</p></th>
+<th class="head"><p>regular expression</p></th>
+<th class="head"><p>described in words</p></th>
+<th class="head"><p>output subject-ID</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>01234</p></td>
+<td><p>[:digit:]{5}</p></td>
+<td><p>5 digits</p></td>
+<td><p>sub-01234</p></td>
+</tr>
+<tr class="row-odd"><td><p>Control2132</p></td>
+<td><p>(Control|Patient)[:digit:]{4}</p></td>
+<td><p>“Control” OR “Patient” followed by 4 digits</p></td>
+<td><p>sub-Control2132</p></td>
+</tr>
+<tr class="row-even"><td><p>Patient0123_test</p></td>
+<td><p>(Control|Patient)[:digit:]{4}</p></td>
+<td><p></p></td>
+<td><p>sub-Patient0213</p></td>
+</tr>
+<tr class="row-odd"><td><p>abcd0123</p></td>
+<td><p>[:alpha:]{4}[:digit:]{4}</p></td>
+<td><p>4 letters and 4 digits</p></td>
+<td><p>sub-abcd0123</p></td>
+</tr>
+<tr class="row-even"><td><p>pilot_sdfjd3222</p></td>
+<td><p>[:alpha:]{4}[:digit:]{4}</p></td>
+<td><p></p></td>
+<td><p>sub-sdfjd3222</p></td>
+</tr>
+<tr class="row-odd"><td><p>adc932d</p></td>
+<td><p>[:alnum:]{5,7}</p></td>
+<td><p>between 5 to 7 alphanumeric (letters, digits)</p></td>
+<td><p>sub-adc932d</p></td>
+</tr>
+<tr class="row-even"><td><p>23d49</p></td>
+<td><p>[:alnum:]{5,7}</p></td>
+<td><p></p></td>
+<td><p>sub-23d49</p></td>
+</tr>
+</tbody>
+</table>
+<p>Examples of subject-ID regular expressions</p>
+</section>
+<section id="regular-expression-pattern-to-remove">
+<h3>Regular expression: pattern to remove<a class="headerlink" href="#regular-expression-pattern-to-remove" title="Permalink to this heading"></a></h3>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>subject-ID</p></th>
+<th class="head"><p>regular expression</p></th>
+<th class="head"><p>described in words</p></th>
+<th class="head"><p>output subject-ID</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>02313_bidirect</p></td>
+<td><p>_(bidirect|BiDirect|Bidiect)</p></td>
+<td><p>“_” followed by “bidirect”, “BiDirect” or “BiDiect”</p></td>
+<td><p>sub-02313</p></td>
+</tr>
+<tr class="row-odd"><td><p>03211_BiDirect</p></td>
+<td><p>_(bidirect|BiDirect|Bidiect)</p></td>
+<td><p></p></td>
+<td><p>sub-03211</p></td>
+</tr>
+<tr class="row-even"><td><p>02111_Bidiect</p></td>
+<td><p>_(bidirect|BiDirect|Bidiect)</p></td>
+<td><p></p></td>
+<td><p>sub-02111</p></td>
+</tr>
+<tr class="row-odd"><td><p>test0111</p></td>
+<td><p>test|study_a_</p></td>
+<td><p>“test” or “study_a_”</p></td>
+<td><p>sub-0111</p></td>
+</tr>
+<tr class="row-even"><td><p>study_a_1111</p></td>
+<td><p>test|study_a_</p></td>
+<td><p></p></td>
+<td><p>sub-1111</p></td>
+</tr>
+<tr class="row-odd"><td><p>pre9222post</p></td>
+<td><p>pre|post|suffix|prefix</p></td>
+<td><p>as in the cell above</p></td>
+<td><p>sub-9222</p></td>
+</tr>
+<tr class="row-even"><td><p>suffix223prefix</p></td>
+<td><p>pre|post|suffix|prefix</p></td>
+<td><p></p></td>
+<td><p>sub-223</p></td>
+</tr>
+</tbody>
+</table>
+<p>Examples of ‘patterns to remove’ regular expressions</p>
+</section>
+</section>
+<section id="do-you-want-to-edit-your-session-ids">
+<h2>Do you want to edit your session-ID’s?<a class="headerlink" href="#do-you-want-to-edit-your-session-ids" title="Permalink to this heading"></a></h2>
+<p>You are now able to edit your session-ID’s. You decide, if you want to
+keep or rename them.</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option to select</p></th>
+<th class="head"><p>What happens?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Yes, I need to change them</p></td>
+<td><p>Each session is opened separately and you can enter the new session-ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p>No, my session-ID’s are fine.</p></td>
+<td><p>Nothing is edited, you keep your session-IDs</p></td>
+</tr>
+</tbody>
+</table>
+<p>Yes:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>session-ID (old)</p></th>
+<th class="head"><p>session-ID (user input)</p></th>
+<th class="head"><p>session-BIDS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>baseline</p></td>
+<td><p>1</p></td>
+<td><p>ses-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>follow_up</p></td>
+<td><p>2</p></td>
+<td><p>ses-2</p></td>
+</tr>
+</tbody>
+</table>
+<p>“Yes, I need to change them” can result in output like this. The user
+could also choose to use “followup” or something else.</p>
+<p>No:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>session-ID (old)</p></th>
+<th class="head"><p>session-BIDS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>baseline</p></td>
+<td><p>ses-baseline</p></td>
+</tr>
+<tr class="row-odd"><td><p>follow_up</p></td>
+<td><p>ses-follow_up</p></td>
+</tr>
+</tbody>
+</table>
+<p>“No, my session-ID’s are fine”</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="workflow.html" class="btn btn-neutral float-left" title="Start of the workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, First Last.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
