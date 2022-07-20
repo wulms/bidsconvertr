@@ -9,9 +9,6 @@ check_sequence_map(sequence_map_file = "sequence_map")
 \arguments{
 \item{sequence_map_file}{}
 }
-\value{
-
-}
 \description{
 Checks sequence map
 }

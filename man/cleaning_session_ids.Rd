@@ -6,9 +6,6 @@
 \usage{
 cleaning_session_ids()
 }
-\value{
-
-}
 \description{
 Wrapper function for the editing of session-IDS
 }

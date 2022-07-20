@@ -9,9 +9,6 @@ editTable(DF, outdir = getwd(), outfilename = "table")
 \arguments{
 \item{outfilename}{}
 }
-\value{
-
-}
 \description{
 Sequence mapper shiny app.
 }

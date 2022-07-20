@@ -9,9 +9,6 @@ copy2BIDS(sequence_map = "sequence_map", sequence_file = "json_metadata_anon")
 \arguments{
 \item{tsv_file}{}
 }
-\value{
-
-}
 \description{
 Prepares and copies files to BIDS
 }

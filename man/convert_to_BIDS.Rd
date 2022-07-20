@@ -11,9 +11,6 @@ convert_to_BIDS(sequence_table = "off")
 
 \item{user_settings_file}{The path to the user settings file from the "create_user_settungs()" function.}
 }
-\value{
-
-}
 \description{
 The core function, which converts the DICOM to NII, extracts the JSON information, opens the sequence mapper and converts the data to BIDS.
 }

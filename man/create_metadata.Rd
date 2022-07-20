@@ -6,9 +6,6 @@
 \usage{
 create_metadata()
 }
-\value{
-
-}
 \description{
 Creates template strings for BIDS
 }

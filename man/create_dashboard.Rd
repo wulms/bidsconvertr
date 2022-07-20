@@ -14,9 +14,6 @@ create_dashboard(
 
 \item{converter_path}{The path to the converter, which contains the bids files}
 }
-\value{
-
-}
 \description{
 Creates the internal dashboard. This one contains sensitive participant information like age, sex and ID.
 }

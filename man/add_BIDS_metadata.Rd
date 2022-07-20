@@ -6,9 +6,6 @@
 \usage{
 add_BIDS_metadata()
 }
-\value{
-
-}
 \description{
 This function adds all required BIDS metadata: 'CHANGES', 'README', 'dataset_description.json', 'participants.json', 'participants.tsv' and per functional sequence a file that contains the RepetitionTime.
 }

@@ -11,9 +11,6 @@ list_json_files(input_path, output_suffix = "")
 
 \item{output_suffix}{Suffix, which will be added to the "sequence_overview" TSV file.}
 }
-\value{
-
-}
 \description{
 This function lists all json files in the folder. It extracts possible sequences based on the "mri_sequences" regex. Furthermore it outputs a "sequence_overview" TSV file containing sequence information and the observations per category. This file is needed for the sequence mapper.
 }

@@ -6,9 +6,6 @@
 \usage{
 edit_session_df()
 }
-\value{
-
-}
 \description{
 Enables user edits to the session ID.
 }

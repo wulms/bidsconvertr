@@ -9,9 +9,6 @@ check_BIDS_plausibility(df)
 \arguments{
 \item{df}{}
 }
-\value{
-
-}
 \description{
 Checks the plausibility of entered BIDS sequences based on regular expressions.
 }

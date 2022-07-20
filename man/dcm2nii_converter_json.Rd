@@ -6,9 +6,6 @@
 \usage{
 dcm2nii_converter_json()
 }
-\value{
-
-}
 \description{
 Converts the DICOM to only JSON files, that contain all sensitive information stored in the DICOM headers.
 }

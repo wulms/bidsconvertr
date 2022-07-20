@@ -9,9 +9,6 @@ create_subject_session_df(directory = user_input_dir)
 \arguments{
 \item{directory}{}
 }
-\value{
-
-}
 \description{
 Extracts the input data folder structure
 }

@@ -14,9 +14,6 @@ create_taskname_metadata(
 
 \item{tsv_map}{the path to the 'sequence_map.tsv'}
 }
-\value{
-
-}
 \description{
 Extracts the sequence id and RepetitionTime of functional sequences for the required BIDS files.
 }

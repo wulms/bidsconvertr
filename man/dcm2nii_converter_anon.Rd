@@ -6,9 +6,6 @@
 \usage{
 dcm2nii_converter_anon()
 }
-\value{
-
-}
 \description{
 Converts the DICOM to anonymized NII and JSON files.
 }

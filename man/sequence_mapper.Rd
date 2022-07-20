@@ -6,17 +6,13 @@
 \usage{
 sequence_mapper(
   sequence_overview_file = "sequence_overview_anon",
-  output_name = "sequence_map",
-  edit_table = "off"
+  output_name = "sequence_map"
 )
 }
 \arguments{
 \item{sequence_overview_file}{The name of the file, which contains the sequence overview.}
 
 \item{output_name}{The name of the output file. In general named 'sequence_map.tsv'}
-}
-\value{
-
 }
 \description{
 The sequence mapper function (1) checks if there is already a 'sequence_map.tsv'. (2) If it exists it will merged with the new sequences from the 'sequence_overview.tsv'. If not a new 'sequence_map.tsv' will be created. (3) Finally a shiny app is started to edit the sequence information manually. All "please edit" fields need to be filled out.

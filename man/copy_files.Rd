@@ -13,9 +13,6 @@ copy_files(from, to, string)
 
 \item{string}{Which step?}
 }
-\value{
-
-}
 \description{
 Copies files, if they don't exist in target
 }

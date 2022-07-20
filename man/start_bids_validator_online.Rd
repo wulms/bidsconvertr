@@ -6,9 +6,6 @@
 \usage{
 start_bids_validator_online()
 }
-\value{
-
-}
 \description{
 Open BIDS validator homepage
 }

@@ -11,9 +11,6 @@ add_participants_tsv(
 \arguments{
 \item{tsv_path}{the path to the 'json_metadata.tsv'}
 }
-\value{
-
-}
 \description{
 This function creates the required BIDS files 'participants.tsv' and 'participants.json'. The '.tsv' contains the actual data per subject from the 'json_metadata.tsv'. The '.json' contains a description of the extracted variables. The following variables are extracted: subject, session, group, PatientBirthDate, AcquisitionDateTime, Patientsex, PatientWeight.
 }

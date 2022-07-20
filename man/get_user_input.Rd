@@ -6,9 +6,6 @@
 \usage{
 get_user_input()
 }
-\value{
-
-}
 \description{
 Start function for the user inputs, asks for input directory, output directory and the order of the input data 'subject_session' or 'session_subject'.
 }

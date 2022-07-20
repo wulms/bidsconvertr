@@ -9,9 +9,6 @@ check_folder_order_df(df, input_order = user_input_order)
 \arguments{
 \item{input_order}{}
 }
-\value{
-
-}
 \description{
 Checks the folder order
 }

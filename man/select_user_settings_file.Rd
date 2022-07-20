@@ -6,9 +6,6 @@
 \usage{
 select_user_settings_file()
 }
-\value{
-
-}
 \description{
 Wrapper function to select and check the user input
 }

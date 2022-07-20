@@ -11,9 +11,6 @@ write_metadata_bids(txt_input, file_path)
 
 \item{file_path}{Output file path.}
 }
-\value{
-
-}
 \description{
 This function writes a string to a path in UTF-8.
 }

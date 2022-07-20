@@ -9,9 +9,6 @@ create_environment_variables(input_path = path_output)
 \arguments{
 \item{input_path}{The path for the BIDSconvertR output}
 }
-\value{
-
-}
 \description{
 Sets up the environment, creates needed variables variables
 }

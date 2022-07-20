@@ -14,9 +14,6 @@ run_shiny_BIDS(
 
 \item{shiny_app_path}{Path to the viewer RMD file}
 }
-\value{
-
-}
 \description{
 Starts the BiDirect BIDS viewer
 }

@@ -6,9 +6,6 @@
 \usage{
 cleaning_subject_ids()
 }
-\value{
-
-}
 \description{
 Function to clean the input subject-ID's from redundant prefixes, suffices or strings.
 }
