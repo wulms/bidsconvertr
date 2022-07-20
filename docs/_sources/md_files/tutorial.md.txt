@@ -5,7 +5,7 @@ We appreciate the [BIDScoin](https://github.com/Donders-Institute/bidscoin) team
 
 ## The installation procedure
 
-Installing E and RStudio and downloading sample data:
+Installing R and RStudio and downloading sample data:
 
 - To install the [BIDSconvertR](installation_bidsconvertr.md) on Windows or Linux follow the [instructions](installation.md).
 - Download the [BIDScoin](https://github.com/Donders-Institute/bidscoin) example data : [Download here](https://surfdrive.surf.nl/files/index.php/s/HTxdUbykBZm2cYM/download). 
