@@ -1,20 +1,15 @@
 # Start of the workflow 
 
-Based on the inputs your data is converted via dcm2niix into NifTI
-format.
+Your data is converted into NifTI format using dcm2niix based on the inputs.
 
-All JSON headers are read out and merged together.
+Each JSON header is read out and combined into one file.
 
 ## The sequence mapper GUI
 
-The unique sequence-ID’s are extracted and the Sequence Mapper is
-launched.
-
-The Sequence Mapper is a Shiny App, which should enable you to rename
-your sequences according to the BIDS specification. You can edit a cell
-after a double-click on it.
-
-Now the ‘sequence_mapper’ should start showing the following interface:
+After extracting the distinct sequence-IDs, the `Sequence Mapper`, a Shiny application is started.
+You should be able to rename your sequences in accordance with the BIDS specification. 
+A double-click on a cell will open it for editing.
+The `Sequence Mapper` should now begin displaying the interface as follows:
 
 
 
@@ -25,46 +20,41 @@ You have to edit each entry according to the BIDS specification. Some
 tips can be found on the left panel and hyperlinks to the BIDS
 specification. Then you click “save” and close the ‘sequence mapper’.
 
-1)  You need to edit each cell, that contains a “please edit”.
+1)  You must edit every cell with the phrase "please edit."
 
-2)  Each ‘BIDS_sequence’ and ‘BIDS_type’ entry is validated in the
-    backend with regular expressions based on BIDS. If a row is coloured
-    “green” you have a high chance of a valid BIDS output.
+2)  Using regular expressions based on BIDS, each ‘BIDS_sequence’ and ‘BIDS_type’ entry is validated in the backend. 
+    There is a good possibility that a row will provide a valid BIDS output if it is coloured "green."
+    
+3)  Note that you are not restricted in how you name files by us. 
+    If you mark a non-valid BIDS string as relevant, it will be copied to BIDS and you can save it.
 
-3)  But note, we do not limit you in naming files. You are able to save
-    non-valid BIDS strings, which are copied to BIDS, if selected as
-    relevant.
-
-4)  You can ignore red rows, when having “irrelevant” marked cells.
-    These are not exported to BIDS. Still, you have to remove the
-    “please edit” from them. This is mandatory, so that the algorithm
-    knows, that the user has edited each cell.
-
-5)  Please “save” your table and close the app. The closing starts the
-    rest of the workflow.
-
+4)  Red rows with "irrelevant" flagged cells can be disregarded.
+    There is no export of these to BIDS. 
+    However, you need to take the "please edit" out of them. 
+    This is required in order for the algorithm to recognise that the user has changed each cell.
+    
+5)  After clicking “save”, please exit the app. 
+    The workflow continues after the closing.
+    
 ![The color-coding of the Sequence Mapper. Can you find out, why some
 rows are still red?](../../../inst/figure/sequence_mapper_validity.png)
 
-The ‘matched’ column shows, when a sequence was detected as BIDS
-compliant. If your sequence is in the ‘unmatched’ column investigate
-each letter of the filename.
+When a sequence is recognised as BIDS compatible, it is indicated in the "matched" column. 
+Investigate each letter of the filename if your sequence appears in the "unmatched" column.
 
 ## BIDS dataset & validation
 
-If everything is fine:
+When everything is in order:
 
 1.  The files are copied to BIDS.
 
-2.  The BIDS validation is started. Via Docker, if it is installed on
-    your local machine, otherwise the online-version is launched and you
-    have to select your folder manually. Files are never uploaded to the BIDS-Validator.
+2.  The BIDS validation process begins. If Docker is already installed on
+    your machine, it is started automatically. If not, the online-version is launched, and you must choose your folder manually. Please note: Files are never uploaded to the BIDS-Validator.
 
-3.  You are asked, if you want to delete temporary images from your hard
-    drive. Don’t do this manually! Do this only, when you have validated
-    your data, and you already acquired all your data.
+3.  You are prompted, if you want to remove temporary images from your hard disk.
+    Avoid performing this by hand! Only do this after validating your data and gathering all of your data.
 
-4.  A Shiny viewer is started to visually inspect the images.
+4.  A Shiny viewer is launched to examine the images visually.
 
 ![BIDS viewer](../../../inst/figure/bids_viewer.PNG)
 

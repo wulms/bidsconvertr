@@ -2,17 +2,18 @@
 
 ## Windows
 
-Download and install a recent [R
+Install a recent [R
 version](https://cran.r-project.org/bin/windows/base/).
 
-If you work on Windows just download
+If you work on Windows, simply download
 [Rtools](https://cran.r-project.org/bin/windows/Rtools/) according to
 your R-version and install it. It is required to install the packages.
 
-Download & install
-[RStudio](https://www.rstudio.com/products/rstudio/download/#download).
+[RStudio](https://www.rstudio.com/products/rstudio/download/#download) should be downloaded and installed.
 
 ## Linux
+
+To install R and its dependencies, enter the following commands into the terminal.
 
 ``` bash
 wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/r-project.gpg
@@ -32,6 +33,6 @@ Install
 [RStudio](https://www.rstudio.com/products/rstudio/download/#download).
 
 Then “Right-Click -\> Open With -\>Software Install” should help in
-installing it.
+the installation.
 
 

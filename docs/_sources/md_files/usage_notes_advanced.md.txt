@@ -2,14 +2,14 @@
 
 ```{Note} 
 This part is optional. 
-It is relevant for you, if you have untidy subject-ID's (e.g. with some redundant prefix, suffix or string) or you want to rename your session-ID's.
+You should read this if your subject-IDs are messy (have a redundant prefix, suffix, or string, for example), or if you want to rename your session-IDs.
 ```
-This part is about the optional cleaning or extraction of subject-ID’s and renaming
+
+This section covers the optional cleaning or extraction of subject-ID’s and renaming
 of sessions.
 
-You are asked during the setup procedure, if your subject- and session-ID’s are fine, or if you
-want to edit them. If your data was already acquired with clear subject-
-and session-ID’s you can skip this procedure by selecting:
+You are prompted to decide if you wish to edit subject- and session-ID’s during the user dialog.
+You can skip this step if your data was already collected with clear subject- and session-ID’s:
 
 | **Option to select**          | **What happens?**                                                                                       |
 |-------------------------------|-------------------------------------------------------------------------------------------------------------|
@@ -26,23 +26,21 @@ or [RegexOne](https://regexone.com/).
 
 <embed src="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf" type="application/pdf" width="100%" height="400">
 
-Each regex set here should match to
-your data. If you encounter any problems just contact me via mail or via
-the issues in this repository.
+Each regex set here should match to your data. 
+Contact me via email or the issues in this repository if you run across any troubles.
 
-
-These both functions should give you enough flexibility to clean up your
-filenames and modify your regular expression step by step.
+You should have enough freedom using these two routines to clean up your filenames and gradually change and improve your regular expression.
 
 
 ## Useful regular expressions
 
-The subject-ID is from the folder name. If no regular expression is used, the subject-ID remains unchanged.
+The input folder name serves as the subject-ID.
+In the absence of a regular expression, the subject-ID is unaltered.
 
 ### Regular expression: subject-ID 
 
-These regular expression extracts the subject-ID from the input string. This can be used, if you had a clear defined naming convention for all your files.
-
+The subject-ID is extracted from the input string using this regular expression. 
+If all of your files had a well established naming convention, you could use this.
 
 | subject-ID                   | regular expression             | described in words                            | output subject-ID |
 |------------------------------|--------------------------------|-----------------------------------------------|-------------------|
@@ -57,6 +55,8 @@ These regular expression extracts the subject-ID from the input string. This can
 Examples of subject-ID regular expressions
 
 ### Regular expression: pattern to remove
+
+The `pattern_to_remove` regular expression simply removes the regular expression(s) from the subject-ID.
 
 | subject-ID                   | regular expression              | described in words                                   | output subject-ID |
 |------------------------------|---------------------------------|------------------------------------------------------|-------------------|
@@ -76,8 +76,8 @@ Examples of ‘patterns to remove’ regular expressions
 
 ## Do you want to edit your session-ID’s?
 
-You are now able to edit your session-ID’s. You decide, if you want to
-keep or rename them.
+Your session-IDs can now be edited. 
+You can choose to keep them or rename them.
 
 | Option to select              | What happens?                                                           |
 |-------------------------------|-------------------------------------------------------------------------|

@@ -5,62 +5,62 @@
 The BIDSconvertR
 ================================
 
-The BIDSconvertR is an R-package, which converts MRI DICOM data into the BIDS-speficication.
+The BIDSconvertR R-package converts MRI DICOM data into BIDS-specification.
 
 .. note::
 
-    The BIDSconvertR is still in development and we are happy to get feedback on usability or new features.
+    We welcome feedback on usability or new features for the BIDSconvertR, which is still in development.
 
 
 Aim
 ------------
 
-The goal of BIDSconvertR is to provide a workflow, which is able to:
+The goal of BIDSconvertR is to provide a workflow that can:
 
-* open the BIDS conversion to the beginner and advanced R-user
+* open the BIDS conversion to both beginner and advanced R-users
 * convert DICOM to NIfTI data using dcm2niix (REF)
 * structure this data according to the BIDS specification (REF)
 * validate the manually entered sequence-ID’s by color-coding
 * enable easy access to the BIDS-Validator (Website/Docker) (REF)
-* provide the papayaWidget viewer (REF) for inspecting the images
+* provide the papayaWidget viewer (REF) for inspecting images
 * enable continuous application during data acquisition in ongoing studies
 
 Features
 -----------------
 
 * Renaming of unclean subject-ID’s or session-ID’s.
-    * This requires a basic understanding of strings and regular expressions in R
-* Validation of manually entered sequence-ID's through color coding.
+    * This requires a fundamental understanding of strings and regular expressions in R
+* Color coding is used to validate manually entered sequence-ID's.
 
 
-Everytime files or sequences are added, the ‘sequence mapper’ checks if they are new.
-Then opens again until everything is declared according to BIDS.
-Already processed files are skipped.
+When new files or sequences are added, the'sequence mapper' determines whether they are new.
+Then it reopens until everything is declared in accordance with BIDS.
+Files that have already been processed are bypassed.
 
 
 
 Technical requirements
 ------------------------
 
-* Microsoft 10 and Ubuntu 22.04 supported and tested.
-    * MacOS: Not tested, but should work. Maybe you can try it out and contact me, if there are any issues.
+* Supported and tested on Microsoft 10 and Ubuntu 22.04.
+* Not tested on MacOS, but it should work. You could try it out and let me know if there are any problems.
 
 
 
 What the user needs to know to apply the BIDSconvertR
 ----------------------------------------------------------
 
-.. important:: What this is not:
+.. important:: What it isn't:
 
-    A full-automated workflow, that does everything for you. You need to bring a minimum of background knowledge on files, folders and DICOMS, as described below.
+    A fully automated workflow that takes care of everything. You must have a basic understanding of files, folders, and DICOMS, as described below.
 
-* What is a folder or file? Where is my data?
-* What is a folder, containing DICOMS?
-* What is a subject- and sequence-ID?
-* What is BIDS?
-* What is a valid BIDS sequence name for my filename?
+* What exactly is a folder or file? What happened to my data?
+* What is a DICOM-containing folder?
+* What is the difference between a subject- and sequence-ID?
+* What exactly is BIDS?
+* Is my sequence name a valid BIDS sequence name?
 
-So, if you are able to rename and restructure the folders according to BIDS manually, you are able to run the tool, to scale things up.
+So, if you can manually rename and restructure the folders according to BIDS, you can run the tool to scale things up.
 
 
 .. toctree::

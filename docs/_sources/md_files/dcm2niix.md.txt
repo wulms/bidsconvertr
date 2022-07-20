@@ -7,7 +7,7 @@ The “convert_to_BIDS()” function automatically uses the tested
 the version number and running the script before running
 “convert_to_BIDS()” the first time.
 
-Otherwise go to your output folder, delete the dcm2niix files in it, and
+Otherwise, go to your output folder, delete the dcm2niix files in it, and
 run the “install_dcm2niix()” version with your version number.
 
 <https://github.com/rordenlab/dcm2niix/releases>
@@ -26,7 +26,7 @@ or inspect the possible arguments from this image:
 
 ![](../../../inst/figure/dcm2niix_arguments.JPG)
 
-dcm2niix_argument_string \<- “-ba y -f %d -z y -w 0 -i y”
+dcm2niix_argument_string \<- `-ba y -f %d -z y -w 0 -i y`
 
 | Argument | Setting | Behaviour                                        |
 |----------|---------|--------------------------------------------------|

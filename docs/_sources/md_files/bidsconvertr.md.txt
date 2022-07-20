@@ -20,8 +20,8 @@
 :align: right
 ```
 
-The hexagonal sticker is created with the [iconspackage](https://github.com/mitchelloharawild/icons) and based on the MRI svg graphics provided by
-Flaticon and was created by mavadee [FlaticonLink](https://www.flaticon.com/free-icons/mri).
+The hexagonal sticker was made using the [iconspackage](https://github.com/mitchelloharawild/icons) and based on the MRI svg graphics provided by
+Flaticon and mavadee [FlaticonLink](https://www.flaticon.com/free-icons/mri).
 
 
 
@@ -30,29 +30,27 @@ Flaticon and was created by mavadee [FlaticonLink](https://www.flaticon.com/free
 
 ## Aim
 
-The goal of [BIDSconvertR](https://github.com/wulms/bidsconvertr) is to provide a workflow, which is able to:
+[BIDSconvertR](https://github.com/wulms/bidsconvertr) aims to provide a workflow that can:
 
 -   convert DICOM data to NIfTI data using
     [dcm2niix](https://github.com/rordenlab/dcm2niix)
 -   structure this data according to the [BIDS
     specification](https://bids-specification.readthedocs.io/en/stable/)
-    -   validate the sequence-ID’s
-    -   enable easy access to the
+    -   verify the sequence-ID’s
+    -   make it simple to access the
         [BIDS-Validator](https://bids-standard.github.io/bids-validator/)
         (Website/Docker)
--   provide the
-    [papayaWidget](https://github.com/muschellij2/papayaWidget) viewer
+-   make available the [papayaWidget](https://github.com/muschellij2/papayaWidget) viewer
     for inspecting the images
--   enable continuous application during data acquisition in ongoing
+-   allow continuous application during data collection in ongoing
     studies
 
 ## Features
 
-Renaming of unclean subject-ID’s or session-ID’s.
+Unclean subject-ID’s or session-ID’s can be renamed.
 
-Everytime new files or sequences are added, the ‘sequence mapper’ opens
-again until everything is declared according to BIDS. Already processed
-files are skipped.
+When new files or sequences are added, the'sequence mapper' reopens until everything is declared in accordance with BIDS. 
+Files that have already been processed are bypassed.
 
 
 

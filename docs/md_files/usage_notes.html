@@ -52,7 +52,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#input-data">Input data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#starting-the-tool">Starting the tool</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#do-you-have-a-user-settings-file">Do you have a user settings file?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#do-you-have-a-user-settings-file">Do you have a <code class="docutils literal notranslate"><span class="pre">user</span> <span class="pre">settings</span></code> file?</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#yes-selection-for-your-user-settings-file">Yes: Selection for your ‘user settings’ file.</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#no">No:</a></li>
 </ul>
@@ -103,47 +103,47 @@
 <h1>Usage notes<a class="headerlink" href="#usage-notes" title="Permalink to this heading"></a></h1>
 <section id="input-data">
 <h2>Input data<a class="headerlink" href="#input-data" title="Permalink to this heading"></a></h2>
-<p>The input data needs to be in the following structure:</p>
+<p>The input data must have the following structure:</p>
 <ul class="simple">
 <li><p>an input folder containing all folders with DICOM data</p>
 <ul>
 <li><p>…/subjects/sessions/DICOM</p>
 <ul>
-<li><p>one folder per subject, e.g. “00001”, “00002”</p></li>
-<li><p>these folders containing the session data, each of them
-containing the DICOM data</p></li>
+<li><p>one folder per subject, for example: “00001”, “00002”</p></li>
+<li><p>these folders containing the session data, each of which contains the DICOM data</p></li>
 </ul>
 </li>
 <li><p>…/sessions/subjects/DICOM</p>
 <ul>
-<li><p>cross-sectional (one folder named ‘baseline’ or else)</p></li>
-<li><p>one folder per session, e.g. “session_1”, “session_2”</p></li>
-<li><p>these folders containing the DICOM data in separate folders
-per subject, e.g. “00001”, “00002”</p></li>
+<li><p>cross-sectional (at least one folder named ‘crosssectional’ or a custom session name)</p></li>
+<li><p>one folder per session, for example: “session_1”, “session_2”</p></li>
+<li><p>these folders, which contain DICOM data in separate folders
+for each subject, e.g. “00001”, “00002”</p></li>
 </ul>
 </li>
-<li><p>in case of other logical structures: Please contact me, so that I can include them.</p></li>
+<li><p>if you have any additional file structures, please contact me, so that I can include them.</p></li>
 </ul>
 </li>
 </ul>
 </section>
 <section id="starting-the-tool">
 <h2>Starting the tool<a class="headerlink" href="#starting-the-tool" title="Permalink to this heading"></a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># loading the library, the &#39;quietly&#39; argument turns off the messages about loading other dependencies.</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the library. </span>
+<span class="c1"># The &#39;quietly&#39; argument turns off the messages about loading other dependencies.</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">bidsconvertr</span><span class="p">,</span> <span class="n">quietly</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> 
 
-<span class="c1"># function that starts the workflow</span>
+<span class="c1"># Start the workflow.</span>
 <span class="nf">convert_to_BIDS</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>If you run the <code class="docutils literal notranslate"><span class="pre">convert_to_BIDS()</span></code> function, you need a <code class="docutils literal notranslate"><span class="pre">user_settings.R</span></code> file.</p>
+<p>A ‘user settings.R’ file is required when using the ‘convert to BIDS()’ function.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">user_settings.R</span></code> file contains your selected options (folders, filename convention, dcm2niix string, regular expressions) and stores theses settings and variables.
-You don’t have to edit these manually, instead you are guided through the procedure with our user dialog.</p>
+<p>The ‘user settings.R’ file stores the settings and variables you’ve chosen (folders, filename convention, dcm2niix string, regular expressions).
+You do not need to manually edit these; instead, our user dialogue will walk you through the process.</p>
 </div>
 <section id="do-you-have-a-user-settings-file">
-<h3>Do you have a user settings file?<a class="headerlink" href="#do-you-have-a-user-settings-file" title="Permalink to this heading"></a></h3>
+<h3>Do you have a <code class="docutils literal notranslate"><span class="pre">user</span> <span class="pre">settings</span></code> file?<a class="headerlink" href="#do-you-have-a-user-settings-file" title="Permalink to this heading"></a></h3>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Option</p></th>
@@ -161,12 +161,12 @@ You don’t have to edit these manually, instead you are guided through the proc
 </table>
 <section id="yes-selection-for-your-user-settings-file">
 <h4>Yes: Selection for your ‘user settings’ file.<a class="headerlink" href="#yes-selection-for-your-user-settings-file" title="Permalink to this heading"></a></h4>
-<p>You select the file in the file selection window. This can be anywhere on
-your filesystem. This file stores your settings, so that you can run this file continuously during the acquisition of data.</p>
+<p>In the file selection window, you select the file. This could be located anywhere on your filesystem.
+This file stores your settings so that you can run it continuously while collecting data.</p>
 </section>
 <section id="no">
 <h4>No:<a class="headerlink" href="#no" title="Permalink to this heading"></a></h4>
-<p>Starts user dialog to create ‘user settings’ file.</p>
+<p>Starts a user dialogue to create a file called <code class="docutils literal notranslate"><span class="pre">user</span> <span class="pre">settings</span></code>.</p>
 </section>
 </section>
 </section>

@@ -99,18 +99,19 @@
 <h1>Creation of ‘user settings’ file.<a class="headerlink" href="#creation-of-user-settings-file" title="Permalink to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You entered <code class="docutils literal notranslate"><span class="pre">convert_to_BIDS()</span></code> and selected in the popup window, that you want to create the <code class="docutils literal notranslate"><span class="pre">user_settings.R</span></code> file.
+<p>You entered <code class="docutils literal notranslate"><span class="pre">convert_to_BIDS()</span></code> and selected in the popup window that you want to create the <code class="docutils literal notranslate"><span class="pre">user_settings.R</span></code> file.
 You have to know where your data is and should be saved to (select the according folders) and set some options based on your input data (session/subject or subject/session) folder order.
 The questions from each popup window are described below in their order.</p>
-<p>You need RStudio for popup support (user-friendly solution). Otherwise the questions will be asked inside the terminal (for the advanced user).</p>
+<p>You need RStudio for popup support (user-friendly solution).
+Otherwise the questions will be asked inside the terminal (for the advanced user).</p>
 </div>
 <section id="please-select-the-root-directory-of-all-dicom-images-your-input-folder-as-described-above">
 <h2>Please select the root directory of all DICOM images (your input folder, as described above.)<a class="headerlink" href="#please-select-the-root-directory-of-all-dicom-images-your-input-folder-as-described-above" title="Permalink to this heading"></a></h2>
-<p>You select the root folder, that contains all session/subject or
-subject/session folders. If you only have one session, store your data
-in a e.g. ‘session-0’ folder.</p>
-<p>The terminal shows a list of folders. These should contain the DICOM
-data.</p>
+<p>The root folder, which contains all session/subject or
+subject/session folders, is the one you choose.
+If you just have one session, keep your data in a folder named, say, ‘session-0’.</p>
+<p>Several folders are listed in the terminal.
+These should include the DICOM information.</p>
 </section>
 <section id="do-these-folders-contain-the-dicom-images">
 <h2>Do these folders contain the DICOM images?<a class="headerlink" href="#do-these-folders-contain-the-dicom-images" title="Permalink to this heading"></a></h2>
@@ -132,10 +133,10 @@ data.</p>
 </section>
 <section id="is-your-dicom-data-structured-as-session-subject-or-subject-session">
 <h2>Is your DICOM data structured as ‘session/subject’ or ‘subject/session’.<a class="headerlink" href="#is-your-dicom-data-structured-as-session-subject-or-subject-session" title="Permalink to this heading"></a></h2>
-<p>The tool extracts extracts the subject- and session-ID’s based on this
-order. The terminal shows the folders.</p>
-<p>Please note: Any subject- or session-ID’s are possible! Also without
-“sub-” or “ses-”.</p>
+<p>Based on this selection, the tool extracts the subject- and session-ID’s.
+The folders are displayed on the console.</p>
+<p>Please note: Any subject- or session-ID is possible! Without
+“sub-” or “ses-” as well.</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Folder order of your files</p></th>
@@ -151,11 +152,12 @@ order. The terminal shows the folders.</p>
 </tr>
 </tbody>
 </table>
-<p>Select the option according to your data, which is shown in the terminal.</p>
+<p>Choose the option that best fits your data, as displayed in the terminal.</p>
 </section>
 <section id="were-subject-ids-and-session-ids-extracted-correctly">
 <h2>Were subject-ID’s and session-ID’s extracted correctly?<a class="headerlink" href="#were-subject-ids-and-session-ids-extracted-correctly" title="Permalink to this heading"></a></h2>
-<p>The terminal shows a table with a “subject” and a “session” column. Are these looking valid?</p>
+<p>A table with the columns “subject” and “session” is displayed on the terminal.
+Do they appear to be valid?</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Option to select</p></th>
@@ -174,8 +176,8 @@ order. The terminal shows the folders.</p>
 </section>
 <section id="selection-of-output-directory">
 <h2>Selection of output directory.<a class="headerlink" href="#selection-of-output-directory" title="Permalink to this heading"></a></h2>
-<p>You are able to select any folder on your disk. So you are able to store
-raw data at another location than converted data.</p>
+<p>You can choose any folder on your hard drive.
+As a result, raw data can be stored somewhere other than where processed data is.</p>
 </section>
 </section>
 

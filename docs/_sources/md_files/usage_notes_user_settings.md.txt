@@ -1,22 +1,23 @@
 # Creation of 'user settings' file.
 
 ```{Note} 
-You entered `convert_to_BIDS()` and selected in the popup window, that you want to create the `user_settings.R` file.
+You entered `convert_to_BIDS()` and selected in the popup window that you want to create the `user_settings.R` file.
 You have to know where your data is and should be saved to (select the according folders) and set some options based on your input data (session/subject or subject/session) folder order. 
 The questions from each popup window are described below in their order.
 
-You need RStudio for popup support (user-friendly solution). Otherwise the questions will be asked inside the terminal (for the advanced user).
+You need RStudio for popup support (user-friendly solution). 
+Otherwise the questions will be asked inside the terminal (for the advanced user).
 ```
 
 
 ## Please select the root directory of all DICOM images (your input folder, as described above.)
 
-You select the root folder, that contains all session/subject or
-subject/session folders. If you only have one session, store your data
-in a e.g. ‘session-0’ folder.
+The root folder, which contains all session/subject or
+subject/session folders, is the one you choose. 
+If you just have one session, keep your data in a folder named, say, ‘session-0’.
 
-The terminal shows a list of folders. These should contain the DICOM
-data.
+Several folders are listed in the terminal. 
+These should include the DICOM information.
 
 ## Do these folders contain the DICOM images?
 
@@ -28,11 +29,11 @@ data.
 
 ## Is your DICOM data structured as ‘session/subject’ or ‘subject/session’.
 
-The tool extracts extracts the subject- and session-ID’s based on this
-order. The terminal shows the folders.
+Based on this selection, the tool extracts the subject- and session-ID’s.
+The folders are displayed on the console.
 
-Please note: Any subject- or session-ID’s are possible! Also without
-“sub-” or “ses-”.
+Please note: Any subject- or session-ID is possible! Without
+“sub-” or “ses-” as well.
 
 | Folder order of your files | Selection       |
 |----------------------------|-----------------|
@@ -40,11 +41,12 @@ Please note: Any subject- or session-ID’s are possible! Also without
 | ses-01/sub-0001            | session/subject |
 
 
-Select the option according to your data, which is shown in the terminal.
+Choose the option that best fits your data, as displayed in the terminal.
 
 ## Were subject-ID’s and session-ID’s extracted correctly?
 
-The terminal shows a table with a “subject” and a “session” column. Are these looking valid?
+A table with the columns "subject" and "session" is displayed on the terminal. 
+Do they appear to be valid?
 
 | Option to select | What happens?                  |
 |------------------|--------------------------------|
@@ -53,5 +55,5 @@ The terminal shows a table with a “subject” and a “session” column. Are 
 
 ## Selection of output directory.
 
-You are able to select any folder on your disk. So you are able to store
-raw data at another location than converted data.
+You can choose any folder on your hard drive.
+As a result, raw data can be stored somewhere other than where processed data is.

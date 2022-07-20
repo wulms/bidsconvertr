@@ -89,21 +89,21 @@
              
   <section id="the-bidsconvertr">
 <h1>The BIDSconvertR<a class="headerlink" href="#the-bidsconvertr" title="Permalink to this heading"></a></h1>
-<p>The BIDSconvertR is an R-package, which converts MRI DICOM data into the BIDS-speficication.</p>
+<p>The BIDSconvertR R-package converts MRI DICOM data into BIDS-specification.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The BIDSconvertR is still in development and we are happy to get feedback on usability or new features.</p>
+<p>We welcome feedback on usability or new features for the BIDSconvertR, which is still in development.</p>
 </div>
 <section id="aim">
 <h2>Aim<a class="headerlink" href="#aim" title="Permalink to this heading"></a></h2>
-<p>The goal of BIDSconvertR is to provide a workflow, which is able to:</p>
+<p>The goal of BIDSconvertR is to provide a workflow that can:</p>
 <ul class="simple">
-<li><p>open the BIDS conversion to the beginner and advanced R-user</p></li>
+<li><p>open the BIDS conversion to both beginner and advanced R-users</p></li>
 <li><p>convert DICOM to NIfTI data using dcm2niix (REF)</p></li>
 <li><p>structure this data according to the BIDS specification (REF)</p></li>
 <li><p>validate the manually entered sequence-ID’s by color-coding</p></li>
 <li><p>enable easy access to the BIDS-Validator (Website/Docker) (REF)</p></li>
-<li><p>provide the papayaWidget viewer (REF) for inspecting the images</p></li>
+<li><p>provide the papayaWidget viewer (REF) for inspecting images</p></li>
 <li><p>enable continuous application during data acquisition in ongoing studies</p></li>
 </ul>
 </section>
@@ -112,44 +112,39 @@
 <ul class="simple">
 <li><dl class="simple">
 <dt>Renaming of unclean subject-ID’s or session-ID’s.</dt><dd><ul>
-<li><p>This requires a basic understanding of strings and regular expressions in R</p></li>
+<li><p>This requires a fundamental understanding of strings and regular expressions in R</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p>Validation of manually entered sequence-ID’s through color coding.</p></li>
+<li><p>Color coding is used to validate manually entered sequence-ID’s.</p></li>
 </ul>
-<p>Everytime files or sequences are added, the ‘sequence mapper’ checks if they are new.
-Then opens again until everything is declared according to BIDS.
-Already processed files are skipped.</p>
+<p>When new files or sequences are added, the’sequence mapper’ determines whether they are new.
+Then it reopens until everything is declared in accordance with BIDS.
+Files that have already been processed are bypassed.</p>
 </section>
 <section id="technical-requirements">
 <h2>Technical requirements<a class="headerlink" href="#technical-requirements" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><dl class="simple">
-<dt>Microsoft 10 and Ubuntu 22.04 supported and tested.</dt><dd><ul>
-<li><p>MacOS: Not tested, but should work. Maybe you can try it out and contact me, if there are any issues.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
+<li><p>Supported and tested on Microsoft 10 and Ubuntu 22.04.</p></li>
+<li><p>Not tested on MacOS, but it should work. You could try it out and let me know if there are any problems.</p></li>
 </ul>
 </section>
 <section id="what-the-user-needs-to-know-to-apply-the-bidsconvertr">
 <h2>What the user needs to know to apply the BIDSconvertR<a class="headerlink" href="#what-the-user-needs-to-know-to-apply-the-bidsconvertr" title="Permalink to this heading"></a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>What this is not:</p>
-<p>A full-automated workflow, that does everything for you. You need to bring a minimum of background knowledge on files, folders and DICOMS, as described below.</p>
+<p>What it isn’t:</p>
+<p>A fully automated workflow that takes care of everything. You must have a basic understanding of files, folders, and DICOMS, as described below.</p>
 </div>
 <ul class="simple">
-<li><p>What is a folder or file? Where is my data?</p></li>
-<li><p>What is a folder, containing DICOMS?</p></li>
-<li><p>What is a subject- and sequence-ID?</p></li>
-<li><p>What is BIDS?</p></li>
-<li><p>What is a valid BIDS sequence name for my filename?</p></li>
+<li><p>What exactly is a folder or file? What happened to my data?</p></li>
+<li><p>What is a DICOM-containing folder?</p></li>
+<li><p>What is the difference between a subject- and sequence-ID?</p></li>
+<li><p>What exactly is BIDS?</p></li>
+<li><p>Is my sequence name a valid BIDS sequence name?</p></li>
 </ul>
-<p>So, if you are able to rename and restructure the folders according to BIDS manually, you are able to run the tool, to scale things up.</p>
+<p>So, if you can manually rename and restructure the folders according to BIDS, you can run the tool to scale things up.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Introduction:</span></p>
 <ul>

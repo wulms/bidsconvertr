@@ -1,28 +1,30 @@
 # Tutorial
 
-This procedure should demonstrate the application of the BIDSconvertR. We thank the [BIDScoin](https://github.com/Donders-Institute/bidscoin) team, who allowed us to use their sample data.
+This procedure should demonstratehow tu use the BIDSconvertR. 
+We appreciate the [BIDScoin](https://github.com/Donders-Institute/bidscoin) team's permission to use their sample data.
 
 ## The installation procedure
 
-Downloading example data and installation of R and RStudio:
+Installing E and RStudio and downloading sample data:
 
-- Follow the [instructions](installation.md) to install the [BIDSconvertR](installation_bidsconvertr.md) on Windows or Linux and their dependencies.
-- Download the [BIDScoin](https://github.com/Donders-Institute/bidscoin) example data : [Download here](https://surfdrive.surf.nl/files/index.php/s/HTxdUbykBZm2cYM/download). Please note, that the data is compressed twice with gunzip (suffix: '.gz') and tar (suffix: '.tar'). You need to unpack both.
-- Create a new folder (e.g. `bidscoin\example`) and copy the `raw` subject folders into it. 
+- To install the [BIDSconvertR](installation_bidsconvertr.md) on Windows or Linux follow the [instructions](installation.md).
+- Download the [BIDScoin](https://github.com/Donders-Institute/bidscoin) example data : [Download here](https://surfdrive.surf.nl/files/index.php/s/HTxdUbykBZm2cYM/download). 
+  Please be aware that the data has been compressed twice using gunzip (suffix: '.gz') and tar (suffix: '.tar'). You need to unpack both.
+- Copy the `raw` subject folders into a new folder (such as `bidscoin\example`). 
 
 ## The BIDSconvertR workflow
 
-Covering all steps of the basid BIDSconvertR workflow:
+This workflow covers each stage of the fundamental BIDSconvertR workflow:
 
-- Start RStudio and use the R console from here on.
+- Launch RStudio and use the R console from here on.
 - Execute `library("bidsconvertr")`.
-- Start the tool with the `convert_to_BIDS()`command.
+- Use the `convert_to_BIDS()`command to launch the tool.
 - Create your own 'user\_settings.R' file by following the popup messages.
-  - Select your input folder containing the DICOM's (e.g. 'bidscoin\_example\raw').
+  - Choose the input folder that contains the DICOM's (e.g. 'bidscoin\_example\raw').
   - Select the `../subject/session/..` order of folders.
-  - Select your output folder.
-  - Skip the "subject-ID" and "pattern to remove" functionality. Your subject-ID's are fine!
-- Rename your files with the sequence mapper according to BIDS, or download the `sequence_map.tsv` from here and replace the file in your output folder.
+  - Choose the output folder.
+  - Do not use the "subject-ID" or "pattern to remove" features. You have good subject-IDs!
+- Use the sequence mapper to rename your files in accordance with BIDS, or download the `sequence_map.tsv` from [this link](https://github.com/wulms/bidsconvertr/blob/master/extdata/sequence_map.tsv) and replace the file in your output folder.
 
 | sequence                            | BIDS_sequence                     | BIDS_type| relevant |
 |-------------------------------------|-----------------------------------|-------|---|
@@ -45,4 +47,4 @@ Covering all steps of the basid BIDSconvertR workflow:
 
 
 
-Now the data is automatically saved into BIDS, the BIDS validator is started and the 'Shiny BIDS viewer' starts.
+Now the data is automatically saved into BIDS, the BIDS validator is started, and the `Shiny BIDS viewer` starts.

@@ -1,18 +1,19 @@
 # Install the BIDSconvertR
 
 ```{Note} 
-Please install R according to the description. From here on enter the following commands into the 'console' panel in RStudio.
+Please install R in accordance with the instructions. From here, enter the following commands into RStudio's 'console' panel.
 ```
 
-You need to install both R packages once. The `devtools` package is required to
-install packages from Github.
+Both packages must be installed only once. 
+The `devtools` package is required to install packages from Github.
 
 ``` r
 install.packages("devtools")
 ```
 
 Now you are able to install the most recent development version of
-`BIDSconvertR` using the command below.
+
+Using the command below, you can now install the most recent development version of `BIDSconvertR`.
 
 ``` r
 devtools::install_github(repo = "wulms/bidsconvertr")
