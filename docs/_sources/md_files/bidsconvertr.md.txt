@@ -12,7 +12,7 @@
 
 <!-- badges: start -->
 
-[![DOI](https://zenodo.org/badge/195199025.svg)](https://zenodo.org/badge/latestdoi/195199025)
+[![DOI](https://zenodo.org/badge/195199025.svg)](https://zenodo.org/badge/latestdoi/195199025) [![Github](https://img.shields.io/github/v/release/wulms/bidsconvertr.svg)](https://github.com/wulms/bidsconvertr)
 
 ```{image} ../../../inst/figure/BIDSconvertR.png
 :alt: BIDSconvertR logo
@@ -20,9 +20,8 @@
 :align: right
 ```
 
-The hexagonal sticker is created with the [icons package](https://github.com/mitchelloharawild/icons) and based on the MRI svg graphics provided by
-Flaticon and was created by mavadee [Flaticon
-Link](https://www.flaticon.com/free-icons/mri).
+The hexagonal sticker is created with the [iconspackage](https://github.com/mitchelloharawild/icons) and based on the MRI svg graphics provided by
+Flaticon and was created by mavadee [FlaticonLink](https://www.flaticon.com/free-icons/mri).
 
 
 
@@ -31,7 +30,7 @@ Link](https://www.flaticon.com/free-icons/mri).
 
 ## Aim
 
-The goal of BIDSconvertR is to provide a workflow, which is able to:
+The goal of [BIDSconvertR](https://github.com/wulms/bidsconvertr) is to provide a workflow, which is able to:
 
 -   convert DICOM data to NIfTI data using
     [dcm2niix](https://github.com/rordenlab/dcm2niix)

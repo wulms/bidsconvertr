@@ -13,6 +13,10 @@ Link](https://www.flaticon.com/free-icons/mri).
 
 <!-- badges: end -->
 
+# Documentation
+
+The code is documented at <https://wulms.github.io/bidsconvertr>.
+
 # Table of contents
 
 1.  [Aim](#aim)
@@ -67,16 +71,11 @@ Install
 
 ``` bash
 wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/r-project.gpg
-
-
 echo "deb [signed-by=/usr/share/keyrings/r-project.gpg] https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" | sudo tee -a /etc/apt/sources.list.d/r-project.list
 
 sudo apt update
-
 sudo apt install --no-install-recommends r-base
-
 sudo apt install r-base-dev
-
 sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev
 ```
 
