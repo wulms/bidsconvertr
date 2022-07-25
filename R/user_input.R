@@ -409,7 +409,9 @@ sessions_id_old <- c("', subject_session_df_BIDS$session %>% unique() %>% paste0
 sessions_id_new <- c("', subject_session_df_BIDS$session_BIDS %>% unique() %>% paste0(., collapse = '", "'), '")
 
 # edit this string only, if you know, what you are doing
+
 dcm2niix_argument_string <- "-ba y -f %d -z y -w 0 -i y"
+
 # -ba y = BIDS anonymisation (yes - anonymise JSON sidecar files)
 # -f %d = filename string (please do not change this one)
 # -z y = zip these files (yes - gunzip, nii.gz output)

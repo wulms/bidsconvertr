@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table of diagnostic files &mdash; BIDSconvertR 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Table of functions" href="table_functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> BIDSconvertR
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bidsconvertr.html">BIDSconvertR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Install R, dependencies and RStudio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation_bidsconvertr.html">Install the BIDSconvertR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Workflow:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage_notes.html">Usage notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_notes_user_settings.html">Creation of ‘user settings’ file.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Start of the workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage_notes_advanced.html">Advanced features</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorial:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Additional information:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="user_settings_file.html">What is in my ‘user_settings.R’ file?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dcm2niix.html">dcm2niix customisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table_functions.html">Table of functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Table of diagnostic files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BIDSconvertR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Table of diagnostic files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_files/table_diagnostic_files.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="table-of-diagnostic-files">
+<h1>Table of diagnostic files<a class="headerlink" href="#table-of-diagnostic-files" title="Permalink to this heading"></a></h1>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><div style="width:100px">filename</div></p></th>
+<th class="head"><p><div style="width:100px">description</div></p></th>
+<th class="head"><p><div style="width:100px">variables</div></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>dicom_paths.tsv</p></td>
+<td><p>Output of the ‘prepare_environment()’ function.  <br> Shows the extracted dicom folders, input and output paths, and the applied regular expressions.</p></td>
+<td><p>Take care, that your “subject/group/session_id” matches the regular expressions.  <br> Inspect the ‘output_path’ variables to find out, where the data will be saved after converting by dcm2niix cite{Li2016}.  <br> The ‘rest_string’ variables contain the removed information from the subject names.</p></td>
+</tr>
+<tr class="row-odd"><td><p>json_metadata.tsv</p></td>
+<td><p>Output of the ‘read_JSON_headers()’ function.  <br> The ‘create_dashboard()’ uses the information from this file.</p></td>
+<td><p>Subject, group, session and sequence variables for identification and all physical MR parameters from the JSON sidecar.</p></td>
+</tr>
+<tr class="row-even"><td><p>sequence_overview.tsv</p></td>
+<td><p>The ‘sequence_mapper()’ creates this file.  <br> It gives an overview of the number of images per unique sequence per session.</p></td>
+<td><p>The ‘sequence’ column is the identifier column, ‘possible sequence’ is based on the regular expression from the ‘user_settings.R’ file.  <br>  Per session one column is created containing the number of files. <br>  The ‘subject_session_merge’ column contains each subject with this sequence, up to a number of 30 observations.</p></td>
+</tr>
+<tr class="row-odd"><td><p>sequence_map.tsv</p></td>
+<td><p>The ‘sequence_mapper()’ creates and updates this file with each unique sequence ID from the ‘json_metadata.tsv’. <br>  Based on this file the ‘copy2BIDS’ output paths are created.</p></td>
+<td><p>The variables show the total number of sequences with the unique ID; the sequence type is identified by the regular expression from the ‘user_settings.R’ file.  <br> ‘BIDS_sequence’ and ‘BIDS_type’ need to be manually matched with the sequence_mapper() to the BIDS specification.  <br> The ‘relevant’ column is used for sequence selection. It is coded with ‘0’ for “no export to BIDS” and ‘1’ for “copy this file into BIDS”.</p></td>
+</tr>
+<tr class="row-even"><td><p>copy2bids.tsv</p></td>
+<td><p>Output of the copy2BIDS() function. <br>  Shows the input and output file paths of each file.</p></td>
+<td><p>Variables per subject, session and sequence ID.  <br> Main information is in the ‘input_file_paths’ and ‘output_file_path’ columns.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="table_functions.html" class="btn btn-neutral float-left" title="Table of functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Niklas Wulms.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -101,3 +101,5 @@ So, if you can manually rename and restructure the folders according to BIDS, yo
 
    md_files/user_settings_file
    md_files/dcm2niix.md
+   md_files/table_functions.md
+   md_files/table_diagnostic_files.md
