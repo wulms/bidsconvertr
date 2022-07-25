@@ -66,6 +66,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="user_settings_file.html">What is in my ‘user_settings.R’ file?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dcm2niix.html">dcm2niix customisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table_functions.html">Table of functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table_diagnostic_files.html">Table of diagnostic files</a></li>
 </ul>
 
         </div>
@@ -103,9 +105,13 @@ You should be able to rename your sequences in accordance with the BIDS specific
 A double-click on a cell will open it for editing.
 The <code class="docutils literal notranslate"><span class="pre">Sequence</span> <span class="pre">Mapper</span></code> should now begin displaying the interface as follows:</p>
 <p><img alt="Sequence mapper" src="../_images/sequence_mapper.PNG" /></p>
-<p>You have to edit each entry according to the BIDS specification. Some
-tips can be found on the left panel and hyperlinks to the BIDS
-specification. Then you click “save” and close the ‘sequence mapper’.</p>
+<p>You have to edit each entry according to the BIDS specification.
+Some tips can be found on the left panel and hyperlinks to the BIDS specification.
+Then you click “save” and close the ‘sequence mapper’.</p>
+<video width="720" height="480" controls="controls">
+  <source src="../_images/color_coding_validation.mp4" title="Sequence mapper color-coded validation" type="video/mp4">
+  <a href="../_images/color_coding_validation.mp4">Sequence mapper color-coded validation</a>
+  </video>
 <ol class="arabic simple">
 <li><p>You must edit every cell with the phrase “please edit.”</p></li>
 <li><p>Using regular expressions based on BIDS, each ‘BIDS_sequence’ and ‘BIDS_type’ entry is validated in the backend.
@@ -119,7 +125,7 @@ This is required in order for the algorithm to recognise that the user has chang
 <li><p>After clicking “save”, please exit the app.
 The workflow continues after the closing.</p></li>
 </ol>
-<p><img alt="The color-coding of the Sequence Mapper. Can you find out, why somerows are still red?" src="../_images/sequence_mapper_validity.png" /></p>
+<p><img alt="The color-coding of the Sequence Mapper. Can you find out, why some rows are still red?" src="../_images/sequence_mapper_validity.png" /></p>
 <p>When a sequence is recognised as BIDS compatible, it is indicated in the “matched” column.
 Investigate each letter of the filename if your sequence appears in the “unmatched” column.</p>
 </section>
@@ -128,10 +134,13 @@ Investigate each letter of the filename if your sequence appears in the “unmat
 <p>When everything is in order:</p>
 <ol class="arabic simple">
 <li><p>The files are copied to BIDS.</p></li>
-<li><p>The BIDS validation process begins. If Docker is already installed on
-your machine, it is started automatically. If not, the online-version is launched, and you must choose your folder manually. Please note: Files are never uploaded to the BIDS-Validator.</p></li>
+<li><p>The BIDS validation process begins.
+If Docker is already installed on your machine, it is started automatically.
+If not, the online-version is launched, and you must choose your folder manually.
+Please note: Files are never uploaded to the BIDS-Validator.</p></li>
 <li><p>You are prompted, if you want to remove temporary images from your hard disk.
-Avoid performing this by hand! Only do this after validating your data and gathering all of your data.</p></li>
+Avoid performing this by hand!
+Only do this after validating your data and gathering all of your data.</p></li>
 <li><p>A Shiny viewer is launched to examine the images visually.</p></li>
 </ol>
 <p><img alt="BIDS viewer" src="../_images/bids_viewer.PNG" /></p>
