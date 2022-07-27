@@ -20,7 +20,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Install R, dependencies and RStudio" href="installation.html" />
-    <link rel="prev" title="The BIDSconvertR" href="../index.html" /> 
+    <link rel="prev" title="The BIDSconvertR" href="../index.html" />
+    <link href="../_static/style.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,6 +45,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">BIDSconvertR</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#aim">Aim</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-visualization">Workflow visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#citation">Citation</a></li>
 </ul>
 </li>
@@ -132,8 +135,16 @@ studies</p></li>
 <section id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this heading"></a></h2>
 <p>Unclean subject-ID’s or session-ID’s can be renamed.</p>
-<p>When new files or sequences are added, the’sequence mapper’ reopens until everything is declared in accordance with BIDS.
+<p>When new files or sequences are added, the ‘sequence mapper’ reopens until everything is declared in accordance with BIDS.
 Files that have already been processed are bypassed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only the metadata contained within the BIDS folder is free of potentially identifiable information. Follow the legal terms when sharing your dataset and consider additional defacing, pseudonymization, or both.</p>
+</div>
+</section>
+<section id="workflow-visualization">
+<h2>Workflow visualization<a class="headerlink" href="#workflow-visualization" title="Permalink to this heading"></a></h2>
+<p><img alt="Workflow" src="../_images/BIDSconvertR_workflow.png" /></p>
 </section>
 <section id="citation">
 <h2>Citation<a class="headerlink" href="#citation" title="Permalink to this heading"></a></h2>

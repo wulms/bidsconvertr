@@ -20,7 +20,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Advanced features" href="usage_notes_advanced.html" />
-    <link rel="prev" title="Creation of ‘user settings’ file." href="usage_notes_user_settings.html" /> 
+    <link rel="prev" title="Creation of ‘user settings’ file." href="usage_notes_user_settings.html" />
+    <link href="../_static/style.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -108,10 +110,10 @@ The <code class="docutils literal notranslate"><span class="pre">Sequence</span>
 <p>You have to edit each entry according to the BIDS specification.
 Some tips can be found on the left panel and hyperlinks to the BIDS specification.
 Then you click “save” and close the ‘sequence mapper’.</p>
-<video width="720" height="480" controls="controls">
+<video width="100%" height="auto" controls="controls">
   <source src="../_images/color_coding_validation.mp4" title="Sequence mapper color-coded validation" type="video/mp4">
   <a href="../_images/color_coding_validation.mp4">Sequence mapper color-coded validation</a>
-  </video>
+</video>
 <ol class="arabic simple">
 <li><p>You must edit every cell with the phrase “please edit.”</p></li>
 <li><p>Using regular expressions based on BIDS, each ‘BIDS_sequence’ and ‘BIDS_type’ entry is validated in the backend.
@@ -121,7 +123,7 @@ If you mark a non-valid BIDS string as relevant, it will be copied to BIDS and y
 <li><p>Red rows with “irrelevant” flagged cells can be disregarded.
 There is no export of these to BIDS.
 However, you need to take the “please edit” out of them.
-This is required in order for the algorithm to recognise that the user has changed each cell.</p></li>
+This is required in order for the algorithm to recognize that the user has changed each cell.</p></li>
 <li><p>After clicking “save”, please exit the app.
 The workflow continues after the closing.</p></li>
 </ol>
@@ -131,6 +133,10 @@ Investigate each letter of the filename if your sequence appears in the “unmat
 </section>
 <section id="bids-dataset-validation">
 <h2>BIDS dataset &amp; validation<a class="headerlink" href="#bids-dataset-validation" title="Permalink to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only the metadata contained within the BIDS folder is free of potentially identifiable information. Follow the legal terms when sharing your dataset and consider additional defacing, pseudonymization, or both.</p>
+</div>
 <p>When everything is in order:</p>
 <ol class="arabic simple">
 <li><p>The files are copied to BIDS.</p></li>

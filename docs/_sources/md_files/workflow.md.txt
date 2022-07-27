@@ -10,6 +10,9 @@ Your data is converted into NifTI format using dcm2niix based on the inputs.
 
 Each JSON header is read out and combined into one file.
 
+
+
+
 ## The sequence mapper GUI
 
 After extracting the distinct sequence-IDs, the `Sequence Mapper`, a Shiny application is started.
@@ -25,10 +28,10 @@ Then you click "save" and close the 'sequence mapper'.
 
 
 
-<video width="720" height="480" controls="controls">
+<video width="100%" height="auto" controls="controls">
   <source src="../_images/color_coding_validation.mp4" title="Sequence mapper color-coded validation" type="video/mp4">
   <a href="../_images/color_coding_validation.mp4">Sequence mapper color-coded validation</a>
-  </video>
+</video>
 
 1)  You must edit every cell with the phrase "please edit."
 
@@ -41,7 +44,7 @@ Then you click "save" and close the 'sequence mapper'.
 4)  Red rows with "irrelevant" flagged cells can be disregarded.
     There is no export of these to BIDS.
     However, you need to take the "please edit" out of them.
-    This is required in order for the algorithm to recognise that the user has changed each cell.
+    This is required in order for the algorithm to recognize that the user has changed each cell.
 
 5)  After clicking "save", please exit the app.
     The workflow continues after the closing.
@@ -52,6 +55,10 @@ When a sequence is recognised as BIDS compatible, it is indicated in the "matche
 Investigate each letter of the filename if your sequence appears in the "unmatched" column.
 
 ## BIDS dataset & validation
+
+```{note} 
+Only the metadata contained within the BIDS folder is free of potentially identifiable information. Follow the legal terms when sharing your dataset and consider additional defacing, pseudonymization, or both.
+```
 
 When everything is in order:
 
@@ -69,3 +76,5 @@ When everything is in order:
 4.  A Shiny viewer is launched to examine the images visually.
 
 ![BIDS viewer](../../../inst/figure/bids_viewer.PNG)
+
+

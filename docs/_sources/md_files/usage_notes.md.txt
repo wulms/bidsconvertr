@@ -36,6 +36,8 @@ You do not need to manually edit these; instead, our user dialogue will walk you
 
 ### Do you have a `user settings` file?
 
+![User Settings Selection](../../../inst/figure/bidsconvertr_settings_file.png)
+
 | Option | What happens?                                                                                                       |
 |--------|---------------------------------------------------------------------------------------------------------------------|
 | Yes    | You are able to select your already existing file. The user dialog is skipped. Starts the rest of the workflow. |

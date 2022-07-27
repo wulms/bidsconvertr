@@ -11,6 +11,9 @@ of sessions.
 You are prompted to decide if you wish to edit subject- and session-ID’s during the user dialog.
 You can skip this step if your data was already collected with clear subject- and session-ID’s:
 
+![Image](../../../inst/figure/bidsconvertr_regex.png)
+
+
 | **Option to select**          | **What happens?**                                                                                       |
 |-------------------------------|-------------------------------------------------------------------------------------------------------------|
 | No, my subject-ID's are fine. | The paths are created, subject- and session-ID's get a "sub-" and "ses-" prefix, if it isn't already there. |
@@ -39,6 +42,9 @@ In the absence of a regular expression, the subject-ID is unaltered.
 
 ### Regular expression: subject-ID 
 
+![Image](../../../inst/figure/bidsconvertr_regex_subjid.png)
+
+
 The subject-ID is extracted from the input string using this regular expression. 
 If all of your files had a well established naming convention, you could use this.
 
@@ -56,6 +62,9 @@ Examples of subject-ID regular expressions
 
 ### Regular expression: pattern to remove
 
+![Image](../../../inst/figure/bidsconvertr_regex_remove.png)
+
+
 The `pattern_to_remove` regular expression simply removes the regular expression(s) from the subject-ID.
 
 | subject-ID                   | regular expression              | described in words                                   | output subject-ID |
@@ -71,12 +80,20 @@ The `pattern_to_remove` regular expression simply removes the regular expression
 Examples of ‘patterns to remove’ regular expressions
 
 
+![Image](../../../inst/figure/bidsconvertr_regex_valid.png)
 
 
 
 ## Do you want to edit your session-ID’s?
 
+![Image](../../../inst/figure/bidsconvertr_renaming_sessions.png)
+
+
 Your session-IDs can now be edited. 
+
+![Image](../../../inst/figure/bidsconvertr_renaming_sessions2.png)
+
+
 You can choose to keep them or rename them.
 
 | Option to select              | What happens?                                                           |

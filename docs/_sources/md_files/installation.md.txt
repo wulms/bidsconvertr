@@ -11,7 +11,7 @@ your R-version and install it. It is required to install the packages.
 
 [RStudio](https://www.rstudio.com/products/rstudio/download/#download) should be downloaded and installed.
 
-## Linux
+## Debian/Ubuntu
 
 To install R and its dependencies, enter the following commands into the terminal.
 

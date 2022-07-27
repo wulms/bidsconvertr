@@ -49,10 +49,16 @@ Flaticon and mavadee [FlaticonLink](https://www.flaticon.com/free-icons/mri).
 
 Unclean subject-ID’s or session-ID’s can be renamed.
 
-When new files or sequences are added, the'sequence mapper' reopens until everything is declared in accordance with BIDS. 
+When new files or sequences are added, the 'sequence mapper' reopens until everything is declared in accordance with BIDS. 
 Files that have already been processed are bypassed.
 
+```{note} 
+Only the metadata contained within the BIDS folder is free of potentially identifiable information. Follow the legal terms when sharing your dataset and consider additional defacing, pseudonymization, or both.
+```
 
+## Workflow visualization
+
+![Workflow](../../../inst/figure/BIDSconvertR_workflow.png)
 
 ## Citation 
 

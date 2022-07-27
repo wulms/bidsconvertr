@@ -20,7 +20,9 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial" href="tutorial.html" />
-    <link rel="prev" title="Start of the workflow" href="workflow.html" /> 
+    <link rel="prev" title="Start of the workflow" href="workflow.html" />
+    <link href="../_static/style.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -110,6 +112,7 @@ You should read this if your subject-IDs are messy (have a redundant prefix, suf
 of sessions.</p>
 <p>You are prompted to decide if you wish to edit subject- and session-ID’s during the user dialog.
 You can skip this step if your data was already collected with clear subject- and session-ID’s:</p>
+<p><img alt="Image" src="../_images/bidsconvertr_regex.png" /></p>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>Option to select</strong></p></th>
@@ -142,6 +145,7 @@ Contact me via email or the issues in this repository if you run across any trou
 In the absence of a regular expression, the subject-ID is unaltered.</p>
 <section id="regular-expression-subject-id">
 <h3>Regular expression: subject-ID<a class="headerlink" href="#regular-expression-subject-id" title="Permalink to this heading"></a></h3>
+<p><img alt="Image" src="../_images/bidsconvertr_regex_subjid.png" /></p>
 <p>The subject-ID is extracted from the input string using this regular expression.
 If all of your files had a well established naming convention, you could use this.</p>
 <table class="colwidths-auto docutils align-default">
@@ -194,6 +198,7 @@ If all of your files had a well established naming convention, you could use thi
 </section>
 <section id="regular-expression-pattern-to-remove">
 <h3>Regular expression: pattern to remove<a class="headerlink" href="#regular-expression-pattern-to-remove" title="Permalink to this heading"></a></h3>
+<p><img alt="Image" src="../_images/bidsconvertr_regex_remove.png" /></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">pattern_to_remove</span></code> regular expression simply removes the regular expression(s) from the subject-ID.</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
@@ -242,12 +247,15 @@ If all of your files had a well established naming convention, you could use thi
 </tbody>
 </table>
 <p>Examples of ‘patterns to remove’ regular expressions</p>
+<p><img alt="Image" src="../_images/bidsconvertr_regex_valid.png" /></p>
 </section>
 </section>
 <section id="do-you-want-to-edit-your-session-ids">
 <h2>Do you want to edit your session-ID’s?<a class="headerlink" href="#do-you-want-to-edit-your-session-ids" title="Permalink to this heading"></a></h2>
-<p>Your session-IDs can now be edited.
-You can choose to keep them or rename them.</p>
+<p><img alt="Image" src="../_images/bidsconvertr_renaming_sessions.png" /></p>
+<p>Your session-IDs can now be edited.</p>
+<p><img alt="Image" src="../_images/bidsconvertr_renaming_sessions2.png" /></p>
+<p>You can choose to keep them or rename them.</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Option to select</p></th>

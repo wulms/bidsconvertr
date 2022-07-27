@@ -24,7 +24,7 @@ This workflow covers each stage of the fundamental BIDSconvertR workflow:
   - Select the `../subject/session/..` order of folders.
   - Choose the output folder.
   - Do not use the "subject-ID" or "pattern to remove" features. You have good subject-IDs!
-- Use the sequence mapper to rename your files in accordance with BIDS, or download the `sequence_map.tsv` from [this link](https://github.com/wulms/bidsconvertr/blob/master/extdata/sequence_map.tsv) and replace the file in your output folder.
+- Use the sequence mapper to rename your files in accordance with BIDS, or download the `sequence_map.tsv` from [this link](https://raw.githubusercontent.com/wulms/bidsconvertr/master/extdata/sequence_map.tsv), right-click, save, and replace the file in your output folder.
 
 | sequence                            | BIDS_sequence                     | BIDS_type| relevant |
 |-------------------------------------|-----------------------------------|-------|---|
