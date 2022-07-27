@@ -121,6 +121,10 @@ read_json_headers <- function(json_path, suffix = "") {
 
   json_metadata_output_tsv <- paste0(path_output_converter, "/json_metadata", suffix, ".tsv")
 
+  if(suffix == "_anon"){
+    json_metadata_output_tsv <- paste0(path_output_converter, "/identifying_information/json_metadata", suffix, ".tsv")
+  }
+
   json_files <- list_json_files(json_path, output_suffix = suffix) %>%
     filter(str_detect(json_path, "participants\\.json", negate = TRUE))
 
