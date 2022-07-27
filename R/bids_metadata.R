@@ -6,10 +6,10 @@
 #' @export
 #'
 #' @examples
-add_participants_tsv <- function(tsv_path = paste0(path_output_converter, "/json_metadata.tsv")){
+add_participants_tsv <- function(tsv_path = paste0(path_output_converter, "/identifying_information/json_metadata.tsv")){
   # Select columns from json dataframe, mutate relevant columns
 
-  tsv_path = paste0(path_output_converter, "/json_metadata.tsv")
+  #tsv_path = paste0(path_output_converter, "/json_metadata.tsv")
 
   df <- tsv_path %>%
     readr::read_tsv(show_col_types = FALSE, lazy = FALSE)
@@ -103,7 +103,7 @@ write_metadata_bids <- function(txt_input, file_path){
 #' @export
 #'
 #' @examples
-create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/json_metadata.tsv"),
+create_taskname_metadata <- function(tsv_path = paste0(path_output_converter, "/identifying_information/json_metadata.tsv"),
                                      tsv_map = paste0(path_output_converter, "/sequence_map.tsv")){
   taskname <- tsv_path %>%
     readr::read_tsv(show_col_types = FALSE, lazy = FALSE) %>% names()

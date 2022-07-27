@@ -60,7 +60,7 @@ list_json_files <- function(input_path,
 
   cat("\n\n Sequence overview saved to file:\n\n")
 
-  if(suffix == "_anon"){
+  if(output_suffix == "_anon"){
     output_tsv <- paste0(path_output_converter, "/sequence_overview", output_suffix, ".tsv")
   } else {
     output_tsv <- paste0(path_output_converter, "/identifying_information/sequence_overview", output_suffix, ".tsv")
