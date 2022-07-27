@@ -59,9 +59,16 @@ list_json_files <- function(input_path,
     print(n = Inf)
 
   cat("\n\n Sequence overview saved to file:\n\n")
-  print(paste0(path_output_converter, "/sequence_overview", output_suffix, ".tsv"))
+
+  if(suffix == "_anon"){
+    output_tsv <- paste0(path_output_converter, "/sequence_overview", output_suffix, ".tsv")
+  } else {
+    output_tsv <- paste0(path_output_converter, "/identifying_information/sequence_overview", output_suffix, ".tsv")
+  }
+
+  print(output_tsv)
   readr::write_tsv(json_overview,
-                   file = paste0(path_output_converter, "/sequence_overview", output_suffix, ".tsv"),
+                   file = output_tsv,
                    append = FALSE)
 
   cat("\n")
@@ -119,9 +126,10 @@ get_json_headers <- function(json) {
 #' @examples read_json_headers(json_list, empty_df_with_headers)
 read_json_headers <- function(json_path, suffix = "") {
 
-  json_metadata_output_tsv <- paste0(path_output_converter, "/json_metadata", suffix, ".tsv")
 
   if(suffix == "_anon"){
+    json_metadata_output_tsv <- paste0(path_output_converter, "/json_metadata", suffix, ".tsv")
+  } else {
     json_metadata_output_tsv <- paste0(path_output_converter, "/identifying_information/json_metadata", suffix, ".tsv")
   }
 
