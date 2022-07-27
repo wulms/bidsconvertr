@@ -27,7 +27,7 @@ For more information on regular expressions (regex) please see the
 sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)
 or [RegexOne](https://regexone.com/). 
 
-<embed src="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf" type="application/pdf" width="100%" height="400">
+<embed src="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf" type="application/pdf" width="100%" height="800px">
 
 Each regex set here should match to your data. 
 Contact me via email or the issues in this repository if you run across any troubles.
@@ -89,11 +89,6 @@ Examples of ‘patterns to remove’ regular expressions
 ![Image](../../../inst/figure/bidsconvertr_renaming_sessions.png)
 
 
-Your session-IDs can now be edited. 
-
-![Image](../../../inst/figure/bidsconvertr_renaming_sessions2.png)
-
-
 You can choose to keep them or rename them.
 
 | Option to select              | What happens?                                                           |
@@ -103,19 +98,26 @@ You can choose to keep them or rename them.
 
 Yes:
 
+“Yes, I need to change them” can result in output like this. Your session-IDs can now be edited. The user
+could also choose to use “followup” or something else.
+
+![Image](../../../inst/figure/bidsconvertr_renaming_sessions2.png)
+
+
 | session-ID (old) | session-ID (user input) | session-BIDS |
 |------------------|-------------------------|--------------|
 | baseline         | 1                       | ses-1        |
 | follow_up        | 2                       | ses-2        |
 
-“Yes, I need to change them” can result in output like this. The user
-could also choose to use “followup” or something else.
+
 
 No:
+
+“No, my session-ID’s are fine”
+
 
 | session-ID (old) | session-BIDS  |
 |------------------|---------------|
 | baseline         | ses-baseline  |
 | follow_up        | ses-follow_up |
 
-“No, my session-ID’s are fine”
