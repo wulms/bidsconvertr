@@ -39,8 +39,14 @@ convert_to_BIDS <- function(sequence_table = "off"){
   cat("\n\n\n============ Sequence Mapper ===============\n\n\n")
   sequence_mapper()
   check_sequence_map()
+
   cat("\n\n\n============ Copy files to BIDS ===============\n\n\n")
   copy2BIDS()
+
+  cat("\n\n\n============ Potentially identifying data statement ===============\n\n\n")
+  svDialogs::dlg_message("ONLY the METADATA contained within the BIDS folder is free of potentially identifiable information.
+                         Please ensure full anonymization (e.g., defacing for images, pseudonymisation of subject-IDs in the filenames)
+                         according to local data protection regulations.")
 
   cat("\n\n\n============ start BIDS validator ===============\n\n\n")
   start_bids_validator()
