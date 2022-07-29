@@ -89,11 +89,11 @@ delete_temp_nii_files <- function(path_to_search = path_output_converter_temp){
   print(files_to_delete)
 
   delete_nii_switch <- menu(graphics = TRUE,
-                                       c("Yes, I want to delete the temporary NII data.",
-                                         "No, I want to keep my data."),
+                                       c("No, I want to keep my data.",
+                                         "Yes, I want to delete the temporary NII data."),
                                        title="Are you sure to delete the listed files?")
 
-  if(delete_nii_switch == 1){
+  if(delete_nii_switch == 2){
     delete_nii_switch2 <<- menu(graphics = TRUE,
                                 c("No, I want to keep my data.",
                                   "Yes, I want to delete the temporary NII data."),
