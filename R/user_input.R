@@ -287,11 +287,11 @@ cleaning_session_ids <- function(){
   if(session_cleaning_needed == 1){
     subject_session_df_BIDS <<- edit_session_df() %>%
       mutate(session_BIDS = paste0("ses-", session_BIDS) %>%
-               str_remove("^ses-(?=ses-)"))
+               str_replace("ses-ses-", "ses-"))
   } else {
     subject_session_df_BIDS <<- subject_session_df_BIDS %>%
       mutate(session_BIDS = paste0("ses-", session) %>%
-               str_remove("^ses-(?=ses-)"))
+               str_replace("ses-ses-", "ses-"))
   }
 
   cat("Your new sessions are named like this:\n\n")
