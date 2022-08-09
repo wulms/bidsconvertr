@@ -203,10 +203,10 @@ check_filenames <- function(df = df){
                                str_replace),
       output_path_nii = paste0(path_output_converter_temp_nii,
                                "/sub-", your_subject_id,
-                               "/", new_session_id),
+                               "/ses-", new_session_id),
       output_path_json = paste0(path_output_converter_temp_json,
                                 "/sub-", your_subject_id,
-                                "/", new_session_id)
+                                "/ses-", new_session_id)
     ) %>%
     relocate(dicom_folder, your_subject_id,
              your_session_id, new_session_id)
