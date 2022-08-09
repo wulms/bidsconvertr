@@ -109,7 +109,7 @@ check_folder_order <- function() {
     unlist() %>%
     data.frame(dicom_folder = ., stringsAsFactors = FALSE)  %>%
     # extract relevant information
-    mutate(
+    dplyr::mutate(
       folder_short = str_remove(dicom_folder, path_input_dicom) %>%
         str_replace("////", "//") %>%
         str_remove("^/"))
@@ -173,29 +173,29 @@ check_filenames <- function(df = df){
   cat("\n\n Preparing filenames \n\n")
   df_out <- df %>%
     # remove "ses- or sub-" from the input string
-    mutate(session = str_remove(session, "^ses-"),
+    dplyr::mutate(session = str_remove(session, "^ses-"),
            subject = str_remove(subject, "^sub-")) %>%
     # apply regular expressions
-    mutate(your_session_id = str_extract(session,
+    dplyr::mutate(your_session_id = str_extract(session,
                                          string_sessions),
            your_subject_id = str_extract(subject,
                                          regex_subject_id)) %>%
     # if one is NA, switch with extracted info before regex
-    mutate(your_session_id = ifelse(is.na(your_session_id),
+    dplyr::mutate(your_session_id = ifelse(is.na(your_session_id),
                                     yes = session,
                                     no = your_session_id),
            your_subject_id = ifelse(is.na(your_subject_id),
                                     yes = subject,
                                     no = your_subject_id)) %>%
     # create rest string
-    mutate(
+    dplyr::mutate(
       rest_string = str_remove(subject, your_subject_id) %>%
         str_remove("//"),
       rest_string2 = str_remove_all(rest_string,
                                     regex(regex_remove_pattern, ignore_case = TRUE))
     ) %>%
     # output path
-    mutate(
+    dplyr::mutate(
       # switch session-IDS
       new_session_id = reduce2(paste0(sessions_id_old, "$"),
                                sessions_id_new,
