@@ -196,7 +196,7 @@ cleaning_subject_ids <- function() {
         cat("You selected: \n\n", regex_remove_pattern, "\n\n")
         regex_remove_pattern <<- stringr::regex(regex_remove_pattern)
         subject_session_df_BIDS <<- subject_session_df_BIDS %>%
-          mutate(removed = stringr::str_extract_all(subject_BIDS, regex_remove_pattern),
+          dplyr::mutate(removed = stringr::str_extract_all(subject_BIDS, regex_remove_pattern),
                  subject_BIDS = stringr::str_remove(subject_BIDS, regex_remove_pattern) %>%
                    paste0("sub-", .) %>%
                    str_replace("sub-sub-", "sub-"))
@@ -218,7 +218,7 @@ cleaning_subject_ids <- function() {
     regex_remove_pattern <<- "nothing_configured"
 
     subject_session_df_BIDS <<- subject_session_df %>%
-      mutate(subject_BIDS = paste0("sub-", subject) %>%
+      dplyr::mutate(subject_BIDS = paste0("sub-", subject) %>%
                str_replace("sub-sub-", "sub-"))
     subject_session_df_BIDS %>%
       select(-dicom_folder, -session) %>% unique() %>% print()
@@ -248,7 +248,7 @@ create_subject_session_df <- function(directory = user_input_dir){
     normalizePath(winslash = "/") %>%
     data.frame(dicom_folder = ., stringsAsFactors = FALSE)  %>%
     # extract relevant information
-    mutate(
+    dplyr::mutate(
       folder_short = str_remove(dicom_folder, directory) %>%
         str_replace("////", "//") %>%
         str_replace("\\\\", "/") %>%
@@ -286,11 +286,11 @@ cleaning_session_ids <- function(){
 
   if(session_cleaning_needed == 1){
     subject_session_df_BIDS <<- edit_session_df() %>%
-      mutate(session_BIDS = paste0("ses-", session_BIDS) %>%
+      dplyr::mutate(session_BIDS = paste0("ses-", session_BIDS) %>%
                str_replace("ses-ses-", "ses-"))
   } else {
     subject_session_df_BIDS <<- subject_session_df_BIDS %>%
-      mutate(session_BIDS = paste0("ses-", session) %>%
+      dplyr::mutate(session_BIDS = paste0("ses-", session) %>%
                str_replace("ses-ses-", "ses-"))
   }
 
@@ -314,7 +314,7 @@ edit_session_df <- function(){
   df <- subject_session_df_BIDS %>%
     select(session) %>%
     unique() %>%
-    mutate(session_BIDS = session %>%
+    dplyr::mutate(session_BIDS = session %>%
              as.factor() %>%
              as.integer() %>%
              as.character())
