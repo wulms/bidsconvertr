@@ -35,7 +35,7 @@ select_user_settings_file <- function(){
     # editing session IDs
     cleaning_session_ids()
 
-    create_user_settings()
+    create_user_settings(folder = user_output_dir)
 
   }
 
