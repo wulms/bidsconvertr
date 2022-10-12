@@ -55,7 +55,7 @@ convert_to_BIDS <- function(sequence_table = "off"){
   # create_dashboard()
 
   cat("\n\n\n============ Starting Shiny BIDS ===============\n\n\n")
-  run_shiny_BIDS()
+  run_shiny_BIDS(bids_directory = path_output_bids)
 
   cat("\n\n\n============ Deletion of temporary files ===============\n\n\n")
   cat("Only recommended, when:")
