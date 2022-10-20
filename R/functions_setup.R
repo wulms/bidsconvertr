@@ -44,7 +44,7 @@ convert_to_BIDS <- function(sequence_table = "off"){
   copy2BIDS()
 
   cat("\n\n\n============ Potentially identifying data statement ===============\n\n\n")
-  svDialogs::dlg_message("ONLY the METADATA contained within the BIDS folder is free of potentially identifiable information.
+  svDialogs::dlg_message("DATA PRIVACY NOTE: ONLY the METADATA contained within the BIDS folder is free of potentially identifiable information.
                          Please ensure full anonymization (e.g., defacing for images, pseudonymisation of subject-IDs in the filenames)
                          according to local data protection regulations.")
 

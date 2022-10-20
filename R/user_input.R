@@ -54,6 +54,8 @@ get_user_input <- function(){
 
   ######################## input folder #############################
   print("Configuring input (root folder containing DICOM's), the order of 'session' and 'subject' folders and the output path.\n\n")
+  svDialogs::dlg_message("Please select your input folder now. It contains folders per session & subject or subject & session with the DICOM data.")
+
 
   switch_input_folder <- 2
   while (switch_input_folder == 2) {
@@ -73,7 +75,9 @@ get_user_input <- function(){
                                 title="Check your input data: Do these folders contain the DICOM images?")
     }
   ########################## folder order #############################
-  cat("\n\n Now please select the order of folders in your input directory: Are they like '../subject_001/session_001/..' or like '../session_001/subject__001..'?\n\n" )
+  cat("\n\n Now please select the order of folders in your input directory: Are they like '../subject_001/session_001/..' or like '../session_001/subject_001..'?\n\n" )
+  svDialogs::dlg_message("Now please select the order of folders in your input directory: Are they like '../subject_001/session_001/..' or like '../session_001/subject_001..'?")
+
   print(create_subject_session_df()$folder_short)
 
   switch_input_order <- 2
@@ -99,6 +103,8 @@ get_user_input <- function(){
 
   ##################### output directory ####################################
   # Selection of output directory
+  svDialogs::dlg_message("Now please select your output directory. All BIDS data and the `user_settings.R` file will be stored here.")
+
   user_output_dir <<- shinyDirectoryInput::choose.dir(caption = "Please select the output directory, where all outputs should be saved. \n") %>%
     normalizePath(., winslash = "/")
 
@@ -117,6 +123,9 @@ get_user_input <- function(){
 #'
 #' @examples
 cleaning_subject_ids <- function() {
+
+  svDialogs::dlg_message("Optional data cleaning: In case of redundant information in your subject-IDs you are able to (1) define the IDs (e.g. [:digit:]{5} for 5 digit IDs) or (2) remove redundant prefixes, suffices or strings using regular expressions (e.g. 'study_a' from 'study_a_0001'). Skip this step, if your IDs are fine.")
+
   ######################### regex cleaning subject ID ############################
   data_cleaning_needed = menu(
     graphics = TRUE,
