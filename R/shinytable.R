@@ -112,9 +112,23 @@ check_BIDS_plausibility <- function(df){
            valid = ifelse(str_detect(BIDS_type, "^(anat|dwi|func|fmap|perf)$",
                                      negate = TRUE), yes = 0, no = valid),
            valid = ifelse(str_detect(relevant, "^(0|1)$",
-                                     negate = TRUE), yes = 0, no = valid),
-           matched = str_extract(BIDS_sequence, valid_BIDS_regex),
-           unmatched = str_remove_all(BIDS_sequence, valid_BIDS_regex))
+                                     negate = TRUE), yes = 0, no = valid)#,
+           #matched = str_extract(BIDS_sequence, valid_BIDS_regex),
+           #unmatched = str_remove_all(BIDS_sequence, valid_BIDS_regex)
+           )
+  return(df)
+}
+
+check_BIDS_plausibility2 <- function(df){
+
+  valid_BIDS_regex <- create_BIDS_regex()
+
+  df <- df %>%
+    mutate(valid = ifelse(test =
+      str_detect(BIDS_sequence, valid_BIDS_regex) == 1 &
+        str_detect(BIDS_type, "^(anat|dwi|func|fmap|perf)$") == 1 &
+        str_detect(relevant, "^(0|1)$") == 1
+    , yes = 1, no = 0))
   return(df)
 }
 
@@ -135,7 +149,7 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
 
   cat("\n\n\nSequence mapper started:...\n\n\n")
 
-  DF <- check_BIDS_plausibility(DF)
+  DF <- check_BIDS_plausibility2(DF)
 
   # print(DF)
 
@@ -210,11 +224,11 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
     # DF formatting
     output$x1 <- renderDT({
       DF %>%
-        check_BIDS_plausibility() %>%
+        check_BIDS_plausibility2() %>%
       datatable(selection = 'none',
                # container = sketch,
              editable = list(target = 'cell',
-                             disable = list(columns = c(0, 1, 2, 3, 7, 8, 9))),
+                             disable = list(columns = c(0, 1, 5))),
              # rownames = FALSE,
              options = list(pageLength = 100,
                             dom = "t",
@@ -270,7 +284,7 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
       finalDF <- new_DF
 
       finalDF <- finalDF %>%
-        select(-valid, -matched, -unmatched)
+        select(-valid)
 
       # print(finalDF)
 

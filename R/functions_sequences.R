@@ -19,7 +19,7 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
   tsv_input <- readr::read_tsv(input_file, show_col_types = FALSE, lazy = FALSE)
 
   tsv_input_sequences <- tsv_input %>%
-    select(sequence, possible_sequence, total) %>%
+    select(sequence) %>%
     unique()
 
   if(file.exists(mapper_file)){
@@ -29,16 +29,16 @@ sequence_mapper <- function(sequence_overview_file = "sequence_overview_anon",
     tsv_difference <- anti_join(tsv_input_sequences, tsv_map, by = "sequence") %>%
       mutate(BIDS_sequence = "please edit (T1w/T2w/etc)",
              BIDS_type = "please edit (anat/dwi/func/etc)",
-             relevant = "please edit (0 = no, 1 = yes)") %>%
-      select(sequence, total, possible_sequence, BIDS_sequence, BIDS_type, relevant)
+             relevant = "1") %>%
+      select(sequence, BIDS_sequence, BIDS_type, relevant)
 
     final_df <- full_join(tsv_map, tsv_difference)
   } else {
     sequence_mapper_df <- tsv_input_sequences %>%
       mutate(BIDS_sequence = "please edit (T1w/T2w/etc)",
              BIDS_type = "please edit (anat/dwi/func/etc)",
-             relevant = "please edit (0 = no, 1 = yes)") %>%
-      select(sequence, total, possible_sequence, BIDS_sequence, BIDS_type, relevant)
+             relevant = "1") %>%
+      select(sequence, BIDS_sequence, BIDS_type, relevant)
 
     final_df <- sequence_mapper_df
   }
