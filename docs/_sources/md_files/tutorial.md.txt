@@ -1,6 +1,6 @@
 # Tutorial
 
-This procedure should demonstrate how to use the BIDSconvertR. 
+This procedure should demonstrate how to use the BIDSconvertR.
 We appreciate the [BIDScoin](https://github.com/Donders-Institute/bidscoin) team's permission to use their sample data.
 
 ## The installation procedure
@@ -8,23 +8,27 @@ We appreciate the [BIDScoin](https://github.com/Donders-Institute/bidscoin) team
 Installing R and RStudio and downloading sample data:
 
 - To install the [BIDSconvertR](installation_bidsconvertr.md) on Windows or Linux follow the [instructions](installation.md).
-- Download the [BIDScoin](https://github.com/Donders-Institute/bidscoin) example data : [Download here](https://surfdrive.surf.nl/files/index.php/s/HTxdUbykBZm2cYM/download). 
+- Download the [BIDScoin](https://github.com/Donders-Institute/bidscoin) example data : [Download here](https://surfdrive.surf.nl/files/index.php/s/HTxdUbykBZm2cYM/download).
   Please be aware that the data has been compressed twice using gunzip (suffix: '.gz') and tar (suffix: '.tar'). You need to unpack both.
-- Copy the `raw` subject folders into a new folder (such as `bidscoin\example`). 
+- Copy the `raw` subject folders into a new folder (such as `bidscoin\example`).
 
 ## The BIDSconvertR workflow
 
-This workflow covers each stage of the fundamental BIDSconvertR workflow:
+This workflow covers a short description of the fundamental BIDSconvertR workflow.
+
+For more detailed information check out the detailed workflow description.
 
 - Launch RStudio and use the R console from here on.
-- Execute `library("bidsconvertr")`.
-- Use the `convert_to_BIDS()`command to launch the tool.
+- Enter `library("bidsconvertr")` to the terminal to load the library.
+- Enter `convert_to_BIDS()`command to launch the tool.
 - Create your own 'user\_settings.R' file by following the popup messages.
   - Choose the input folder that contains the DICOM's (e.g. 'bidscoin\_example\raw').
   - Select the `../subject/session/..` order of folders.
   - Choose the output folder.
   - Do not use the "subject-ID" or "pattern to remove" features. You have good subject-IDs!
 - Use the sequence mapper to rename your files in accordance with BIDS, or download the `sequence_map.tsv` from [this link](https://raw.githubusercontent.com/wulms/bidsconvertr/master/extdata/sequence_map.tsv), right-click, save, and replace the file in your output folder.
+
+
 
 | sequence                            | BIDS_sequence                     | BIDS_type| relevant |
 |-------------------------------------|-----------------------------------|-------|---|
