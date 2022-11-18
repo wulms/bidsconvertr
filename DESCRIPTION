@@ -1,6 +1,6 @@
 Package: bidsconvertr
 Title: Converts DICOM data to NIfTI and structure the NIfTI data in BIDS specification
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person(given = "Niklas",
            family = "Wulms",
