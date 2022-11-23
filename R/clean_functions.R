@@ -1558,7 +1558,7 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
                               a("The code for this shiny app is adapted from here",
                                 href = "http://stla.github.io/stlapblog/posts/shiny_editTable.html"),
 
-                              width = 2
+                              width = 3
 
                             ),
 
@@ -1567,7 +1567,7 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
 
                               #br(),
                               dt_output('Please edit the red & bold columns (double-click) and "save". Red indicates non-valid BIDS strings. Green indicates a valid "BIDS_sequence", "BIDS_type" and "relevant" column.', 'x1'),
-                              width = 10
+                              width = 9
 
 
 
