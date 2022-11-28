@@ -83,8 +83,15 @@ select_user_settings_file <- function(){
   if(user_settings_file_existing == 1){
     print("Please select the 'user_settings.R' file now:")
     # Select the file!
-    settings_file <<- file.choose() %>%
+    # settings_file <<- file.choose() %>%
+    #   normalizePath(., winslash = "/")
+
+    settings_file <<- choose.files(default = "user_settings.R",
+                                   caption = "Select 'user_settings.R file.",
+                                   multi = FALSE,
+                                   filter = Filters[c("R"),]) %>%
       normalizePath(., winslash = "/")
+
 
     # Check, that the file is valid!
     print(readLines(settings_file))
@@ -121,14 +128,13 @@ get_user_input <- function(){
 
   # input folder
   print("Configuring input (root folder containing DICOM's), the order of 'session' and 'subject' folders and the output path.\n\n")
-  svDialogs::dlg_message("Please select your input folder now. It contains folders per session & subject or subject & session with the DICOM data.")
+  svDialogs::dlg_message("Please select your input folder now. It contains folders per session & subject or subject & session with the DICOM data. Your folder must be structured as follows: \n\n 'root/sessions/subjects/dicoms' \n\n 'root/subjects/sessions/dicoms'")
 
 
   switch_input_folder <- 2
   while (switch_input_folder == 2) {
     # DICOM Input folder on root level
-    user_input_dir <<- shinyDirectoryInput::choose.dir(caption = "Please select the root directory of all DICOM images (Input). \n
-  Your folder must be structured as e.g.: 'root/sessions/subjects/dicoms' OR 'root/subjects/sessions/dicoms'") %>%
+    user_input_dir <<- shinyDirectoryInput::choose.dir(caption = "Select the input directory of DICOM folders:") %>%
       normalizePath(., winslash = "/")
 
     # Check input data
@@ -139,12 +145,15 @@ get_user_input <- function(){
     switch_input_folder <- menu(graphics = TRUE,
                                 choices = c("Yes, these folders contain the DICOMs",
                                             "No, please let me select the folder again."),
-                                title="Check your input data: Do these folders contain the DICOM images?")
+                                title="Do these folders contain the DICOMs?")
   }
 
   # folder order
   cat("\n\n Now please select the order of folders in your input directory: Are they like '../subject_001/session_001/..' or like '../session_001/subject_001..'?\n\n" )
-  svDialogs::dlg_message("Now please select the order of folders in your input directory: Are they like '../subject_001/session_001/..' or like '../session_001/subject_001..'?")
+  svDialogs::dlg_message(c("Select input data structure (order of folders):",
+                           "",
+                           "'.../subject_id/session_id/...'",
+                           "'.../session_id/subject_id/...'?"))
 
   print(create_subject_session_df()$folder_short)
 
@@ -154,7 +163,7 @@ get_user_input <- function(){
     user_input_order <<- ifelse(test = menu(graphics = TRUE,
                                             choices = c("'../sessions/subjects/DICOM' ?",
                                                         "'../subjects/sessions/DICOM' ?"),
-                                            title="Is your DICOM data folder structured as:") == 1,
+                                            title="Select input data structure:") == 1,
                                 yes = "session_subject",
                                 no = "subject_session")
 
@@ -169,14 +178,14 @@ get_user_input <- function(){
     switch_input_order <- menu(graphics = TRUE,
                                choices = c("Yes, the 'subject' and 'session' column are valid.",
                                            "No, please let me select the folder order again."),
-                               title="Do folders and subfolders are in the right order?")
+                               title="Are 'subject' and 'session' correct?")
   }
 
   # output directory
   # Selection of output directory
   svDialogs::dlg_message("Now please select your output directory. All BIDS data and the `user_settings.R` file will be stored here.")
 
-  user_output_dir <<- shinyDirectoryInput::choose.dir(caption = "Please select the output directory, where all outputs should be saved. \n") %>%
+  user_output_dir <<- shinyDirectoryInput::choose.dir(caption = "Select output directory:") %>%
     normalizePath(., winslash = "/")
 
 
@@ -195,7 +204,7 @@ get_user_input <- function(){
 #' @examples
 cleaning_subject_ids <- function() {
 
-  svDialogs::dlg_message("Optional data cleaning: In case of redundant information in your subject-IDs you are able to (1) define the IDs (e.g. [:digit:]{5} for 5 digit IDs) or (2) remove redundant prefixes, suffices or strings using regular expressions (e.g. 'study_a' from 'study_a_0001'). Skip this step, if your IDs are fine.")
+  svDialogs::dlg_message("Optional data cleaning: \n\n You are able in case of redundant information in your subject-IDs to: \n\n (1) define the IDs (e.g. [:digit:]{5} for 5 digit IDs) and/or \n (2) remove redundant prefixes, suffices or strings using regular expressions (e.g. 'study_a' from 'study_a_0001'). \n\n Skip this step, if your IDs are fine.")
 
   # regex cleaning subject ID
   data_cleaning_needed = menu(
@@ -204,7 +213,7 @@ cleaning_subject_ids <- function() {
       "Yes, I need to remove some prefixes, suffices or else.",
       "No, my subject-ID's are fine."
     ),
-    title = "Do your subject-ID's need some file cleaning using regular expressions?"
+    title = "Clean subject-IDs?"
   )
 
   if (data_cleaning_needed == 1) {
@@ -212,7 +221,7 @@ cleaning_subject_ids <- function() {
 
     switch_subject_regex = 2
     while (switch_subject_regex == 2) {
-      regex_subject_id <<- svDialogs::dlg_input("Please set your subject-ID regular expression: e.g. [:digit:]{3} for a three digit ID. \n \n Press cancel, if you don't know what to do, or want to keep the subject folder name.")$res
+      regex_subject_id <<- svDialogs::dlg_input("Set subject-ID regular expression: \n\n e.g. [:digit:]{3} for a three digit ID. \n\n Press cancel, if you don't know what to do, or want to keep the subject folder name.")$res
 
       if (!length(regex_subject_id) | isTRUE(str_detect(regex_subject_id, "nothing_configured")) | exists("regex_subject_id") == 0) {
         # The user clicked the 'cancel' button. Using the subject-ID from the folder
@@ -260,11 +269,14 @@ cleaning_subject_ids <- function() {
     print(regex_subject_id)
 
     # regex pattern to remove
-    print("--- Configuring data cleaning of patterns, that needs to be removed from the subject-ID's --- \n\n")
+    cat("--- Configuring data cleaning of patterns, that needs to be removed from the subject-ID's --- \n\n")
 
     switch_pattern_regex = 2
     while (switch_pattern_regex == 2) {
-      regex_remove_pattern <<- svDialogs::dlg_input("Please set your regular expressions, you want to remove from the data. \n The string 'my_study' would remove this string from each of the ID's. \n If you want to use multiple patterns just connect them with the '|' operator: 'study_a|study_b'\n\n Press cancel, if you don't know what to do, nothing will be removed from the string.")$res
+
+      svDialogs::dlg_message("Set the regular expressions, you want to remove from the data. \n\n E.g. the string 'my_study' removes this string from each of the subject-IDs. \n\n If you want to use multiple patterns just connect them with the '|' operator: 'study_a|study_b'\n\n Click 'cancel' to skip.")
+
+      regex_remove_pattern <<- svDialogs::dlg_input("Set the regular expressions, you want to remove from the data. Click 'cancel' to skip.")$res
 
       if (!length(regex_remove_pattern) | isTRUE(str_detect(regex_remove_pattern, "nothing_configured"))) {
         # The user clicked the 'cancel' button. Using the sequence-ID from the folder
@@ -362,7 +374,7 @@ cleaning_session_ids <- function(){
   session_cleaning_needed = menu(graphics = TRUE,
                                  choices = c("Yes, I need to change them.",
                                              "No, my session-ID's are fine."),
-                                 title="Do your session-ID's need some renaming?")
+                                 title="Rename session-IDs?")
 
   if(session_cleaning_needed == 1){
     subject_session_df_BIDS <<- edit_session_df() %>%
@@ -401,7 +413,7 @@ edit_session_df <- function(){
       dplyr::mutate(session_BIDS = as.character(session))
 
     for (i in 1:nrow(df)) {
-      df$session_BIDS[i] <- svDialogs::dlg_input(paste0("Please set your new session-ID for the old session-ID: \n",
+      df$session_BIDS[i] <- svDialogs::dlg_input(paste0("Please set your new session-ID for the old session-ID: \n The BIDS-prefix 'ses-' will be added automatically.",
                                                         df$session[i], " (", i, " of ", nrow(df), ")"),
                                                  default = df$session_BIDS[i])$res}
 
@@ -1510,6 +1522,8 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
   # based on these: https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data
 
   cat("\n\n\nSequence mapper started:...\n\n\n")
+
+  svDialogs::dlg_message("The 'sequence mapper' starts now. Please edit each 'bold' text inside a cell. \n\n Set the BIDS type and BIDS sequence. The rows turn green on valid BIDS types and sequence-IDs. \n\n You can disable the export of irrelevant sequences by changing '1' to '0' in the 'relevant' column. \n\n If you are ready click save and close the app to start the validation and BIDS export.")
 
   DF <- check_BIDS_plausibility2(DF)
 
