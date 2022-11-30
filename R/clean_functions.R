@@ -221,6 +221,14 @@ cleaning_subject_ids <- function() {
 
     switch_subject_regex = 2
     while (switch_subject_regex == 2) {
+
+      svDialogs::dlg_message(c("You can define your subject-ID with a regular expression in the next step: \n\n",
+                             "[:digit:]{3} = three digit subject-IDs (e.g. 001-999)\n",
+                             "[:alnum:]{5} = five alphanumerical signs (e.g. I0001, C0001)\n",
+                             "(Control|Intervention)_[:digit:]{3} = Control_001 OR Intervention_001 to Control_999 OR Intervention_999"
+
+                             ))
+
       regex_subject_id <<- svDialogs::dlg_input("Set subject-ID regular expression: \n\n e.g. [:digit:]{3} for a three digit ID. \n\n Press cancel, if you don't know what to do, or want to keep the subject folder name.")$res
 
       if (!length(regex_subject_id) | isTRUE(str_detect(regex_subject_id, "nothing_configured")) | exists("regex_subject_id") == 0) {
@@ -274,9 +282,9 @@ cleaning_subject_ids <- function() {
     switch_pattern_regex = 2
     while (switch_pattern_regex == 2) {
 
-      svDialogs::dlg_message("Set the regular expressions, you want to remove from the data. \n\n E.g. the string 'my_study' removes this string from each of the subject-IDs. \n\n If you want to use multiple patterns just connect them with the '|' operator: 'study_a|study_b'\n\n Click 'cancel' to skip.")
+      svDialogs::dlg_message("Set the regular expressions, you want to remove from your subject-IDs. \n\n E.g. the string 'my_study' removes this string from each of the subject-IDs. \n\n If you want to use multiple patterns just connect them with the '|' operator: 'study_a|study_b'")
 
-      regex_remove_pattern <<- svDialogs::dlg_input("Set the regular expressions, you want to remove from the data. Click 'cancel' to skip.")$res
+      regex_remove_pattern <<- svDialogs::dlg_input("Set the regular expressions, you want to remove from your subject-IDs. \n\n Click 'cancel' to skip.")$res
 
       if (!length(regex_remove_pattern) | isTRUE(str_detect(regex_remove_pattern, "nothing_configured"))) {
         # The user clicked the 'cancel' button. Using the sequence-ID from the folder
