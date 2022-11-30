@@ -1094,8 +1094,8 @@ list_json_files <- function(input_path,
   json_overview <- json_df %>%
     select(-json_path, -subject) %>%
     group_by(session, sequence, possible_sequence) %>%
-    count() %>%
-    pivot_wider(names_from = session, values_from = freq) %>%
+    dplyr::count() %>%
+    pivot_wider(names_from = session, values_from = n) %>%
     group_by(sequence, possible_sequence) %>%
     mutate(total = sum(c_across(contains("ses-")), na.rm = TRUE)) %>%
     arrange(desc(possible_sequence), desc(total)) %>%
@@ -1888,7 +1888,7 @@ copy2BIDS <- function(sequence_map = "sequence_map",
   file_paths %>%
     filter(relevant == 1) %>%
     select(sequence) %>%
-    count() %>%
+    dplyr::count() %>%
     print.data.frame()
 
   cat("\n\n")
@@ -1899,7 +1899,7 @@ copy2BIDS <- function(sequence_map = "sequence_map",
   file_paths %>%
     filter(relevant == 0) %>%
     select(sequence) %>%
-    count() %>%
+    dplyr::count() %>%
     print.data.frame()
 
   cat("\n\n")
@@ -2392,7 +2392,7 @@ df_select_n <- function(df) {
   df <- df %>%
     select(session, BIDS_type, BIDS_sequence, relevant) %>%
     group_by(across(everything())) %>%
-    count() %>%
+    dplyr::count() %>%
     ungroup()
   # spread(. ,session, value = n)
   return(df)
@@ -2403,7 +2403,7 @@ df_select_n_group <- function(df) {
     select(session, BIDS_type, BIDS_sequence, group, PatientSex, relevant) %>%
     filter(relevant == 1) %>%
     group_by(across(everything())) %>%
-    count() %>%
+    dplyr::count() %>%
     ungroup()
   return(df)
 }
@@ -2472,7 +2472,7 @@ calculate_comp_subjects <- function(df, sessions) {
     filter(relevant == 1) %>%
     select(-relevant) %>%
     group_by(across(everything())) %>%
-    count() %>%
+    dplyr::count() %>%
     ungroup %>%
     spread(session, freq) %>%
     mutate("RatioCompleteSurveys" = rowSums(select(., contains("ses-")), na.rm = TRUE)/sessions) %>%
@@ -2526,7 +2526,7 @@ show_settings <- function(df) {
     ) %>%
     mutate(across(where(is.numeric), round, digits = 2)) %>%
     group_by(across(everything())) %>%
-    count() %>%
+    dplyr::count() %>%
     ungroup() %>%
     select(BIDS_sequence, BIDS_type, n, group_BIDS, relevant, everything())
   return(df)
