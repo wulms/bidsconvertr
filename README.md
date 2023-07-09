@@ -59,4 +59,4 @@ Wulms, Niklas. 2022. *Wulms/Bidsconvertr*. Zenodo. <https://doi.org/10.5281/ZENO
 
 - publish the BIDSconvertR
 - testing the tool on MAC systems 
-- adapt code to CRAN requirements
+

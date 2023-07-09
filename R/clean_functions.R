@@ -299,7 +299,8 @@ cleaning_subject_ids <- function() {
           dplyr::mutate(removed = stringr::str_extract_all(subject_BIDS, regex_remove_pattern),
                         subject_BIDS = stringr::str_remove(subject_BIDS, regex_remove_pattern) %>%
                           paste0("sub-", .) %>%
-                          str_replace("sub-sub-", "sub-"))
+                          str_replace("sub-sub-", "sub-") %>%
+                          str_replace_all("(?<!^ses)-", "_"))
       }
 
       print("Do the subject columns look valid?\n\n")
@@ -319,7 +320,9 @@ cleaning_subject_ids <- function() {
 
     subject_session_df_BIDS <<- subject_session_df %>%
       dplyr::mutate(subject_BIDS = paste0("sub-", subject) %>%
-                      str_replace("sub-sub-", "sub-"))
+                      str_replace("sub-sub-", "sub-") %>%
+                      str_replace_all("(?<!^ses)-", "_"))
+
     subject_session_df_BIDS %>%
       select(-dicom_folder, -session) %>% unique() %>% print()
   }
@@ -426,7 +429,8 @@ edit_session_df <- function(){
                                                  default = df$session_BIDS[i])$res}
 
     df_out <- subject_session_df_BIDS %>%
-      left_join(df, by = "session")
+      left_join(df, by = "session") %>%
+      dplyr::mutate(session_BIDS = stringr::str_replace_all(session_BIDS, "(?<!^ses)-", "_"))
 
     cat("Sessions are edited:")
 
@@ -1468,6 +1472,231 @@ create_BIDS_regex <- function(){
   return(valid_BIDS_regex)
 }
 
+#' Creates the BIDS regular expression
+#'
+#' @return one regular expression containing the BIDS nomenclature
+#' @export
+#'
+#' @examples
+create_BIDS_anat_regex <- function(){
+  valid_BIDS_prefixes <- c("^(acq-[:alnum:]+_)?",
+                           "(ce-[:alnum:]+_)?",
+                           "(rec-[:alnum:]+_)?",
+                  #         "(dir-[:alnum:]+_)?",
+                           "(run-[:digit:]+_)?",
+                           "(mod-[:alnum:]+_)?",
+                           "(echo-[:digit:]+_)?",
+                           "(flip-[:digit:]+_)?",
+                           "(inv-[:digit:]+_)?",
+                           "(mt-(on|off)_)?",
+                           "(part-(mag|phase|real|imag)_)?"
+                          # "(recording-[:alnum:]+_)?"
+                  ) %>% paste(collapse = "")
+
+
+
+  valid_BIDS_sequences <- c(
+    ### anatomy https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data
+    "(T1w",
+    "T2w",
+    "PDw",
+    "T2starw",
+    "FLAIR",
+    "inplaneT1",
+    "inplaneT2",
+    "PDT2",
+    "UNIT1",
+    "angio",
+    ### anatomy - phase images
+    "T1map",
+    "T1rho",
+    "T2map",
+    "T2starmap",
+    "R1map",
+    "R2map",
+    "R2starmap",
+    "PDT2map",
+    "PDmap",
+    "MTRmap",
+    "MTsat",
+    "MWFmap",
+    "MTVmap",
+    "Chimap",
+    "TB1map",
+    "RB1map",
+    "S0map",
+    "M0map",
+    ### anatomy - file collections https://bids-specification.readthedocs.io/en/stable/99-appendices/10-file-collections.html
+    "VFA",
+    "IRT1",
+    "MP2RAGE",
+    "MESE",
+    "MEGRE",
+    "MTR",
+    "MTS",
+    "MPM{1}$") %>% paste(collapse = "|")
+
+  valid_BIDS_regex <- paste0(valid_BIDS_prefixes, valid_BIDS_sequences)
+
+
+
+  return(valid_BIDS_regex)
+}
+
+#' Creates the BIDS regular expression
+#'
+#' @return one regular expression containing the BIDS nomenclature
+#' @export
+#'
+#' @examples
+create_BIDS_dwi_regex <- function(){
+  valid_BIDS_prefixes <- c("^(task-[:alnum:]+_)?",
+                           "(acq-[:alnum:]+_)?",
+                   #        "(ce-[:alnum:]+_)?",
+                           "(rec-[:alnum:]+_)?",
+                           "(dir-[:alnum:]+_)?",
+                           "(run-[:digit:]+_)?",
+                       #    "(mod-[:alnum:]+_)?",
+                     #      "(echo-[:digit:]+_)?",
+                      #     "(flip-[:digit:]+_)?",
+                      #     "(inv-[:digit:]+_)?",
+                      #     "(mt-(on|off)_)?",
+                           "(part-(mag|phase|real|imag)_)?",
+                           "(recording-[:alnum:]+_)?") %>% paste(collapse = "")
+
+
+
+  valid_BIDS_sequences <- c(
+    ### anatomy https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data
+    ### diffusion
+    "(dwi",
+    "sbref){1}$") %>% paste(collapse = "|")
+
+  valid_BIDS_regex <- paste0(valid_BIDS_prefixes, valid_BIDS_sequences)
+
+  return(valid_BIDS_regex)
+
+}
+
+#' Creates the BIDS regular expression
+#'
+#' @return one regular expression containing the BIDS nomenclature
+#' @export
+#'
+#' @examples
+create_BIDS_func_regex <- function(){
+  valid_BIDS_prefixes <- c("^(task-[:alnum:]+_)?",
+                           "(acq-[:alnum:]+_)?",
+                           "(ce-[:alnum:]+_)?",
+                           "(rec-[:alnum:]+_)?",
+                           "(dir-[:alnum:]+_)?",
+                           "(run-[:digit:]+_)?",
+                          # "(mod-[:alnum:]+_)?",
+                           "(echo-[:digit:]+_)?",
+                          # "(flip-[:digit:]+_)?",
+                          # "(inv-[:digit:]+_)?",
+                          # "(mt-(on|off)_)?",
+                           "(part-(mag|phase|real|imag)_)?",
+                           "(recording-[:alnum:]+_)?") %>% paste(collapse = "")
+
+
+
+  valid_BIDS_sequences <- c(
+    ### anatomy https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data
+    "(bold",
+    "cbv",
+    "phase",
+    "sbref){1}$") %>% paste(collapse = "|")
+
+  valid_BIDS_regex <- paste0(valid_BIDS_prefixes, valid_BIDS_sequences)
+
+  return(valid_BIDS_regex)
+}
+
+
+
+#' Creates the BIDS regular expression
+#'
+#' @return one regular expression containing the BIDS nomenclature
+#' @export
+#'
+#' @examples
+create_BIDS_asl_regex <- function(){
+  valid_BIDS_prefixes <- c("^(task-[:alnum:]+_)?",
+                           "(acq-[:alnum:]+_)?",
+                           # "(ce-[:alnum:]+_)?",
+                           "(rec-[:alnum:]+_)?",
+                           "(dir-[:alnum:]+_)?",
+                           "(run-[:digit:]+_)?",
+                           # "(mod-[:alnum:]+_)?",
+                           # "(echo-[:digit:]+_)?",
+                           #  "(flip-[:digit:]+_)?",
+                           #   "(inv-[:digit:]+_)?",
+                           #  "(mt-(on|off)_)?",
+                           #   "(part-(mag|phase|real|imag)_)?",
+                           "(recording-[:alnum:]+_)?") %>% paste(collapse = "")
+
+
+
+  valid_BIDS_sequences <- c(
+    ### anatomy https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data
+    "(asl",
+    "m0scan",
+    "aslcontext",
+    "asllabeling",
+    "physio",
+    "stim){1}$") %>% paste(collapse = "|")
+
+  valid_BIDS_regex <- paste0(valid_BIDS_prefixes, valid_BIDS_sequences)
+
+  return(valid_BIDS_regex)
+}
+
+#' Creates the BIDS regular expression
+#'
+#' @return one regular expression containing the BIDS nomenclature
+#' @export
+#'
+#' @examples
+create_BIDS_fieldmap_regex <- function(){
+  valid_BIDS_prefixes <- c(#"^(task-[:alnum:]+_)?",
+    "^(acq-[:alnum:]+_)?",
+    "(ce-[:alnum:]+_)?",
+    # "(rec-[:alnum:]+_)?",
+    "(dir-[:alnum:]+_)?",
+    "(run-[:digit:]+_)?",
+    # "(mod-[:alnum:]+_)?",
+    # "(echo-[:digit:]+_)?",
+    # "(flip-[:digit:]+_)?",
+    # "(inv-[:digit:]+_)?",
+    # "(mt-(on|off)_)?",
+    # "(part-(mag|phase|real|imag)_)?",
+    "(recording-[:alnum:]+_)?") %>% paste(collapse = "")
+
+
+
+  valid_BIDS_sequences <- c(
+    ### anatomy https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data
+    "(magnitud(e|e1|e2)",
+    "phase(1|2|diff)",
+    "fieldmap",
+    "epi",
+    ### fieldmap - file collection
+    "TB1DAM",
+    "TB1EPI",
+    "TB1AFI",
+    "TB1TFL",
+    "TB1RFM",
+    "TB1SRGE",
+    "RB1COR){1}$") %>% paste(collapse = "|")
+
+  valid_BIDS_regex <- paste0(valid_BIDS_prefixes, valid_BIDS_sequences)
+
+  return(valid_BIDS_regex)
+}
+
+
+
 #' Checks the plausibility of entered BIDS sequences based on regular expressions.
 #'
 #' @param df
@@ -1503,16 +1732,43 @@ check_BIDS_plausibility <- function(df){
 #' @examples
 check_BIDS_plausibility2 <- function(df){
 
-  valid_BIDS_regex <- create_BIDS_regex()
+  # valid_BIDS_regex <- create_BIDS_regex()
+  valid_BIDS_anat_regex <- create_BIDS_anat_regex()
+  valid_BIDS_func_regex <- create_BIDS_func_regex()
+  valid_BIDS_asl_regex <- create_BIDS_asl_regex()
+  valid_BIDS_dwi_regex <- create_BIDS_asl_regex()
+  valid_BIDS_fmap_regex <- create_BIDS_fieldmap_regex()
 
   df <- df %>%
-    mutate(valid = ifelse(test =
-                            str_detect(BIDS_sequence, valid_BIDS_regex) == 1 &
-                            str_detect(BIDS_type, "^(anat|dwi|func|fmap|perf)$") == 1 &
-                            str_detect(relevant, "^(0|1)$") == 1
-                          , yes = "yes", no = "no"))
+    # mutate(valid = ifelse(test =
+    #                         str_detect(BIDS_sequence, valid_BIDS_regex) == 1 &
+    #                         str_detect(BIDS_type, "^(anat|dwi|func|fmap|perf)$") == 1 &
+    #                         str_detect(relevant, "^(0|1)$") == 1
+    #                       , yes = "yes", no = "no")) %>%
+    rowwise() %>%
+    mutate(valid = case_when(
+
+      str_detect(BIDS_sequence, valid_BIDS_anat_regex) == 1 &
+        str_detect(BIDS_type, "^anat$") == 1 &
+        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
+      str_detect(BIDS_sequence, valid_BIDS_func_regex) == 1 &
+        str_detect(BIDS_type, "^dwi$") == 1 &
+        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
+      str_detect(BIDS_sequence, valid_BIDS_asl_regex) == 1 &
+        str_detect(BIDS_type, "^func$") == 1 &
+        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
+      str_detect(BIDS_sequence, valid_BIDS_dwi_regex) == 1 &
+        str_detect(BIDS_type, "^fmap$") == 1 &
+        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
+      str_detect(BIDS_sequence, valid_BIDS_fmap_regex) == 1 &
+        str_detect(BIDS_type, "^perf$") == 1 &
+        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
+      .default = "no"
+    )) %>% ungroup()
   return(df)
 }
+
+
 
 
 #' Sequence mapper shiny app.
@@ -1535,7 +1791,7 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
 
   DF <- check_BIDS_plausibility2(DF)
 
-  # print(DF)
+  print(DF)
 
 
   dt_output = function(title, id) {
@@ -1680,7 +1936,15 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
       finalDF <- isolate(values[["new_DF"]])
       finalDF <- new_DF
 
+
+      if(nrow(finalDF %>% filter(valid == "yes")) > 0){
+        svDialogs::dlg_message("Your inputs are not valid. You are not allowed to save.")
+        svDialogs::dlg_message(finalDF %>% filter(valid == "yes") > 0)
+        stop("Invalid parameters entered. Not allowed.")
+      }
+
       finalDF <- finalDF %>%
+        filter(valid == "yes") %>%
         select(-valid)
 
       # print(finalDF)
