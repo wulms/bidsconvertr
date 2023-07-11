@@ -42,6 +42,7 @@ convert_to_BIDS <- function(sequence_table = "off"){
 
   cat("\n\n\n============ Extracting metadata information ===============\n\n\n")
   # read all metadata from JSON files
+
   read_json_headers(json_path = path_output_converter_temp_json, suffix = "")
 
   read_json_headers(json_path = path_output_converter_temp_nii, suffix = "_anon")
@@ -61,7 +62,6 @@ convert_to_BIDS <- function(sequence_table = "off"){
 
   cat("\n\n\n============ start BIDS validator ===============\n\n\n")
   start_bids_validator()
-  Sys.sleep(10)
   # cat("\n\n\n============ Create Dashboard ===============\n\n\n")
   # create_dashboard()
 

@@ -82,12 +82,10 @@ select_user_settings_file <- function(){
 
   if(user_settings_file_existing == 1){
     print("Please select the 'user_settings.R' file now:")
-    # Select the file!
-    # settings_file <<- file.choose() %>%
-    #   normalizePath(., winslash = "/")
 
-    settings_file <<- choose.files(default = "user_settings.R",
-                                   caption = "Select 'user_settings.R file.",
+
+    settings_file <<- choose.files(# default = "user_settings.R",
+                                   caption = "Select 'user_settings.R' file.",
                                    multi = FALSE,
                                    filter = Filters[c("R"),]) %>%
       normalizePath(., winslash = "/")
@@ -922,13 +920,13 @@ check_dataframe <- function(df){
 #'
 #' @examples install_dcm2niix()
 #' @export
-install_dcm2niix <- function(dcm2niix_release = "v1.0.20211006") {
+install_dcm2niix <- function(dcm2niix_release = "v1.0.20230411") {
 
   dcm2niix_release_path <- paste0("https://github.com/rordenlab/dcm2niix/releases/download/",
                                   dcm2niix_release, "/dcm2niix_")
 
-  if (length(list.files(path = path_output,
-                        pattern = "dcm2niix")) == 0) {
+  if (length(fs::dir_ls(path = path_output,
+                        regexp = "dcm2niix", type  = "file")) == 0) {
     os <- Sys.info()["sysname"]
     if (os == "Darwin") {
       message("Identified MacOs. Not officially supported!")
@@ -950,16 +948,20 @@ install_dcm2niix <- function(dcm2niix_release = "v1.0.20211006") {
 
 
 
+    if(!file.exists(paste0(dcm2niix_path, ".zip"))){
+      print(paste("The dcm2niix files are at the following location: ", dcm2niix_path))
 
-    print(paste("The dcm2niix files are at the following location: ", dcm2niix_path))
-
-    download.file(dcm2niix, paste0(dcm2niix_path, ".zip"))
-    unzip(zipfile = paste0(dcm2niix_path, ".zip"),
-          exdir = normalizePath(path_output))
-    file.remove(paste0(dcm2niix_path, ".zip"))
-    if (os == "Linux") {
-      Sys.chmod(dcm2niix_path, mode = "0777")
+      download.file(dcm2niix, paste0(dcm2niix_path, ".zip"))
+      unzip(zipfile = paste0(dcm2niix_path, ".zip"),
+            exdir = normalizePath(path_output))
+      file.remove(paste0(dcm2niix_path, ".zip"))
+      if (os == "Linux") {
+        Sys.chmod(dcm2niix_path, mode = "0777")
+      }
+    } else {
+      print("Installation of dcm2niix skipped. Already downloaded.")
     }
+
   }
 }
 
@@ -1099,7 +1101,8 @@ list_json_files <- function(input_path,
     mutate(possible_sequence = str_replace(possible_sequence,
                                            pattern = regex("(survey|smartbrain|smart)",
                                                            ignore_case = TRUE),
-                                           replacement = "localizer"))
+                                           replacement = "localizer")) %>%
+    filter(!str_detect(json_path, "participants\\.json$"))
 
   cat("\n")
   print("Sequences by session")
@@ -1348,7 +1351,10 @@ check_sequence_map <- function(sequence_map_file = "sequence_map"){
   print(df_import, n = Inf)
 
   df_to_edit <- df_import %>%
-    filter_all(any_vars(str_detect(., "please edit")))
+#    filter_all(any_vars(str_detect(., "please edit"))) %>%
+    check_BIDS_plausibility2() %>%
+    rowwise() %>%
+    filter(valid != "yes" && relevant == "1")
 
   while(nrow(df_to_edit) > 0){
 
@@ -1373,7 +1379,9 @@ check_sequence_map <- function(sequence_map_file = "sequence_map"){
     print(df_import, n = Inf)
 
     df_to_edit <- df_import %>%
-      filter_all(any_vars(str_detect(., "please edit")))
+      check_BIDS_plausibility2() %>%
+      rowwise() %>%
+      filter(valid != "yes" && relevant == "1")
 
     if(nrow(df_to_edit) > 0){
       cat("\n\nError: you still have unchanged cells (containing 'please edit')")
@@ -2149,7 +2157,7 @@ copy2BIDS <- function(sequence_map = "sequence_map",
                          lazy = FALSE) %>%
     select(Path, subject, session, sequence) %>%
     left_join(tsv_file) %>%
-    # filter(relevant == 1) %>%
+    filter(relevant == "1") %>%
     rename(path_json = Path) %>%
     mutate(path_nii = str_replace(path_json, "json$", "nii\\.gz"),
            path_bval = ifelse(str_detect(BIDS_type, "dwi"),
