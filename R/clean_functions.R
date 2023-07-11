@@ -390,11 +390,15 @@ cleaning_session_ids <- function(){
   if(session_cleaning_needed == 1){
     subject_session_df_BIDS <<- edit_session_df() %>%
       dplyr::mutate(session_BIDS = paste0("ses-", session_BIDS) %>%
-                      str_replace("ses-ses-", "ses-"))
+                      str_replace("ses-ses-", "ses-") %>%
+                      stringr::str_remove_all("(?<!^ses)([:punct:]|[:symbol:])+"))
+
   } else {
     subject_session_df_BIDS <<- subject_session_df_BIDS %>%
       dplyr::mutate(session_BIDS = paste0("ses-", session) %>%
-                      str_replace("ses-ses-", "ses-"))
+                      str_replace("ses-ses-", "ses-") %>%
+                      stringr::str_remove_all("(?<!^ses)([:punct:]|[:symbol:])+"))
+
   }
 
   cat("Your new sessions are named like this:\n\n")
@@ -415,22 +419,33 @@ cleaning_session_ids <- function(){
 #' @examples
 edit_session_df <- function(){
 
-  sessions_fine <- 0
+  sessions_fine <- 2
 
-  while (sessions_fine == 0) {
+  while (sessions_fine == 2) {
     df <- subject_session_df_BIDS %>%
       select(session) %>%
       unique() %>%
       dplyr::mutate(session_BIDS = as.character(session))
 
     for (i in 1:nrow(df)) {
-      df$session_BIDS[i] <- svDialogs::dlg_input(paste0("Please set your new session-ID for the old session-ID: \n The BIDS-prefix 'ses-' will be added automatically.",
-                                                        df$session[i], " (", i, " of ", nrow(df), ")"),
-                                                 default = df$session_BIDS[i])$res}
+        df$session_BIDS[i] <- svDialogs::dlg_input(paste0("Please set your new session-ID for the old session-ID: \n The BIDS-prefix 'ses-' will be added automatically.",
+                                                          df$session[i], " (", i, " of ", nrow(df), ")"),
+                                                   default = df$session_BIDS[i])$res
+        }
+      if(str_detect(df$session_BIDS[i], "(?<!^ses)([:punct:]|[:symbol:])+")){
+        svDialogs::dlg_message("You are not allowed to use special symbols inside of session-IDs in BIDS. We removed invalid symbols.")
+        df$session_BIDS[i] <- df$session_BIDS[i] %>%
+          stringr::str_remove_all("(?<!^ses)([:punct:]|[:symbol:])+")
+      }
+    if(nchar(df$session_BIDS[i]) == 0 | is.null(df$session_BIDS[i])){
+      svDialogs::dlg_message("You are not allowed to choose empty session-IDs. We added 'ses-default'.")
+      df$session_BIDS[i] <- 'default'
+    }
+
 
     df_out <- subject_session_df_BIDS %>%
       left_join(df, by = "session") %>%
-      dplyr::mutate(session_BIDS = stringr::str_replace_all(session_BIDS, "(?<!^ses)-", "_"))
+      dplyr::mutate(session_BIDS = stringr::str_remove_all(session_BIDS, "(?<!^ses)([:punct:]|[:symbol:])+"))
 
     cat("Sessions are edited:")
 
@@ -1534,7 +1549,7 @@ create_BIDS_anat_regex <- function(){
     "MEGRE",
     "MTR",
     "MTS",
-    "MPM{1}$") %>% paste(collapse = "|")
+    "MPM){1}$") %>% paste(collapse = "|")
 
   valid_BIDS_regex <- paste0(valid_BIDS_prefixes, valid_BIDS_sequences)
 
@@ -1736,7 +1751,7 @@ check_BIDS_plausibility2 <- function(df){
   valid_BIDS_anat_regex <- create_BIDS_anat_regex()
   valid_BIDS_func_regex <- create_BIDS_func_regex()
   valid_BIDS_asl_regex <- create_BIDS_asl_regex()
-  valid_BIDS_dwi_regex <- create_BIDS_asl_regex()
+  valid_BIDS_dwi_regex <- create_BIDS_dwi_regex()
   valid_BIDS_fmap_regex <- create_BIDS_fieldmap_regex()
 
   df <- df %>%
@@ -1745,26 +1760,33 @@ check_BIDS_plausibility2 <- function(df){
     #                         str_detect(BIDS_type, "^(anat|dwi|func|fmap|perf)$") == 1 &
     #                         str_detect(relevant, "^(0|1)$") == 1
     #                       , yes = "yes", no = "no")) %>%
-    rowwise() %>%
+    rowwise()  %>%
+    mutate(valid_anat =  str_detect(BIDS_sequence, valid_BIDS_anat_regex) &&
+             str_detect(BIDS_type, "^anat$") &&
+             str_detect(relevant, "^1$"),
+           valid_dwi = str_detect(BIDS_sequence,valid_BIDS_dwi_regex) &&
+             str_detect(BIDS_type, "^dwi$") &&
+             str_detect(relevant, "^1$"),
+           valid_func = str_detect(BIDS_sequence, valid_BIDS_func_regex) &&
+             str_detect(BIDS_type, "^func$") &&
+             str_detect(relevant, "^1$"),
+           valid_fmap = str_detect(BIDS_sequence, valid_BIDS_fmap_regex) &&
+             str_detect(BIDS_type, "^fmap$") &&
+             str_detect(relevant, "^1$"),
+           valid_perf = str_detect(BIDS_sequence, valid_BIDS_asl_regex) &&
+             str_detect(BIDS_type, "^perf$")  &&
+             str_detect(relevant, "^1$"),
+           please_edit = str_detect(BIDS_sequence, "please edit") ||
+             str_detect(BIDS_type, "please edit") ||
+             str_detect(relevant, "please edit")
+    ) %>% ungroup()  %>%
     mutate(valid = case_when(
-
-      str_detect(BIDS_sequence, valid_BIDS_anat_regex) == 1 &
-        str_detect(BIDS_type, "^anat$") == 1 &
-        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
-      str_detect(BIDS_sequence, valid_BIDS_func_regex) == 1 &
-        str_detect(BIDS_type, "^dwi$") == 1 &
-        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
-      str_detect(BIDS_sequence, valid_BIDS_asl_regex) == 1 &
-        str_detect(BIDS_type, "^func$") == 1 &
-        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
-      str_detect(BIDS_sequence, valid_BIDS_dwi_regex) == 1 &
-        str_detect(BIDS_type, "^fmap$") == 1 &
-        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
-      str_detect(BIDS_sequence, valid_BIDS_fmap_regex) == 1 &
-        str_detect(BIDS_type, "^perf$") == 1 &
-        str_detect(relevant, "^(0|1)$") == 1 ~ "yes",
-      .default = "no"
-    )) %>% ungroup()
+      valid_anat | valid_dwi | valid_func | valid_fmap | valid_perf ~ "yes",
+      relevant != "1" ~ "not selected",
+      please_edit ~ "please edit",
+      !(valid_anat | valid_dwi | valid_func | valid_fmap | valid_perf) ~ "no"
+    )) %>%
+    select(-contains("valid_"), -please_edit)
   return(df)
 }
 
@@ -1807,12 +1829,13 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
                           sidebarLayout(
                             sidebarPanel(
 
-                              p("BIDS sequence information from: V1.1.2 (2019-01-10)"),
-                              a("BIDS documentation",
-                                href = "https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data"),
+                              a("BIDS sequence information from: V1.8.0 (implemented in the BIDSconvertR 2023-07-11)",
+                                href = "https://bids-specification.readthedocs.io/en/v1.8.0/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#anatomy-imaging-data"),
 
                               br(),
                               h4("Edit your BIDS sequence"),
+                              a("Online documentation",
+                                href = "https://wulms.github.io/bidsconvertr_jtd/usage_notes/#gui-the-sequence-mapper"),
 
                               p("T1 weighted images = T1w"),
                               p("T2 weighted images = T2w"),
@@ -1841,10 +1864,15 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
                             ),
 
                             mainPanel(
-                              actionButton("save", "Save"),
+                              actionButton("save", "Validate & Save"),
 
                               #br(),
-                              dt_output('Please edit the red & bold columns (double-click) and "save". Red indicates non-valid BIDS strings. Green indicates a valid "BIDS_sequence", "BIDS_type" and "relevant" column.', 'x1'),
+                              h4('Please edit (double-click) ALL the **lightgrey** (not edited) columns or unselect (with "relevant" = 0). Then "Validate & Save".\n'),
+                              tags$ul(
+                                tags$li('**Red** indicates non-valid "BIDS_sequence", "BIDS_type" or combination of both. You are not able to "Save" with incompatible combinations.\n'),
+                                tags$li('**Green** indicates a valid combination of "BIDS_sequence" and "BIDS_type" that is converted to BIDS (when "relevant" = 1).'),
+                                tags$li('**White** indicates a "not relevant" sequence. These are not validated because they are not exported to BIDS.')),
+                              dt_output('', 'x1'),
                               width = 9
 
 
@@ -1889,26 +1917,13 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
                           });
                         }")
                   )
-        )%>%
+        ) %>%
         formatStyle('valid',
                     target = "row",
                     color = 'black',
-                    backgroundColor = JS("(/^no$/).test(value) ? 'tomato' : (/^yes$/).test(value) ? 'lightgreen' : ''")
-                    #backgroundColor = styleEqual(c('no', 'yes'),
-                    #                             c('tomato', 'lightgreen'))
-                    )  %>%
-        # formatStyle(c("BIDS_sequence", "BIDS_type"),
-        #             backgroundColor = 'white') %>%
-        formatStyle(c("BIDS_type", "BIDS_sequence", "relevant"),
-                    # target = "row",
-                    backgroundColor = JS("(/please edit/).test(value) ? 'red' : (/^(anat|dwi|func|fmap|perf)$/).test(value) ? 'lightgreen' : ''"),
-                    fontWeight = "bold") %>%
-        formatStyle('relevant',
-                    #target = "row",
-                    backgroundColor = styleEqual(c(0, 1),
-                                                 c('grey', 'lightgreen')),
-                    fontWeight =  styleEqual(c(0, 1),
-                                             c('italics', 'bold')))  %>%
+                    backgroundColor = JS("(/^no$/).test(value) ? 'tomato' : (/^yes$/).test(value) ? 'lightgreen' : (/^please edit$/).test(value) ? 'lightgrey' : (/^not selected$/).test(value) ? 'white' : ''")) %>%
+
+        formatStyle(c("BIDS_type", "BIDS_sequence", "relevant"), fontWeight = "bold") %>%
         formatStyle(columns = c(0:5), fontSize = '75%')
     },
     server = TRUE)
@@ -1932,24 +1947,46 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
     ## Save
     observeEvent(input$save, {
 
-      fileType <- "TSV"
-      finalDF <- isolate(values[["new_DF"]])
-      finalDF <- new_DF
+      if(exists("new_DF")){
+        fileType <- "TSV"
+        finalDF <- isolate(values[["new_DF"]])
+        finalDF <- new_DF
 
 
-      if(nrow(finalDF %>% filter(valid == "yes")) > 0){
-        svDialogs::dlg_message("Your inputs are not valid. You are not allowed to save.")
-        svDialogs::dlg_message(finalDF %>% filter(valid == "yes") > 0)
-        stop("Invalid parameters entered. Not allowed.")
+        not_valid_df <- finalDF %>%
+          rowwise() %>%
+          filter(relevant == "1" & valid != "yes")
+
+        validDF <- finalDF %>%
+          rowwise() %>%
+          filter(valid == "yes" || relevant != "1") %>%
+          select(-valid)
+
+
+
+        print("These are valid BIDS sequence and BIDS type combinations:")
+        print(validDF)
+        cat("\n\n")
+
+        if(nrow(not_valid_df) > 0){
+          svDialogs::dlg_message("Your BIDS sequence and BIDS type combinations are not compatible with BIDS. You are not allowed to save. Please edit the files according to the BIDS specification or unselect incompatible sequences.")
+          print("These are NOT COMPATIBLE with BIDS")
+          print(not_valid_df)
+        } else {
+          outputDF <- finalDF %>%
+            select(-valid)
+          print(outputDF)
+          cat("Save sequence map \n\n")
+          readr::write_tsv(outputDF, file.path(outdir, sprintf("%s.tsv", outfilename)))
+        }
+      } else {
+        svDialogs::dlg_message("Please edit the cells before you try to save!")
       }
 
-      finalDF <- finalDF %>%
-        filter(valid == "yes") %>%
-        select(-valid)
 
-      # print(finalDF)
 
-      readr::write_tsv(finalDF, file.path(outdir, sprintf("%s.tsv", outfilename)))
+
+
 
     })
 
@@ -2013,9 +2050,9 @@ start_bids_validator_online <- function(){
 #' @examples
 start_bids_validator <- function(bids_path = path_output_bids){
 
-  #if system("docker", show.output.on.console = FALSE) == 127) {
-  if (suppressWarnings({system2("docker") == 127})){
-    #  | system2("docker") == 127
+  if (suppressWarnings({system("docker",
+                               ignore.stdout = TRUE,
+                               ignore.stderr = TRUE) == 127})){
     browseURL("https://docs.docker.com/desktop/windows/install/")
     cat("Starting the online version of the BIDS-Validator. \n\n")
     start_bids_validator_online()
@@ -2026,7 +2063,12 @@ start_bids_validator <- function(bids_path = path_output_bids){
 
     print(command)
 
-    system(command)
+    bidsvalidator_info <<- system(command, intern = TRUE)
+    print(bidsvalidator_info)
+    bidsvalidator_report = paste0(path_output_converter, "/bidsvalidator.txt")
+    readr::write_lines(x = bidsvalidator_info, file = bidsvalidator_report)
+    svDialogs::dlg_message("BIDS validator has run on your data, please check the 'bidsvalidator.txt' in your output folder for information.")
+
   }
 
 

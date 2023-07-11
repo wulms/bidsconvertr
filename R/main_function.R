@@ -62,7 +62,7 @@ convert_to_BIDS <- function(sequence_table = "off"){
   cat("\n\n\n============ start BIDS validator ===============\n\n\n")
   start_bids_validator()
   Sys.sleep(10)
-  cat("\n\n\n============ Create Dashboard ===============\n\n\n")
+  # cat("\n\n\n============ Create Dashboard ===============\n\n\n")
   # create_dashboard()
 
   cat("\n\n\n============ Starting Shiny BIDS ===============\n\n\n")
@@ -75,6 +75,7 @@ convert_to_BIDS <- function(sequence_table = "off"){
   cat("\n (3) Your dataset is validated with the BIDS-Validator.\n\n")
 
   delete_temp_nii_files()
+  rm(list = ls())
 
 
 }
