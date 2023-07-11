@@ -75,7 +75,7 @@ convert_to_BIDS <- function(sequence_table = "off"){
   cat("\n (3) Your dataset is validated with the BIDS-Validator.\n\n")
 
   delete_temp_nii_files()
-  rm(list = ls())
+  rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
 
 
 }
