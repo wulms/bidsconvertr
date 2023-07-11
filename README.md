@@ -3,7 +3,7 @@
 
 
 
-[![DOI](https://zenodo.org/badge/195199025.svg)](https://zenodo.org/badge/latestdoi/195199025) 
+[![DOI](https://zenodo.org/badge/448850893.svg)](https://zenodo.org/badge/latestdoi/448850893)
 [![BIDS](https://img.shields.io/badge/BIDS-v1.7.0-blue)](https://bids-specification.readthedocs.io/en/v1.7.0/)
 [![Github](https://img.shields.io/github/v/release/wulms/bidsconvertr.svg)](https://github.com/wulms/bidsconvertr)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)

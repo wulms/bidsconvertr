@@ -2335,16 +2335,16 @@ sessions_id_new <- c("0", "2", "4", "6")
 mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe|tse")'
 
   dataset_description <<- '{
-\t"Name": "The BIDS-Direct-ConverteR study",
-\t"BIDSVersion": "1.1.0rc4",
-\t"License": "This dataset was made available by You. We hope that the users of the data will acknowledge the BIDS-Direct-ConverteR team and the funding by the Federal Ministry of Education and Research, Germany (grants #01ER0816, #01ER1205 and #01ER1506) in any publications.",
-\t"Authors":  ["Niklas Wulms", "Sven Eppe", "Benedikt Sundermann", "Klaus Berger", "Heike Minnerup"],
-\t"HowToAcknowledge": "Please cite publications in References and Links",
+\t"Name": "The BIDSconvertR study",
+\t"BIDSVersion": "1.8.0",
+\t"License": "This dataset needs a licence.",
+\t"Authors":  ["Awesome first author", "Awesome second author", "Awesome last author"],
+\t"HowToAcknowledge": "We hope that the users of the data will acknowledge the BIDSconvertR team and the funding by the Federal Ministry of Education and Research, Germany (grants #01ER0816, #01ER1205 and #01ER1506) in any publications. Please cite publications in References and Links",
 \t"Funding": ["Here comes the fund"],
 \t"ReferencesAndLinks": [
 \t\t"Teismann, H., Wersching, H., Nagel, M., Arolt, V., Heindel, W., Baune, B. T., … Berger, K. (2014). Establishing the bidirectional relationship between depression and subclinical arteriosclerosis - rationale, design, and characteristics of the BiDirect Study. BMC Psychiatry, 14(1). https://doi.org/10.1186/1471-244X-14-174",
 \t\t"Teuber, A., Sundermann, B., Kugel, H., Schwindt, W., Heindel, W., Minnerup, J., … Wersching, H. (2017). MR imaging of the brain in large cohort studies: feasibility report of the population- and patient-based BiDirect study. European Radiology, 27(1), 231–238. https://doi.org/10.1007/s00330-016-4303-9",
-\t\t"nwulms, & wulms. (2019, October 2). wulms/BiDirect_BIDS_Converter: Runable script (Version 0.1). Zenodo. http://doi.org/10.5281/zenodo.3469539"
+\t\t" Wulms N., Sundermann, B. & Minnerup, H. (2023, July 11). wulms/bidsconvertr: Runable script (Version 1.0.2). Zenodo. https://doi.org/10.5281/zenodo.6514292"
 \t],
 \t"DatasetDOI": "Add here your DOI"
 }'
@@ -2397,27 +2397,7 @@ mri_sequences <- c("T1|T2|DTI|fmr|rest|rs|func|FLAIR|smartbrain|survey|smart|ffe
 
 
 
-  README <<-
-    "This dataset was acquired at the BiDirect study, Institute for Epidemiology and Social Medicine, University of Muenster, Germany.
 
-Description: BiDirect study neuroimaging data in BIDS format
-
-We hope that all users of the data will acknowledge and refer to the BiDirect project.
-Please cite the following references if you use these data:
-
-General Study information:
-Teismann, H., Wersching, H., Nagel, M., Arolt, V., Heindel, W., Baune, B. T., … Berger, K. (2014). Establishing the bidirectional relationship between depression and subclinical arteriosclerosis - rationale, design, and characteristics of the BiDirect Study. BMC Psychiatry, 14(1). https://doi.org/10.1186/1471-244X-14-174 \n
-
-Neuroimaging Study information:
-Teuber, A., Sundermann, B., Kugel, H., Schwindt, W., Heindel, W., Minnerup, J., … Wersching, H. (2017). MR imaging of the brain in large cohort studies: feasibility report of the population- and patient-based BiDirect study. European Radiology, 27(1), 231–238. https://doi.org/10.1007/s00330-016-4303-9\n
-
-Code used for processing: dicom2nii conversion, file management and BIDS:
-nwulms, & wulms. (2019, October 2). wulms/BiDirect_BIDS_Converter: Runable script (Version 0.1). Zenodo. http://doi.org/10.5281/zenodo.3469539
-
-2019-12-04: Initial release, added references.
-
-This dataset can be made available Univ.-Prof. Dr. med. Klaus Berger (mail: bergerk@uni-muenster.de).
-The BiDirect Study is funded by the Federal Ministry of Education and Research, Germany (grants #01ER0816, #01ER1205 and #01ER1506)."
 
 
   CHANGES <<-
@@ -2587,8 +2567,11 @@ add_BIDS_metadata <- function(){
   add_participants_tsv()
   # add CHANGES, README, dataset_description
 
+  bids_readme_path = "https://raw.githubusercontent.com/bids-standard/bids-starter-kit/main/templates/README.MD"
+  download.file(bids_readme_path, paste0(path_output_bids, "/README"))
+
   write_metadata_bids(CHANGES, paste0(path_output_bids, "/CHANGES"))
-  write_metadata_bids(README, paste0(path_output_bids, "/README"))
+ # write_metadata_bids(README, paste0(path_output_bids, "/README"))
   write_metadata_bids(dataset_description, paste0(path_output_bids, "/dataset_description.json"))
 
 
