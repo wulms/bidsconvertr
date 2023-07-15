@@ -202,6 +202,18 @@ get_user_input <- function(){
 #' @examples
 cleaning_subject_ids <- function() {
 
+
+  invalid_sub_names <- subject_session_df %>%
+    filter(str_detect(subject, "(?<!^sub)([:punct:]|[:symbol:])+")) %>%
+    mutate(new_subject_id, str_remove_all("(?<!^sub)([:punct:]|[:symbol:])+"))
+
+  if(nrow(invalid_sub_names) > 0) {
+    svDialogs::dlg_message("Warning: Invalid symbols identified in subject-IDs. The invalid symbols are removed automatically.")
+    print(invalid_sub_names)
+
+  }
+
+
   svDialogs::dlg_message("Optional data cleaning: \n\n You are able in case of redundant information in your subject-IDs to: \n\n (1) define the IDs (e.g. [:digit:]{5} for 5 digit IDs) and/or \n (2) remove redundant prefixes, suffices or strings using regular expressions (e.g. 'study_a' from 'study_a_0001'). \n\n Skip this step, if your IDs are fine.")
 
   # regex cleaning subject ID
@@ -235,7 +247,9 @@ cleaning_subject_ids <- function() {
         regex_subject_id <<- "nothing_configured"
         subject_session_df_BIDS <<- subject_session_df %>%
           mutate(subject_BIDS = paste0("sub-", subject) %>%
-                   str_replace("sub-sub-", "sub-"))
+                   str_replace("sub-sub-", "sub-") %>%
+                   str_remove_all(subject, "(?<!^sub)([:punct:]|[:symbol:])+")
+                 )
 
       } else {
 
@@ -248,7 +262,8 @@ cleaning_subject_ids <- function() {
             rest = stringr::str_remove_all(subject, regex_subject_id),
             subject_BIDS = stringr::str_extract(subject, regex_subject_id) %>%
               paste0("sub-", .) %>%
-              str_replace("sub-sub-", "sub-")
+              str_replace("sub-sub-", "sub-") %>%
+              str_remove_all(subject, "(?<!^sub)([:punct:]|[:symbol:])+")
           )
       }
 
@@ -821,7 +836,9 @@ check_filenames <- function(df = df){
 create_short_ids <- function(df){
   df_out <- df %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(your_subject_id = ifelse(regex_subject_id == "nothing_configured",
+    dplyr::mutate(subject = stringr::str_remove_all(subject,
+                                                            "(?<!^sub)([:punct:]|[:symbol:])+"),
+                  your_subject_id = ifelse(regex_subject_id == "nothing_configured",
                                            yes = stringr::str_remove(subject, "^sub-"),
                                            no = stringr::str_remove(subject, "^sub-") %>%
                                              stringr::str_extract(., stringr::regex(regex_subject_id)))
@@ -2263,7 +2280,7 @@ delete_temp_nii_files <- function(path_to_search = path_output_converter_temp){
   cat("\n\n\n Searching for all '.nii' and '.nii.gz' files from the temporary folder: \n\n")
   print(path_to_search)
 
-  files_to_delete <- list.files(path = path_to_search, pattern = "(nii|nii\\.gz)$",
+  files_to_delete <- list.files(path = path_to_search, pattern = "(|\\.json\\.nii|\\.nii\\.gz)$",
                                 recursive = TRUE, full.names = TRUE, all.files = TRUE)
 
   cat("\n\n The following files will be deleted. Are you sure?\n\n")

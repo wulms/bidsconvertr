@@ -77,5 +77,4 @@ convert_to_BIDS <- function(sequence_table = "off"){
   delete_temp_nii_files()
   rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
 
-
 }
