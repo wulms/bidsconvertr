@@ -1,10 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
+**This is the legacy repository of BIDSconvertR. Please visit the new repository for LTS: [BIDSconvertR](https://github.com/bidsconvertr/bidsconvertr)**
 
 
 [![DOI](https://zenodo.org/badge/448850893.svg)](https://zenodo.org/badge/latestdoi/448850893)
-[![BIDS](https://img.shields.io/badge/BIDS-v1.7.0-blue)](https://bids-specification.readthedocs.io/en/v1.7.0/)
+[![BIDS](https://img.shields.io/badge/BIDS-v1.8.0-blue)](https://bids-specification.readthedocs.io/en/v1.8.0/)
 [![Github](https://img.shields.io/github/v/release/wulms/bidsconvertr.svg)](https://github.com/wulms/bidsconvertr)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -14,12 +14,12 @@
 
 # Documentation
 
-The code is documented at **<https://wulms.github.io/bidsconvertr_jtd/>**. Please visit the documentation for a detailed description of the BIDSconvertR
+The code is documented at **<https://bidsconvertr.github.io/>**. Please visit the documentation for a detailed description of the BIDSconvertR
 
 
 ## Aim
 
-[BIDSconvertR](https://github.com/wulms/bidsconvertr) aims to provide a workflow that can:
+[BIDSconvertR](https://github.com/bidsconvertr/bidsconvertr) aims to provide a workflow that can:
 
 - do the task inside of the R environment
 - convert DICOM data to NIfTI (with the awesome [dcm2niix](https://github.com/rordenlab/dcm2niix)
