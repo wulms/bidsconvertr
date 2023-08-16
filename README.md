@@ -3,7 +3,7 @@
 **This is the legacy repository of BIDSconvertR. Please visit the new repository for LTS: [BIDSconvertR](https://github.com/bidsconvertr/bidsconvertr)**
 
 
-[![DOI](https://zenodo.org/badge/448850893.svg)](https://zenodo.org/badge/latestdoi/448850893)
+[![DOI](https://zenodo.org/badge/448850893.svg)](https://doi.org/10.5281/zenodo.5878407)
 [![BIDS](https://img.shields.io/badge/BIDS-v1.8.0-blue)](https://bids-specification.readthedocs.io/en/v1.8.0/)
 [![Github](https://img.shields.io/github/v/release/wulms/bidsconvertr.svg)](https://github.com/wulms/bidsconvertr)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
