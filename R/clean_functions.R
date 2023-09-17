@@ -84,10 +84,9 @@ select_user_settings_file <- function(){
     print("Please select the 'user_settings.R' file now:")
 
 
-    settings_file <<- choose.files(# default = "user_settings.R",
-                                   caption = "Select 'user_settings.R' file.",
-                                   multi = FALSE,
-                                   filter = Filters[c("R"),]) %>%
+    settings_file <<- rstudioapi::selectFile(
+      caption = "Select 'user_settings.R' file.",
+      filter = "*.R") %>%
       normalizePath(., winslash = "/")
 
 
@@ -126,7 +125,7 @@ get_user_input <- function(){
 
   # input folder
   print("Configuring input (root folder containing DICOM's), the order of 'session' and 'subject' folders and the output path.\n\n")
-  svDialogs::dlg_message("Please select your input folder now. It contains folders per session & subject or subject & session with the DICOM data. Your folder must be structured as follows: \n\n 'root/sessions/subjects/dicoms' \n\n 'root/subjects/sessions/dicoms'")
+  svDialogs::dlg_message("Please select your input folder now. It contains folders per session and subject or subject and session with the DICOM data. Your folder must be structured as follows: \n\n 'root/sessions/subjects/dicoms' \n\n 'root/subjects/sessions/dicoms', ")
 
 
   switch_input_folder <- 2
@@ -205,7 +204,7 @@ cleaning_subject_ids <- function() {
 
   invalid_sub_names <- subject_session_df %>%
     filter(str_detect(subject, "(?<!^sub)([:punct:]|[:symbol:])+")) %>%
-    mutate(new_subject_id, str_remove_all("(?<!^sub)([:punct:]|[:symbol:])+"))
+    mutate(new_subject_id = str_remove_all(subject, "(?<!^sub)([:punct:]|[:symbol:])+"))
 
   if(nrow(invalid_sub_names) > 0) {
     svDialogs::dlg_message("Warning: Invalid symbols identified in subject-IDs. The invalid symbols are removed automatically.")
@@ -233,11 +232,11 @@ cleaning_subject_ids <- function() {
     while (switch_subject_regex == 2) {
 
       svDialogs::dlg_message(c("You can define your subject-ID with a regular expression in the next step: \n\n",
-                             "[:digit:]{3} = three digit subject-IDs (e.g. 001-999)\n",
-                             "[:alnum:]{5} = five alphanumerical signs (e.g. I0001, C0001)\n",
-                             "(Control|Intervention)_[:digit:]{3} = Control_001 OR Intervention_001 to Control_999 OR Intervention_999"
+                               "[:digit:]{3} = three digit subject-IDs (e.g. 001-999)\n",
+                               "[:alnum:]{5} = five alphanumerical signs (e.g. I0001, C0001)\n",
+                               "(Control|Intervention)_[:digit:]{3} = Control_001 OR Intervention_001 to Control_999 OR Intervention_999"
 
-                             ))
+      ))
 
       regex_subject_id <<- svDialogs::dlg_input("Set subject-ID regular expression: \n\n e.g. [:digit:]{3} for a three digit ID. \n\n Press cancel, if you don't know what to do, or want to keep the subject folder name.")$res
 
@@ -249,7 +248,7 @@ cleaning_subject_ids <- function() {
           mutate(subject_BIDS = paste0("sub-", subject) %>%
                    str_replace("sub-sub-", "sub-") %>%
                    str_remove_all(subject, "(?<!^sub)([:punct:]|[:symbol:])+")
-                 )
+          )
 
       } else {
 
@@ -441,15 +440,15 @@ edit_session_df <- function(){
       dplyr::mutate(session_BIDS = as.character(session))
 
     for (i in 1:nrow(df)) {
-        df$session_BIDS[i] <- svDialogs::dlg_input(paste0("Please set your new session-ID for the old session-ID: \n The BIDS-prefix 'ses-' will be added automatically.",
-                                                          df$session[i], " (", i, " of ", nrow(df), ")"),
-                                                   default = df$session_BIDS[i])$res
-        }
-      if(str_detect(df$session_BIDS[i], "(?<!^ses)([:punct:]|[:symbol:])+")){
-        svDialogs::dlg_message("You are not allowed to use special symbols inside of session-IDs in BIDS. We removed invalid symbols.")
-        df$session_BIDS[i] <- df$session_BIDS[i] %>%
-          stringr::str_remove_all("(?<!^ses)([:punct:]|[:symbol:])+")
-      }
+      df$session_BIDS[i] <- svDialogs::dlg_input(paste0("Please set your new session-ID for the old session-ID: \n The BIDS-prefix 'ses-' will be added automatically.",
+                                                        df$session[i], " (", i, " of ", nrow(df), ")"),
+                                                 default = df$session_BIDS[i])$res
+    }
+    if(str_detect(df$session_BIDS[i], "(?<!^ses)([:punct:]|[:symbol:])+")){
+      svDialogs::dlg_message("Warning: Invalid symbols identified in session-IDs. The invalid symbols are removed automatically.")
+      df$session_BIDS[i] <- df$session_BIDS[i] %>%
+        stringr::str_remove_all("(?<!^ses)([:punct:]|[:symbol:])+")
+    }
     if(nchar(df$session_BIDS[i]) == 0 | is.null(df$session_BIDS[i])){
       svDialogs::dlg_message("You are not allowed to choose empty session-IDs. We added 'ses-default'.")
       df$session_BIDS[i] <- 'default'
@@ -732,7 +731,7 @@ check_folder_order <- function() {
   }
 
   cat("These are your input folders.
-      'folder_short' should represent the folders, that contain the DICOM files per session & subject.")
+      'folder_short' should represent the folders, that contain the DICOM files per session and subject.")
   cat("\n\n")
   print(paste("You selected the input folder hierarchy: ", folder_order))
   cat("\n\n")
@@ -837,16 +836,16 @@ create_short_ids <- function(df){
   df_out <- df %>%
     dplyr::rowwise() %>%
     dplyr::mutate(subject = stringr::str_remove_all(subject,
-                                                            "(?<!^sub)([:punct:]|[:symbol:])+"),
+                                                    "(?<!^sub)([:punct:]|[:symbol:])+"),
                   your_subject_id = ifelse(regex_subject_id == "nothing_configured",
                                            yes = stringr::str_remove(subject, "^sub-"),
                                            no = stringr::str_remove(subject, "^sub-") %>%
                                              stringr::str_extract(., stringr::regex(regex_subject_id)))
-                  ) %>%
+    ) %>%
     # if one is NA, switch with extracted info before regex
     dplyr::mutate(your_subject_id = ifelse(is.na(your_subject_id),
-                               yes = subject,
-                               no = your_subject_id)) %>%
+                                           yes = subject,
+                                           no = your_subject_id)) %>%
     # create rest string
     dplyr::mutate(
       rest_string = stringr::str_remove(subject, "^sub-") %>%
@@ -1368,7 +1367,7 @@ check_sequence_map <- function(sequence_map_file = "sequence_map"){
   print(df_import, n = Inf)
 
   df_to_edit <- df_import %>%
-#    filter_all(any_vars(str_detect(., "please edit"))) %>%
+    #    filter_all(any_vars(str_detect(., "please edit"))) %>%
     check_BIDS_plausibility2() %>%
     rowwise() %>%
     filter(valid != "yes" && relevant == "1")
@@ -1522,7 +1521,7 @@ create_BIDS_anat_regex <- function(){
   valid_BIDS_prefixes <- c("^(acq-[:alnum:]+_)?",
                            "(ce-[:alnum:]+_)?",
                            "(rec-[:alnum:]+_)?",
-                  #         "(dir-[:alnum:]+_)?",
+                           #         "(dir-[:alnum:]+_)?",
                            "(run-[:digit:]+_)?",
                            "(mod-[:alnum:]+_)?",
                            "(echo-[:digit:]+_)?",
@@ -1530,8 +1529,8 @@ create_BIDS_anat_regex <- function(){
                            "(inv-[:digit:]+_)?",
                            "(mt-(on|off)_)?",
                            "(part-(mag|phase|real|imag)_)?"
-                          # "(recording-[:alnum:]+_)?"
-                  ) %>% paste(collapse = "")
+                           # "(recording-[:alnum:]+_)?"
+  ) %>% paste(collapse = "")
 
 
 
@@ -1592,15 +1591,15 @@ create_BIDS_anat_regex <- function(){
 create_BIDS_dwi_regex <- function(){
   valid_BIDS_prefixes <- c("^(task-[:alnum:]+_)?",
                            "(acq-[:alnum:]+_)?",
-                   #        "(ce-[:alnum:]+_)?",
+                           #        "(ce-[:alnum:]+_)?",
                            "(rec-[:alnum:]+_)?",
                            "(dir-[:alnum:]+_)?",
                            "(run-[:digit:]+_)?",
-                       #    "(mod-[:alnum:]+_)?",
-                     #      "(echo-[:digit:]+_)?",
-                      #     "(flip-[:digit:]+_)?",
-                      #     "(inv-[:digit:]+_)?",
-                      #     "(mt-(on|off)_)?",
+                           #    "(mod-[:alnum:]+_)?",
+                           #      "(echo-[:digit:]+_)?",
+                           #     "(flip-[:digit:]+_)?",
+                           #     "(inv-[:digit:]+_)?",
+                           #     "(mt-(on|off)_)?",
                            "(part-(mag|phase|real|imag)_)?",
                            "(recording-[:alnum:]+_)?") %>% paste(collapse = "")
 
@@ -1631,11 +1630,11 @@ create_BIDS_func_regex <- function(){
                            "(rec-[:alnum:]+_)?",
                            "(dir-[:alnum:]+_)?",
                            "(run-[:digit:]+_)?",
-                          # "(mod-[:alnum:]+_)?",
+                           # "(mod-[:alnum:]+_)?",
                            "(echo-[:digit:]+_)?",
-                          # "(flip-[:digit:]+_)?",
-                          # "(inv-[:digit:]+_)?",
-                          # "(mt-(on|off)_)?",
+                           # "(flip-[:digit:]+_)?",
+                           # "(inv-[:digit:]+_)?",
+                           # "(mt-(on|off)_)?",
                            "(part-(mag|phase|real|imag)_)?",
                            "(recording-[:alnum:]+_)?") %>% paste(collapse = "")
 
@@ -1889,10 +1888,10 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
                             ),
 
                             mainPanel(
-                              actionButton("save", "Validate & Save"),
+                              actionButton("save", "Validate and Save"),
 
                               #br(),
-                              h4('Please edit (double-click) ALL the **lightgrey** (not edited) columns or unselect (with "relevant" = 0). Then "Validate & Save".\n'),
+                              h4('Please edit (double-click) ALL the **lightgrey** (not edited) columns or unselect (with "relevant" = 0). Then "Validate and Save".\n'),
                               tags$ul(
                                 tags$li('**Red** indicates non-valid "BIDS_sequence", "BIDS_type" or combination of both. You are not able to "Save" with incompatible combinations.\n'),
                                 tags$li('**Green** indicates a valid combination of "BIDS_sequence" and "BIDS_type" that is converted to BIDS (when "relevant" = 1).'),
@@ -1922,26 +1921,26 @@ editTable <- function(DF, outdir=getwd(), outfilename="table"){
                       # height = 1000,
                       #fill = TRUE,
                       #fillContainer = TRUE,
-                  # container = sketch,
-                  editable = list(target = 'cell',
-                                  disable = list(columns = c(0, 1, 5))),
-                  # plugins = "scrollResize",
-                  # rownames = FALSE,
-                  options = list(pageLength = 80,
-                                 scrollX = TRUE,
+                      # container = sketch,
+                      editable = list(target = 'cell',
+                                      disable = list(columns = c(0, 1, 5))),
+                      # plugins = "scrollResize",
+                      # rownames = FALSE,
+                      options = list(pageLength = 80,
+                                     scrollX = TRUE,
 
-                                 #scrollResize = TRUE, paging = FALSE, scrollY = "100px", scrollCollapse = TRUE,
+                                     #scrollResize = TRUE, paging = FALSE, scrollY = "100px", scrollCollapse = TRUE,
 
-                                 dom = "t",
-                                 autoWidth = FALSE,
-                                 #headerCallback = JS(headerCallback),
-                                 initComplete = JS("
+                                     dom = "t",
+                                     autoWidth = FALSE,
+                                     #headerCallback = JS(headerCallback),
+                                     initComplete = JS("
                         function(settings, json) {
                           $(this.api().table().header()).css({
                           'font-size': '12px',
                           });
                         }")
-                  )
+                      )
         ) %>%
         formatStyle('valid',
                     target = "row",
@@ -2167,7 +2166,7 @@ copy2BIDS <- function(sequence_map = "sequence_map",
   tsv_file <- read_tsv(path,
                        show_col_types = FALSE,
                        lazy = FALSE) #%>%
-    #select(-total, -possible_sequence)
+  #select(-total, -possible_sequence)
 
   file_paths <- read_tsv(path_jsons,
                          show_col_types = FALSE,
@@ -2588,7 +2587,7 @@ add_BIDS_metadata <- function(){
   download.file(bids_readme_path, paste0(path_output_bids, "/README"))
 
   write_metadata_bids(CHANGES, paste0(path_output_bids, "/CHANGES"))
- # write_metadata_bids(README, paste0(path_output_bids, "/README"))
+  # write_metadata_bids(README, paste0(path_output_bids, "/README"))
   write_metadata_bids(dataset_description, paste0(path_output_bids, "/dataset_description.json"))
 
 
